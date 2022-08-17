@@ -36,7 +36,7 @@ void Read<T>::readFile(string file, T *valores) {
 	string line;
 	int contLinha = 0;
 
-	Util<T> u;
+	Util u;
 
 	if (myfile.is_open()) {
 		while (getline(myfile, line))

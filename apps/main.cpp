@@ -8,7 +8,7 @@ template <typename T> void control(string file) {
 	Read<T> r;
 	r.readFile(file, &input);
 
-	Util<T> u;
+	Util u;
 	u.printMap(&input);
 }
 
