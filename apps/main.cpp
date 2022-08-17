@@ -1,22 +1,20 @@
 #include "read.hpp"
 #include <map>
+#include <typeinfo>
+
+template <typename T> void control(string file) {
+	T input;
+
+	Read<T> r;
+	r.readFile(file, &input);
+
+	Util<T> u;
+	u.printMap(&input);
+}
 
 int main() {
-	unordered_map<string, vector<int>>   inputD;
-	map<tuple<int, string>, vector<int>> inputT;
-
-	Read
-		<unordered_map<string, vector<int>>>   r1;
-	Read
-		<map<tuple<int, string>, vector<int>>> r2;
-	Util u;
-
-	r1.readFile("D", &inputD);
-	r2.readFile("T", &inputT);
-
-	u.printMap(&inputD);
-	cout << "============" << endl << endl;
-	u.printMap(&inputT);
+	control <unordered_map<string, vector<int>>>("D");
+	control <map<tuple<int, string>, vector<int>>>("D");
 
 	return EXIT_SUCCESS;
 }
