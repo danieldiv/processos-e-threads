@@ -13,7 +13,7 @@ private:
 public:
 	Read();
 	~Read();
-	void readFile(string file, T *valores);
+	void readFile(string file, T *valores, bool control);
 };
 
 template<typename T>
@@ -25,11 +25,15 @@ Read<T>::~Read() {}
 /**
  * @brief realiza a leitura de um arquivo e salva em um mapeamento com vetores
  *
+ * @tparam T
+ * @brief realiza a leitura de um arquivo e salva em um mapeamento com vetores
+ *
  * @param file nome do arquivo a ser aberto
  * @param valores map para armazenar os valores lidos e tokenizados
+ * @param control controla a quantidade de colunas
  */
 template<typename T>
-void Read<T>::readFile(string file, T *valores) {
+void Read<T>::readFile(string file, T *valores, bool control) {
 	file.insert(0, "files/").append(".csv");
 
 	ifstream myfile(file);
@@ -40,7 +44,7 @@ void Read<T>::readFile(string file, T *valores) {
 
 	if (myfile.is_open()) {
 		while (getline(myfile, line))
-			u.tokenizar(line, valores, ++contLinha);
+			u.tokenizar(line, valores, ++contLinha, control);
 	} else cout << "nao foi possivel abrir o arquivo" << endl;
 }
 

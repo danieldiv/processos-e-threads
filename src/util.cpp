@@ -4,15 +4,16 @@ Util::Util() {}
 Util::~Util() {}
 
 /**
- * @brief recebe uma string e tokeniza pelos espacos
+* @brief recebe uma string e tokeniza pelos espacos
  *
  * @param text string que sera tokenizada
  * @param valores map para armazenar os valores tokenizados
  * @param linha linha atual do arquivo
+ * @param control utilizado para reduzir a ultima coluna a ser tokenizada
  *
  * utilizado pela funcao readFile
  */
-void Util::tokenizar(string text, unordered_map<string, vector<int>> *valores, int linha) {
+void Util::tokenizar(string text, unordered_map<string, vector<int>> *valores, int linha, bool control) {
 	char del = ',';
 	int cont = 1;
 
@@ -23,7 +24,9 @@ void Util::tokenizar(string text, unordered_map<string, vector<int>> *valores, i
 	unordered_map<string, vector<int>>::iterator itr;
 
 	while (getline(sstream, word, del)) {
+		if (cont == 4 && control) return;
 		if (cont < 5) word.assign(to_string(cont++).append("-").append(word));
+
 		itr = valores->find(word);
 
 		if (itr != valores->end()) itr->second.push_back(linha);

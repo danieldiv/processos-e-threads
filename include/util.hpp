@@ -18,7 +18,7 @@ public:
 	Util();
 	~Util();
 
-	void tokenizar(string text, unordered_map<string, vector<int>> *valores, int linha);
+	void tokenizar(string text, unordered_map<string, vector<int>> *valores, int linha, bool control);
 	void tokenizar(string text, map<tuple<int, string>, vector<int>> *valores, int linha);
 
 	void printMap(unordered_map<string, vector<int>> *valores);
