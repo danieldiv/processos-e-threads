@@ -25,26 +25,25 @@
 // 	return 0;
 // }
 
-#include "read.hpp"
-#include <map>
+#include "arquivo.hpp"
 
 template <typename T>
-void control(string file, bool control) {
+void control(string file) {
 	T itens;
 	T classes;
 
-	Read<T> r;
-	r.readFile(file, &itens, &classes, control);
+	Arquivo arq;
+	arq.readFile(file, &itens, &classes);
 
-	Util<T> u;
+	Util u;
 	u.printMap(&itens);
 	u.printMap(&classes);
 }
 
 int main() {
-	control <unordered_map<string, set<int>>>("D", false);
+	control <unordered_map<string, set<int>>>("D");
 	cout << "==========\n\n";
-	control <unordered_map<string, set<int>>>("T", true);
+	control <unordered_map<int, set<string>>>("T");
 
 	return EXIT_SUCCESS;
 }

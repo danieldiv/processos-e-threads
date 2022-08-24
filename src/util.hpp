@@ -5,42 +5,29 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 #include <set>
 
 using namespace std;
 
-template <typename T>
 class Util {
-private:
 public:
-	Util();
-	~Util();
+	void tokenizar(string text, int linha,
+		unordered_map < string, set<int>> *itens,
+		unordered_map < string, set<int>> *classes);
 
-	void tokenizar(string text, T *itens, T *classes, int linha, bool control);
-	// void tokenizar(string text, map<tuple<int, string>, vector<int>> *valores, int linha);
+	void tokenizar(string text, int linha,
+		unordered_map < int, set<string>> *itens,
+		unordered_map < int, set<string>> *classes);
 
-	void printMap(T *valores);
-	// void printMap(map<tuple<int, string>, vector<int>> *valores);
+	void printMap(unordered_map < string, set<int>> *itens);
+	void printMap(unordered_map < int, set<string>> *itens);
 };
 
-template <typename T>
-Util<T>::Util() {}
+void Util::tokenizar(string text, int linha,
+	unordered_map < string, set<int>> *itens,
+	unordered_map < string, set<int>> *classes) {
 
-template <typename T>
-Util<T>::~Util() {}
-
-/**
-* @brief recebe uma string e tokeniza pelos espacos
- *
- * @param text string que sera tokenizada
- * @param valores map para armazenar os valores tokenizados
- * @param linha linha atual do arquivo
- * @param control utilizado para reduzir a ultima coluna a ser tokenizada
- *
- * utilizado pela funcao readFile
- */
-template <typename T>
-void Util<T>::tokenizar(string text, T *itens, T *classes, int linha, bool control) {
 	char del = ',';
 	int cont = 1;
 
@@ -48,10 +35,9 @@ void Util<T>::tokenizar(string text, T *itens, T *classes, int linha, bool contr
 	string word;
 
 	set<int> vec;
-	typename T::iterator itr;
+	unordered_map < string, set<int>>::iterator itr;
 
 	while (getline(sstream, word, del)) {
-		if (cont == 4 && control) return;
 		if (cont < 5) {
 			word.assign(to_string(cont++).append(",").append(word));
 
@@ -76,18 +62,46 @@ void Util<T>::tokenizar(string text, T *itens, T *classes, int linha, bool contr
 	}
 }
 
-/**
- * @brief imprime o map passado
- *
- * @param valores map que sera impresso possuindo string como chave
- */
-template <typename T>
-void Util<T>::printMap(T *valores) {
-	typename T::iterator itr;
+void Util::tokenizar(string text, int linha,
+	unordered_map < int, set<string>> *itens,
+	unordered_map < int, set<string>> *classes) {
 
-	for (itr = valores->begin(); itr != valores->end();++itr) {
+	char del = ',';
+	int cont = 1;
+
+	stringstream sstream(text);
+	string word;
+
+	set<string> vec;
+	unordered_map < int, set<string>>::iterator itr;
+
+	while (getline(sstream, word, del)) {
+		if (cont < 5) {
+			word.assign(to_string(cont++).append(",").append(word));
+			vec.insert(word);
+		}
+	}
+	itens->insert({ linha, vec });
+}
+
+void Util::printMap(unordered_map < string, set<int>> *itens) {
+	unordered_map < string, set<int>>::iterator itr;
+
+	for (itr = itens->begin();itr != itens->end();itr++) {
 		cout << itr->first << endl << "-> ";
-		for (int i : itr->second) cout << i << " ";
+
+		for (auto v : itr->second) cout << v << " ";
+		cout << endl << endl;
+	}
+}
+
+void Util::printMap(unordered_map < int, set<string>> *itens) {
+	unordered_map < int, set<string>>::iterator itr;
+
+	for (itr = itens->begin();itr != itens->end();itr++) {
+		cout << itr->first << endl << "-> ";
+
+		for (auto v : itr->second) cout << v << " ";
 		cout << endl << endl;
 	}
 }
