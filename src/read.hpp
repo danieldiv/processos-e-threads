@@ -1,7 +1,7 @@
 #ifndef READ_HPP
 #define READ_HPP
 
-#include <util.hpp>
+#include "util.hpp"
 
 #include <fstream>
 
@@ -34,7 +34,7 @@ Read<T>::~Read() {}
  */
 template<typename T>
 void Read<T>::readFile(string file, T *itens, T *classes, bool control) {
-	file.insert(0, "files/").append(".csv");
+	file.insert(0, "src/files/").append(".csv");
 
 	ifstream myfile(file);
 	string line;
