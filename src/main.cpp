@@ -32,10 +32,10 @@ void control(string file) {
 	T itens;
 	T classes;
 
-	Arquivo arq;
+	Arquivo<T> arq;
 	arq.readFile(file, &itens, &classes);
 
-	Util u;
+	Util<T> u;
 	u.printMap(&itens);
 	u.printMap(&classes);
 }

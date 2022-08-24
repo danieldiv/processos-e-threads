@@ -10,8 +10,12 @@
 
 using namespace std;
 
+template<typename T>
 class Util {
 public:
+	Util();
+	~Util();
+
 	void tokenizar(string text, int linha,
 		unordered_map < string, set<int>> *itens,
 		unordered_map < string, set<int>> *classes);
@@ -20,11 +24,18 @@ public:
 		unordered_map < int, set<string>> *itens,
 		unordered_map < int, set<string>> *classes);
 
-	void printMap(unordered_map < string, set<int>> *itens);
-	void printMap(unordered_map < int, set<string>> *itens);
+	void printMap(T *itens);
+	// void printMap(unordered_map < int, set<string>> *itens);
 };
 
-void Util::tokenizar(string text, int linha,
+template<typename T>
+Util<T>::Util() {}
+
+template<typename T>
+Util<T>::~Util() {}
+
+template<typename T>
+void Util<T>::tokenizar(string text, int linha,
 	unordered_map < string, set<int>> *itens,
 	unordered_map < string, set<int>> *classes) {
 
@@ -62,7 +73,8 @@ void Util::tokenizar(string text, int linha,
 	}
 }
 
-void Util::tokenizar(string text, int linha,
+template<typename T>
+void Util<T>::tokenizar(string text, int linha,
 	unordered_map < int, set<string>> *itens,
 	unordered_map < int, set<string>> *classes) {
 
@@ -84,19 +96,9 @@ void Util::tokenizar(string text, int linha,
 	itens->insert({ linha, vec });
 }
 
-void Util::printMap(unordered_map < string, set<int>> *itens) {
-	unordered_map < string, set<int>>::iterator itr;
-
-	for (itr = itens->begin();itr != itens->end();itr++) {
-		cout << itr->first << endl << "-> ";
-
-		for (auto v : itr->second) cout << v << " ";
-		cout << endl << endl;
-	}
-}
-
-void Util::printMap(unordered_map < int, set<string>> *itens) {
-	unordered_map < int, set<string>>::iterator itr;
+template<typename T>
+void Util<T>::printMap(T *itens) {
+	typename T::iterator itr;
 
 	for (itr = itens->begin();itr != itens->end();itr++) {
 		cout << itr->first << endl << "-> ";

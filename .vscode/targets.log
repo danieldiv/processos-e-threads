@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Wed Aug 24 17:55:24 2022
+# Make data base, printed on Wed Aug 24 18:46:22 2022
 
 # Variables
 
@@ -20,7 +21,6 @@ SRC := src/main.cpp
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
- 
 # environment
 SNAP_INSTANCE_KEY = 
 # environment
@@ -222,7 +222,6 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-419f9acc-1.70.2-main.sock
 # environment
- 
 TERM = xterm-256color
 # environment
 SNAP_NAME = code
@@ -231,6 +230,7 @@ GSETTINGS_SCHEMA_DIR = /snap/code/105/usr/share/glib-2.0/schemas
 # environment
 IM_CONFIG_PHASE = 1
 # default
+ 
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
@@ -305,7 +305,8 @@ debug: all
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-24 17:55:23.828038513
+ 
+#  Last modified 2022-08-24 18:46:12.433846434
 #  File has been updated.
 #  Successfully updated.
 
@@ -351,6 +352,7 @@ run:
 build:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
+ 
 #  Implicit/static pattern stem: ''
 #  File does not exist.
 #  File has been updated.
@@ -364,7 +366,6 @@ build:
 # automatic
 # + := 
 # automatic
- 
 # % := 
 # automatic
 # ^ := 
@@ -381,6 +382,7 @@ build:
 r: clean all run
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # makefile (from 'Makefile', line 32)
@@ -403,6 +405,7 @@ release: all
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 # files hash-table stats:
 # Load=13/1024=1%, Rehash=0, Collisions=0/47=0%
@@ -412,12 +415,12 @@ release: all
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 28 / storage = 239 B / avg = 8 B
-# current buf: size = 8162 B / used = 239 B / count = 28 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 28 / storage = 242 B / avg = 8 B
+# current buf: size = 8162 B / used = 242 B / count = 28 / avg = 8 B
 
 # strcache performance: lookups = 62 / hit rate = 54%
 # hash-table stats:
 # Load=28/8192=0%, Rehash=0, Collisions=0/62=0%
-# Finished Make data base on Wed Aug 24 17:55:24 2022
+# Finished Make data base on Wed Aug 24 18:46:22 2022
 
  

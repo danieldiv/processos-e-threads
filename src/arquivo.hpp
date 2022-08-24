@@ -4,49 +4,32 @@
 #include "util.hpp"
 #include <fstream>
 
-// template <typename T>
+template <typename T>
 class Arquivo {
 public:
-	void readFile(string file,
-		unordered_map < string, set<int>> *itens,
-		unordered_map < string, set<int>> *classes);
+	Arquivo();
+	~Arquivo();
 
-	void readFile(string file,
-		unordered_map < int, set<string>> *itens,
-		unordered_map < int, set<string>> *classes);
+	void readFile(string file, T *itens, T *classes);
 };
 
-void Arquivo::readFile(string file,
-	unordered_map < string, set<int>> *itens,
-	unordered_map < string, set<int>> *classes) {
+template <typename T>
+Arquivo<T>::Arquivo() {}
 
+template <typename T>
+Arquivo<T>::~Arquivo() {}
+
+template <typename T>
+void Arquivo<T>::readFile(string file, T *itens, T *classes) {
 	file.insert(0, "src/files/").append(".csv");
 
 	ifstream myfile(file);
 	string line;
 	int contLinha = 0;
 
-	Util u;
+	Util<T> u;
 
-	if (myfile.is_open()) {
-		while (getline(myfile, line))
-			u.tokenizar(line, ++contLinha, itens, classes);
-	} else cout << "nao foi possivel abrir o arquivo" << endl;
-}
-
-void Arquivo::readFile(string file,
-	unordered_map < int, set<string>> *itens,
-	unordered_map < int, set<string>> *classes) {
-
-	file.insert(0, "src/files/").append(".csv");
-
-	ifstream myfile(file);
-	string line;
-	int contLinha = 0;
-
-	Util u;
-
-	if (myfile.is_open()) {
+	if (myfile.is_open() && myfile.good()) {
 		while (getline(myfile, line))
 			u.tokenizar(line, ++contLinha, itens, classes);
 	} else cout << "nao foi possivel abrir o arquivo" << endl;
