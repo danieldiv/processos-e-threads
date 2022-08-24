@@ -13,7 +13,7 @@ private:
 public:
 	Read();
 	~Read();
-	void readFile(string file, T *valores, bool control);
+	void readFile(string file, T *valores, T *classes, bool control);
 };
 
 template<typename T>
@@ -33,18 +33,18 @@ Read<T>::~Read() {}
  * @param control controla a quantidade de colunas
  */
 template<typename T>
-void Read<T>::readFile(string file, T *valores, bool control) {
+void Read<T>::readFile(string file, T *itens, T *classes, bool control) {
 	file.insert(0, "files/").append(".csv");
 
 	ifstream myfile(file);
 	string line;
 	int contLinha = 0;
 
-	Util u;
+	Util<T> u;
 
 	if (myfile.is_open()) {
 		while (getline(myfile, line))
-			u.tokenizar(line, valores, ++contLinha, control);
+			u.tokenizar(line, itens, classes, ++contLinha, control);
 	} else cout << "nao foi possivel abrir o arquivo" << endl;
 }
 

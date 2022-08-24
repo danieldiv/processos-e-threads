@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 23 12:46:41 2022
+# Make data base, printed on Wed Aug 24 12:40:29 2022
 
 # Variables
 
@@ -25,7 +25,9 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 SNAP_INSTANCE_KEY = 
 # environment
-VSCODE_CWD = /home/daniel/Documentos/Cefet/SO/processos-e-treads
+GJS_DEBUG_OUTPUT = stderr
+# environment
+VSCODE_CWD = /home/daniel
 # makefile (from 'Makefile', line 9)
 LIBS = -lm -led -L $(LIB)
 # default
@@ -48,8 +50,6 @@ PWD = /home/daniel/Documentos/Cefet/SO/processos-e-treads
 %D = $(patsubst %/,%,$(dir $%))
 # environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
-# environment
-OLDPWD = /home/daniel/Documentos/Cefet/SO
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # automatic
@@ -59,21 +59,17 @@ VSCODE_CODE_CACHE_PATH = /home/daniel/.config/Code/CachedData/e4503b30fc78200f84
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.UHR9Q1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.WX6PR1
 # default
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
-# environment
-GNOME_TERMINAL_SERVICE = :1.137
 # makefile
 MAKEFLAGS = pqrR
-# environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=daf45b2c0e5ddd16d7bbdde96304e711
 # makefile
 CURDIR := /home/daniel/Documentos/Cefet/SO/processos-e-treads
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # automatic
@@ -101,21 +97,23 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 8859
+VSCODE_PID = 3692
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
+# environment
+BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # makefile (from 'Makefile', line 8)
 FLAGS = -O3 -Wall
 # environment
-SESSION_MANAGER = local/daniel:@/tmp/.ICE-unix/1971,unix/daniel:/tmp/.ICE-unix/1971
+SESSION_MANAGER = local/daniel:@/tmp/.ICE-unix/2211,unix/daniel:/tmp/.ICE-unix/2211
 # automatic
 *F = $(notdir $*)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=daf45b2c0e5ddd16d7bbdde96304e711
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # makefile (from 'Makefile', line 4)
 LIB = ./lib
 # automatic
@@ -135,11 +133,13 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
 # environment
-SHLVL = 1
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/4f30c60f_a182_4844_ba6b_d49735cd953c
+SHLVL = 0
 # environment
 MAKELEVEL := 0
+# environment
+IM_CONFIG_CHECK_ENV = 1
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
@@ -157,6 +157,8 @@ SNAP_USER_COMMON = /home/daniel/snap/code/common
 # environment
 SNAP = /snap/code/105
 # environment
+INVOCATION_ID = f8a79ed3c6964f7f9e875338e3bd4db1
+# environment
 SNAP_REVISION = 105
 # environment
 SNAP_REAL_HOME = /home/daniel
@@ -171,7 +173,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 XDG_CURRENT_DESKTOP = Unity
 # environment
-LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+LS_COLORS = 
 # automatic
 +F = $(notdir $+)
 # environment
@@ -183,11 +185,13 @@ GNUMAKEFLAGS :=
 # environment
 LOGNAME = daniel
 # environment
+GIO_LAUNCHED_DESKTOP_FILE = /var/lib/snapd/desktop/applications/code_code.desktop
+# environment
 SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1971
+SYSTEMD_EXEC_PID = 2249
 # environment
 DISPLAY = :0
 # environment
@@ -203,15 +207,19 @@ SNAP_DATA = /var/snap/code/105
 # environment
 SNAP_CONTEXT = EMrKkIEhEVpllwsQsiDAzU41fxKWWJxkSp_q4qp1lryMpkrUPsUo
 # environment
-DBUS_STARTER_BUS_TYPE = session
+MANAGERPID = 2054
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3605
+# environment
+_ = /snap/code/105/usr/share/code/code
 # makefile (from 'Makefile', line 2)
 BIN = ./bin
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
-COLORTERM = truecolor
-# environment
 GDK_PIXBUF_MODULE_FILE = /home/daniel/snap/code/common/.cache/gdk-pixbuf-loaders.cache
+# environment
+JOURNAL_STREAM = 8:33470
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -224,8 +232,6 @@ QT_IM_MODULE = ibus
 ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-419f9acc-1.70.2-main.sock
-# environment
-TERM = xterm-256color
 # environment
 SNAP_NAME = code
 # environment
@@ -245,8 +251,6 @@ VSCODE_CLI = 1
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
-VTE_VERSION = 6800
-# environment
 SNAP_COMMON = /var/snap/code/common
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
@@ -259,7 +263,7 @@ GDMSESSION = ubuntu
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=124/1024=12%, Rehash=0, Collisions=13/167=8%
+# Load=126/1024=12%, Rehash=0, Collisions=5/169=3%
 
 # Pattern-specific Variable Values
 
@@ -267,13 +271,14 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# include (device 2051, inode 11012156): 2 files, no impossibilities so far.
-# src (device 2051, inode 11012164): 2 files, no impossibilities so far.
-# . (device 2051, inode 10750686): 12 files, no impossibilities.
+# include (device 2051, inode 11012156): 3 files, no impossibilities so far.
+# src (device 2051, inode 11012164): 3 files, no impossibilities so far.
+# . (device 2051, inode 10750686): 14 files, no impossibilities.
 # apps (device 2051, inode 11010445): No files, no impossibilities so far.
 
-# 16 files, no impossibilities in 4 directories.
+# 20 files, no impossibilities in 4 directories.
 
+ 
 # Implicit Rules
 
 obj/%.o: src/%.cpp include/%.hpp
@@ -284,9 +289,15 @@ bin/%: apps/%.cpp
 #  recipe to execute (from 'Makefile', line 25):
 	g++ $(FLAGS) $< $(LIBS) -I $(INCLUDE) -o $@
 
- 
 # 2 implicit rules, 0 (0.0%) terminal.
 # Files
+
+# Not a target:
+include/util.hpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-24 08:12:06.535965452
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 src/read.cpp:
@@ -298,19 +309,43 @@ src/read.cpp:
 # Not a target:
 include/read.hpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-23 12:46:30.441007916
+#  Last modified 2022-08-24 07:44:53.873603136
 #  File has been updated.
 #  Successfully updated.
 
 libed: obj/read.o obj/util.o
 #  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
+# automatic
+# @ := libed
+# automatic
+# * := 
+# automatic
+# < := obj/read.o
+# automatic
+# + := obj/read.o obj/util.o
+# automatic
+# % := 
+# automatic
+# ^ := obj/read.o obj/util.o
+# automatic
+# ? := obj/read.o obj/util.o
+# automatic
+# | := 
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+# Load=8/32=25%, Rehash=0, Collisions=1/13=8%
 #  recipe to execute (from 'Makefile', line 16):
 	ar -rcs $(LIB)/libed.a $(OBJ)/*.o
+
+# Not a target:
+src/util.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-24 07:25:12.363817966
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 Makefile:
@@ -332,11 +367,14 @@ bin/main:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-obj/util.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+obj/util.o: src/util.cpp include/util.hpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'util'
+#  Last modified 2022-08-24 08:13:10.083640283
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 22):
+	g++ $(FLAGS) -c $< -I $(INCLUDE) -o $@
 
 # Not a target:
 .DEFAULT:
@@ -375,27 +413,9 @@ r: all run
 obj/read.o: src/read.cpp include/read.hpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'read'
-#  File does not exist.
+#  Last modified 2022-08-24 08:07:06.564299402
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := obj/read.o
-# automatic
-# * := read
-# automatic
-# < := src/read.cpp
-# automatic
-# + := src/read.cpp include/read.hpp
-# automatic
-# % := 
-# automatic
-# ^ := src/read.cpp include/read.hpp
-# automatic
-# ? := src/read.cpp include/read.hpp
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/15=7%
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 22):
 	g++ $(FLAGS) -c $< -I $(INCLUDE) -o $@
 
@@ -404,20 +424,26 @@ myapps: clean_apps bin/main
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # files hash-table stats:
-# Load=15/1024=1%, Rehash=0, Collisions=0/42=0%
+# Load=17/1024=2%, Rehash=0, Collisions=0/50=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 36 / storage = 299 B / avg = 8 B
-# current buf: size = 8162 B / used = 299 B / count = 36 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 43 / storage = 360 B / avg = 8 B
+# current buf: size = 8162 B / used = 360 B / count = 43 / avg = 8 B
 
-# strcache performance: lookups = 60 / hit rate = 40%
+# strcache performance: lookups = 70 / hit rate = 38%
 # hash-table stats:
-# Load=36/8192=0%, Rehash=0, Collisions=0/60=0%
-# Finished Make data base on Tue Aug 23 12:46:41 2022
+# Load=43/8192=1%, Rehash=0, Collisions=0/70=0%
+# Finished Make data base on Wed Aug 24 12:40:29 2022
 
  
