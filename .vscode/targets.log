@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Aug 24 20:26:17 2022
+# Make data base, printed on Thu Aug 25 19:06:26 2022
 
 # Variables
 
@@ -46,6 +46,8 @@ PWD = /home/daniel/Documentos/Cefet/SO/processos-e-treads
 %D = $(patsubst %/,%,$(dir $%))
 # environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+# environment
+OLDPWD = /home/daniel/Documentos/Cefet/SO
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # automatic
@@ -55,21 +57,19 @@ VSCODE_CODE_CACHE_PATH = /home/daniel/.config/Code/CachedData/e4503b30fc78200f84
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.XRHQR1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.KBLOR1
 # default
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.99
+GNOME_TERMINAL_SERVICE = :1.100
 # makefile
 MAKEFLAGS = pqrR
-# environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=643070118d1cca5a40f6508d63067c65
 # makefile
 CURDIR := /home/daniel/Documentos/Cefet/SO/processos-e-treads
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # automatic
@@ -95,19 +95,19 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 5078
+VSCODE_PID = 12310
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/daniel:@/tmp/.ICE-unix/2201,unix/daniel:/tmp/.ICE-unix/2201
+SESSION_MANAGER = local/daniel:@/tmp/.ICE-unix/4210,unix/daniel:/tmp/.ICE-unix/4210
 # automatic
 *F = $(notdir $*)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=643070118d1cca5a40f6508d63067c65
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -127,7 +127,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/4a29379a_281b_4b34_9c03_8a5c580b9851
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/298f95db_57bb_4c85_88ad_cf740a6057d1
 # environment
 MAKELEVEL := 0
 # default
@@ -153,7 +153,7 @@ SNAP_REAL_HOME = /home/daniel
 # environment
 USERNAME = daniel
 # environment
-GNOME_SETUP_DISPLAY = :1
+GNOME_SETUP_DISPLAY = :3
 # environment
 LESSCLOSE = /usr/bin/lesspipe %s %s
 # automatic
@@ -179,9 +179,9 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 2201
+SYSTEMD_EXEC_PID = 5578
 # environment
-DISPLAY = :0
+DISPLAY = :2
 # environment
 USER = daniel
 # environment
@@ -200,8 +200,6 @@ BUILD := ./build
 LDFLAGS := -lstdc++ -lm
 # makefile (from 'Makefile', line 6)
 APP_DIR := ./build/
-# environment
-DBUS_STARTER_BUS_TYPE = session
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -246,8 +244,6 @@ ELECTRON_NO_ATTACH_CONSOLE = 1
 VTE_VERSION = 6800
 # environment
 SNAP_COMMON = /var/snap/code/common
-# makefile (from 'Makefile', line 2)
-CXXFLAGS := -Wall -Wextra -Werror
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 1)
@@ -261,7 +257,7 @@ GDMSESSION = ubuntu
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=125/1024=12%, Rehash=0, Collisions=13/172=8%
+# Load=123/1024=12%, Rehash=0, Collisions=12/170=7%
 
 # Pattern-specific Variable Values
 
@@ -269,10 +265,10 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# src (device 2051, inode 11145690): 6 files, no impossibilities.
-# . (device 2051, inode 10750686): 9 files, no impossibilities.
+# src (device 2051, inode 11145690): 7 files, no impossibilities.
+# . (device 2051, inode 10750686): 12 files, no impossibilities.
 
-# 15 files, no impossibilities in 2 directories.
+# 19 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -288,8 +284,8 @@ build//app: build/objects/src/main.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 #  recipe to execute (from 'Makefile', line 20):
+ 
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $(APP_DIR)/$(TARGET) $(OBJECTS) $(LDFLAGS)
 
@@ -306,7 +302,7 @@ debug: all
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-24 20:26:06.549488555
+#  Last modified 2022-08-25 12:08:57.138013868
 #  File has been updated.
 #  Successfully updated.
 
@@ -412,12 +408,12 @@ release: all
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 28 / storage = 242 B / avg = 8 B
-# current buf: size = 8162 B / used = 242 B / count = 28 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 32 / storage = 290 B / avg = 9 B
+# current buf: size = 8162 B / used = 290 B / count = 32 / avg = 9 B
 
-# strcache performance: lookups = 62 / hit rate = 54%
+# strcache performance: lookups = 66 / hit rate = 51%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=0/62=0%
-# Finished Make data base on Wed Aug 24 20:26:17 2022
+# Load=32/8192=0%, Rehash=0, Collisions=0/66=0%
+# Finished Make data base on Thu Aug 25 19:06:26 2022
 
  

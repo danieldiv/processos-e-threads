@@ -1,10 +1,10 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/daniel/Documentos/Cefet/SO/processos-e-treads'
 mkdir -p ./build/
 mkdir -p ./build/objects
 mkdir -p build/objects/src
-g++ -Wall -Wextra -Werror -Iinclude/ -o build/objects/src/main.o -c src/main.cpp
+g++  -Iinclude/ -o build/objects/src/main.o -c src/main.cpp
 mkdir -p build/
-g++ -Wall -Wextra -Werror -Iinclude/ -o ./build//app ./build/objects/src/main.o -lstdc++ -lm
+g++  -Iinclude/ -o ./build//app ./build/objects/src/main.o -lstdc++ -lm
 make: Leaving directory '/home/daniel/Documentos/Cefet/SO/processos-e-treads'
  

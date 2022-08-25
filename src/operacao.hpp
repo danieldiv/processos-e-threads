@@ -17,7 +17,11 @@ public:
 
 	void fazIntersecao(
 		unordered_map < string, set<int>> *itens,
+		unordered_map < string, set<int>> *classes,
 		unordered_map < int, set<string>> *classesT);
+
+	void printValores(set<int> vec,
+		unordered_map < string, set<int>> *classes);
 };
 
 Operacao::Operacao() {}
@@ -44,6 +48,7 @@ void Operacao::itensInComum(
 
 void Operacao::fazIntersecao(
 	unordered_map < string, set<int>> *itens,
+	unordered_map < string, set<int>> *classes,
 	unordered_map < int, set<string>> *classesT) {
 
 	unordered_map < string, set<int>>::iterator found;
@@ -54,11 +59,25 @@ void Operacao::fazIntersecao(
 			found = itens->find(key);
 
 			cout << found->first << " -> [ " << found->second.size() << " ] ";
-			for (auto val : found->second)
-				cout << val << " ";
-			cout << endl;
+			printValores(found->second, classes);
 		}
 		cout << endl;
+	}
+}
+
+void Operacao::printValores(set<int> vecA,
+	unordered_map < string, set<int>> *classes) {
+	for (auto val : vecA)
+		cout << val << " ";
+	cout << endl << endl;
+
+	unordered_map < string, set<int>>::iterator itr;
+
+	for (itr = classes->begin();itr != classes->end();++itr) {
+		cout << itr->first << "\n-> ";
+		for (auto val : itr->second)
+			cout << val << " ";
+		cout << endl << endl;
 	}
 }
 

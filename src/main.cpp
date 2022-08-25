@@ -85,7 +85,7 @@ int main() {
 
 	Operacao op;
 	op.itensInComum(&itens, &tarefaT, &classesT);
-	op.fazIntersecao(&itens, &classesT);
+	op.fazIntersecao(&itens, &classes, &classesT);
 
 	// imprimirMap(&classesT);
 
