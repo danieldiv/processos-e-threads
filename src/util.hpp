@@ -25,7 +25,6 @@ public:
 		unordered_map < int, set<string>> *classes);
 
 	void printMap(T *itens);
-	// void printMap(unordered_map < int, set<string>> *itens);
 };
 
 template<typename T>
@@ -46,7 +45,7 @@ void Util<T>::tokenizar(string text, int linha,
 	string word;
 
 	set<int> vec;
-	unordered_map < string, set<int>>::iterator itr;
+	typename T::iterator itr;
 
 	while (getline(sstream, word, del)) {
 		if (cont < 5) {
@@ -85,7 +84,9 @@ void Util<T>::tokenizar(string text, int linha,
 	string word;
 
 	set<string> vec;
-	unordered_map < int, set<string>>::iterator itr;
+	typename T::iterator itr;
+
+	classes->insert({ linha, vec });
 
 	while (getline(sstream, word, del)) {
 		if (cont < 5) {
@@ -101,10 +102,10 @@ void Util<T>::printMap(T *itens) {
 	typename T::iterator itr;
 
 	for (itr = itens->begin();itr != itens->end();itr++) {
-		cout << itr->first << endl << "-> ";
+		cout << itr->first << "-> ";
 
 		for (auto v : itr->second) cout << v << " ";
-		cout << endl << endl;
+		cout << endl;
 	}
 }
 
