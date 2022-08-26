@@ -87,7 +87,5 @@ int main() {
 	op.itensInComum(&itens, &tarefaT, &classesT);
 	op.fazIntersecao(&itens, &classes, &classesT);
 
-	// imprimirMap(&classesT);
-
 	return EXIT_SUCCESS;
 }
