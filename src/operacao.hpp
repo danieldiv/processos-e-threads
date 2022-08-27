@@ -2,9 +2,8 @@
 #define OPERACAO_HPP
 
 #include "util.hpp"
-#include <algorithm>
 
-#define N 4
+#include <algorithm>
 
 class Operacao {
 public:
@@ -71,7 +70,6 @@ void Operacao::fazIntersecoes(
 	unordered_map < int, set<string>> *classesT) {
 
 	unordered_map<int, unordered_map<string, int>> classes_aux;
-	// unordered_map<string, int> classes_aux;
 
 	faz1(itens, classes, classesT, &classes_aux);
 	faz2(itens, classes, classesT, &classes_aux);
@@ -84,7 +82,7 @@ void Operacao::fazIntersecoes(
 	string classe;
 
 	for (itr_aux = classes_aux.begin();itr_aux != classes_aux.end();++itr_aux) {
-		cout << "[" << itr_aux->first << "]" << endl;
+		printf("[ %2d ] ", itr_aux->first);
 
 		maior = 0;
 		for (itr_aux_values = itr_aux->second.begin();
@@ -95,15 +93,8 @@ void Operacao::fazIntersecoes(
 				classe.assign(itr_aux_values->first);
 				maior = itr_aux_values->second;
 			}
-			// cout << itr_aux_values->first << endl << "-> " << itr_aux_values->second << endl;
 		}
-		// cout << endl;
-		// if (itr_aux->second > maior) {
-		// 	classe.assign(itr_aux->first);
-		// 	maior = itr_aux->second;
-		// }
-		// cout << itr_aux->second << " -> " << itr_aux->first << endl;
-		cout << "--------> " << ((maior > 0) ? classe : "NULL") << endl;
+		cout << "----> " << ((maior > 0) ? classe : "NULL") << endl;
 	}
 }
 
@@ -126,26 +117,15 @@ void Operacao::faz1(unordered_map < string, set<int>> *itens,
 		value_class_aux.insert({ itrClasses->first, 0 });
 
 	for (itr = classesT->begin();itr != classesT->end();++itr) {
-		// cout << itr->first << " - " << linha << endl;
-		// cout << linha++ << " ";
-
 		classes_aux->insert({ itr->first, value_class_aux });
 		foundClasses_aux = classes_aux->find(itr->first);
-		// classes_aux->insert({ linha, value_class_aux });
-		// foundClasses_aux = classes_aux->find(linha++);
 
 		for (auto key : itr->second) {
 			found = itens->find(key);
 			v1 = found->second;
-			// cout << value_class_aux.size() << endl;
-			// cout << classes_aux->size() << endl;
-			// cout << foundClasses_aux->first << endl;
-			// cout << endl;
 			checkClasse(v1, classes, &foundClasses_aux->second);
-			// return;
 		}
 	}
-	// cout << endl << endl;
 }
 
 void Operacao::faz2(unordered_map < string, set<int>> *itens,
@@ -168,8 +148,6 @@ void Operacao::faz2(unordered_map < string, set<int>> *itens,
 	set<int>aux;
 
 	for (itr = classesT->begin();itr != classesT->end();++itr) {
-		// cout << linha++ << " ";
-		// value_class_aux.clear();
 		foundClasses_aux = classes_aux->find(linha++);
 
 		for (auto key : itr->second) {
@@ -196,7 +174,6 @@ void Operacao::faz2(unordered_map < string, set<int>> *itens,
 			}
 		}
 	}
-	// cout << endl << endl;
 }
 
 void Operacao::faz3(unordered_map < string, set<int>> *itens,
@@ -221,8 +198,6 @@ void Operacao::faz3(unordered_map < string, set<int>> *itens,
 	set<int>aux;
 
 	for (itr = classesT->begin();itr != classesT->end();++itr) {
-		// cout << linha++ << " ";
-		// value_class_aux.clear();
 		foundClasses_aux = classes_aux->find(linha++);
 
 		for (auto key : itr->second) {
@@ -266,7 +241,6 @@ void Operacao::faz3(unordered_map < string, set<int>> *itens,
 			}
 		}
 	}
-	// cout << endl << endl;
 }
 
 void Operacao::checkClasse(set<int> vecA,
@@ -281,12 +255,7 @@ void Operacao::checkClasse(set<int> vecA,
 
 	for (itr = classes->begin();itr != classes->end();++itr) {
 		intersecaoVetores(vecA, itr->second, &res);
-
-		// cout << classes_aux->size() << endl;
-
-		// cout << "procurando..." << itr->first << "\n";
 		itr_aux = classes_aux->find(itr->first);
-		// return;
 
 		if (itr_aux != classes_aux->end())
 			itr_aux->second = itr_aux->second + res.size();

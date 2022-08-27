@@ -8,6 +8,8 @@
 #include <vector>
 #include <set>
 
+#define N 5
+
 using namespace std;
 
 template<typename T>
@@ -48,9 +50,8 @@ void Util<T>::tokenizar(string text, int linha,
 	typename T::iterator itr;
 
 	while (getline(sstream, word, del)) {
-		if (cont < 5) {
+		if (cont < N) {
 			word.assign(to_string(cont++).append(",").append(word));
-
 			itr = itens->find(word);
 
 			if (itr != itens->end()) itr->second.insert(linha);
@@ -89,7 +90,7 @@ void Util<T>::tokenizar(string text, int linha,
 	classes->insert({ linha, vec });
 
 	while (getline(sstream, word, del)) {
-		if (cont < 5) {
+		if (cont < N) {
 			word.assign(to_string(cont++).append(",").append(word));
 			vec.insert(word);
 		}
