@@ -1,12 +1,6 @@
 # Processos e treads
 
-## Compilacao
-
-> make clean
->
-> make
->
-> make run
+## Compilação e Execução
 
 | Comando    | Função                                                                                  |
 | ---------- | --------------------------------------------------------------------------------------- |
