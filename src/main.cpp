@@ -65,9 +65,9 @@ int main() {
 
 template <typename T, typename D>
 int menu(T *itens, D *tarefaT) {
-	cout << "=============" << endl;
-	cout << " MENU OPCOES" << endl;
-	cout << "=============" << endl << endl;
+	cout << "=================" << endl;
+	cout << "   MENU OPCOES" << endl;
+	cout << "=================" << endl << endl;
 
 	cout << "1 - Ler arquivo D ";
 	cout << (itens->empty() ? RED "Nao lido" : GREEN "Lido") << RESET << endl;
