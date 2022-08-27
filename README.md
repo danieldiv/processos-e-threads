@@ -16,11 +16,11 @@
 
 ![Scrennshot](src/files/imgs/menuPrincipal.png)
 
-- Ao executar o programa tera as seguintes opcoes
+- Ao executar o programa tera as seguintes opções
 
   - `0` - Finaliza o programa
-  - `1` - Realiza a leitura do arquivo [D](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/D.csv)
-  - `2` - Realiza a leitura do arquivo [T](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/D.csv)
+  - `1` - Realizar a leitura do arquivo [D](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/D.csv)
+  - `2` - Realizar a leitura do arquivo [T](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/D.csv)
   - `3` - Fazer as operacoes envolvendo os arquivod `D` e `T`
 
 ## Sistema multitarefa: Etapa I
