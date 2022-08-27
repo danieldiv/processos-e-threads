@@ -8,7 +8,7 @@
 
 - Mais informações sobre o problema pode ser encontrado em [Documentação](https://github.com/danieldiv/processos-e-treads/blob/main/README-DOC.md)
 
-# Menu
+## Menu
 
 ![Scrennshot](src/files/imgs/menuPrincipal.png)
 
