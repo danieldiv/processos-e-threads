@@ -4,14 +4,6 @@
 	O trabalho constitui de um sistema de classificação cujas características serão utilizadas para observar conceitos importantes como: escalonamento e gestão de memória primária. No sistema será utilizado dois arquivos, D e T. A base D será utilizada para simular a inicialização, fornecendo assim o conceito de bootstrapping, tal como no sistema operacional.
 </p>
 
-# Compilação e Execução
-
-| Comando    | Função                                                                                  |
-| ---------- | --------------------------------------------------------------------------------------- |
-| make clean | Apaga a última compilação realizada contida na pasta build                              |
-| make       | Executa a compilação do programa utilizando o g++, e o resultado vai para a pasta build |
-| make run   | Executa o programa da pasta build após a realização da compilação                       |
-
 ## Documentação
 
 - Mais informações sobre o problema pode ser encontrado em [Documentação](https://github.com/danieldiv/processos-e-treads/blob/main/README-DOC.md)
@@ -38,3 +30,11 @@
 ## Sistema multitarefa: Etapa III
 
 - Para executar a etapa III é necessario liberar a opção `3`, que ficará bloqueada até fazer a leitura dos arquivos `D` e `T`. Nesta etapa é feita a operação para encontrar a classe da tarefa em T.
+
+# Compilação e Execução
+
+| Comando    | Função                                                                                  |
+| ---------- | --------------------------------------------------------------------------------------- |
+| make clean | Apaga a última compilação realizada contida na pasta build                              |
+| make       | Executa a compilação do programa utilizando o g++, e o resultado vai para a pasta build |
+| make run   | Executa o programa da pasta build após a realização da compilação                       |
