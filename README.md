@@ -25,11 +25,11 @@
 
 ## Sistema multitarefa: Etapa I
 
-- Na etapa I é realizada a leitura e tokenizacao do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-treads/blob/main/src/util.hpp#L44) em 5 colunas que representa as chaves e as linhas representam os valores, as 4 primeiras colunas sera utilizado como chave dos itens e a ultima coluna sera utilizado como chave da classe.
+- Na etapa I é realizada a leitura e tokenização do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-treads/blob/main/src/util.hpp#L44) em 5 colunas que representa as chaves e as linhas representam os valores, as 4 primeiras colunas sera utilizando como chave dos itens e a ultima coluna sera utilizando como chave da classe.
 
 ## Sistema multitarefa: Etapa II
 
-- Na etapa II é realizada a leitura, tokenizacao e processamento do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-treads/blob/main/src/util.hpp#L82) linha a linhas utilizado as colunas como valores e linha como chave.
+- Na etapa II é realizada a leitura, tokenizacao e processamento do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-treads/blob/main/src/util.hpp#L82) linha a linhas utilizando as colunas como valores e linha como chave.
 
 ## Sistema multitarefa: Etapa III
 
