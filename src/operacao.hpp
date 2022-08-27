@@ -109,7 +109,6 @@ void Operacao::faz1(unordered_map < string, set<int>> *itens,
 	unordered_map < int, set<string>>::iterator itr;
 
 	unordered_map<string, int> value_class_aux;
-	int linha = 1;
 
 	set<int> v1;
 

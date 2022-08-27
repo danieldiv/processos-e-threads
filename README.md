@@ -12,6 +12,25 @@
 
 - Mais informações sobre o problema pode ser encontrado em [Documentação](https://github.com/danieldiv/processos-e-treads/blob/main/README-DOC.md)
 
+# Menu
+
+![Scrennshot](src/files/imgs/menuPrincipal.png)
+
+- Ao executar o programa tera as seguintes opcoes
+
+  - `0` - Finaliza o programa
+  - `1` - Realiza a leitura do arquivo [D](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/D.csv)
+  - `2` - Realiza a leitura do arquivo [T](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/D.csv)
+  - `3` - Fazer as operacoes envolvendo os arquivod `D` e `T`
+
 ## Sistema multitarefa: Etapa I
 
-- Na etapa I é realizado a leitura de dois arquivos `D` e `T`, os dois arquivos possuem a mesma estrutura de dados, porem o arquivo `D` sera utilizado para simular a inicialização do problea e o arquivo `T` ira representar os processos a serem executados.
+- Na etapa I é realizada a leitura e tokenizacao do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-treads/blob/main/src/util.hpp#L39) em 5 colunas que representa as chaves e as linhas representam os valores, as 4 primeiras colunas sera utilizado como chave dos itens e a ultima coluna sera utilizado como chave da classe.
+
+## Sistema multitarefa: Etapa II
+
+- Na etapa II é realizada a leitura, tokenizacao e processamento do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-treads/blob/main/src/util.hpp#L77) linha a linhas utilizado as colunas como valores e linha como chave.
+
+## Sistema multitarefa: Etapa III
+
+- Para executar a etapa III é necessario liberar a opção `3`, que ficara bloqueada até fazer a leitura dos arquivos `D` e `T`. Nesta etapa é feita a operação para encontrar a classe da tarefa em T.
