@@ -85,7 +85,7 @@ int main() {
 
 	Operacao op;
 	op.itensInComum(&itens, &tarefaT, &classesT);
-	op.fazIntersecao(&itens, &classes, &classesT);
+	op.fazIntersecoes(&itens, &classes, &classesT);
 
 	return EXIT_SUCCESS;
 }

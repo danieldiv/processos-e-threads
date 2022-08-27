@@ -16,13 +16,29 @@ public:
 		unordered_map < int, set<string>> *tarefaT,
 		unordered_map < int, set<string>> *classesT);
 
-	void fazIntersecao(
+	void fazIntersecoes(
 		unordered_map < string, set<int>> *itens,
 		unordered_map < string, set<int>> *classes,
 		unordered_map < int, set<string>> *classesT);
 
 	void checkClasse(set<int> vecA,
-		unordered_map < string, set<int>> *classes);
+		unordered_map < string, set<int>> *classes,
+		unordered_map<string, int> *classes_aux);
+
+	void faz1(unordered_map < string, set<int>> *itens,
+		unordered_map < string, set<int>> *classes,
+		unordered_map < int, set<string>> *classesT,
+		unordered_map<int, unordered_map<string, int>> *classes_aux);
+
+	void faz2(unordered_map < string, set<int>> *itens,
+		unordered_map < string, set<int>> *classes,
+		unordered_map < int, set<string>> *classesT,
+		unordered_map<int, unordered_map<string, int>> *classes_aux);
+
+	void faz3(unordered_map < string, set<int>> *itens,
+		unordered_map < string, set<int>> *classes,
+		unordered_map < int, set<string>> *classesT,
+		unordered_map<int, unordered_map<string, int>> *classes_aux);
 
 	void intersecaoVetores(set<int> v1, set<int>v2, vector<int> *res);
 };
@@ -49,79 +65,239 @@ void Operacao::itensInComum(
 	}
 }
 
-void Operacao::fazIntersecao(
+void Operacao::fazIntersecoes(
 	unordered_map < string, set<int>> *itens,
 	unordered_map < string, set<int>> *classes,
 	unordered_map < int, set<string>> *classesT) {
 
+	unordered_map<int, unordered_map<string, int>> classes_aux;
+	// unordered_map<string, int> classes_aux;
+
+	faz1(itens, classes, classesT, &classes_aux);
+	faz2(itens, classes, classesT, &classes_aux);
+	faz3(itens, classes, classesT, &classes_aux);
+
+	unordered_map<int, unordered_map<string, int>>::iterator itr_aux;
+	unordered_map<string, int>::iterator itr_aux_values;
+
+	int maior = 0;
+	string classe;
+
+	for (itr_aux = classes_aux.begin();itr_aux != classes_aux.end();++itr_aux) {
+		cout << "[" << itr_aux->first << "]" << endl;
+
+		maior = 0;
+		for (itr_aux_values = itr_aux->second.begin();
+			itr_aux_values != itr_aux->second.end();
+			++itr_aux_values) {
+
+			if (itr_aux_values->second > maior) {
+				classe.assign(itr_aux_values->first);
+				maior = itr_aux_values->second;
+			}
+			// cout << itr_aux_values->first << endl << "-> " << itr_aux_values->second << endl;
+		}
+		// cout << endl;
+		// if (itr_aux->second > maior) {
+		// 	classe.assign(itr_aux->first);
+		// 	maior = itr_aux->second;
+		// }
+		// cout << itr_aux->second << " -> " << itr_aux->first << endl;
+		cout << "--------> " << ((maior > 0) ? classe : "NULL") << endl;
+	}
+}
+
+void Operacao::faz1(unordered_map < string, set<int>> *itens,
+	unordered_map < string, set<int>> *classes,
+	unordered_map < int, set<string>> *classesT,
+	unordered_map<int, unordered_map<string, int>> *classes_aux) {
+
+	unordered_map<int, unordered_map<string, int>>::iterator foundClasses_aux;
+	unordered_map < string, set<int>>::iterator itrClasses;
 	unordered_map < string, set<int>>::iterator found;
 	unordered_map < int, set<string>>::iterator itr;
+
+	unordered_map<string, int> value_class_aux;
+	int linha = 1;
+
+	set<int> v1;
+
+	for (itrClasses = classes->begin();itrClasses != classes->end();++itrClasses)
+		value_class_aux.insert({ itrClasses->first, 0 });
+
+	for (itr = classesT->begin();itr != classesT->end();++itr) {
+		// cout << itr->first << " - " << linha << endl;
+		// cout << linha++ << " ";
+
+		classes_aux->insert({ itr->first, value_class_aux });
+		foundClasses_aux = classes_aux->find(itr->first);
+		// classes_aux->insert({ linha, value_class_aux });
+		// foundClasses_aux = classes_aux->find(linha++);
+
+		for (auto key : itr->second) {
+			found = itens->find(key);
+			v1 = found->second;
+			// cout << value_class_aux.size() << endl;
+			// cout << classes_aux->size() << endl;
+			// cout << foundClasses_aux->first << endl;
+			// cout << endl;
+			checkClasse(v1, classes, &foundClasses_aux->second);
+			// return;
+		}
+	}
+	// cout << endl << endl;
+}
+
+void Operacao::faz2(unordered_map < string, set<int>> *itens,
+	unordered_map < string, set<int>> *classes,
+	unordered_map < int, set<string>> *classesT,
+	unordered_map<int, unordered_map<string, int>> *classes_aux) {
+
+	unordered_map<int, unordered_map<string, int>>::iterator foundClasses_aux;
+	unordered_map < string, set<int>>::iterator found;
+	unordered_map < string, set<int>>::iterator found2;
+	unordered_map < int, set<string>>::iterator itr;
+
+	unordered_map<string, int> value_class_aux;
+	int linha = 1;
+
+	set<int> v1;
+	set<int> v2;
+
+	vector<int>res;
+	set<int>aux;
+
+	for (itr = classesT->begin();itr != classesT->end();++itr) {
+		// cout << linha++ << " ";
+		// value_class_aux.clear();
+		foundClasses_aux = classes_aux->find(linha++);
+
+		for (auto key : itr->second) {
+			found = itens->find(key);
+
+			v1.clear();
+			v1 = found->second;
+
+			for (auto key2 : itr->second) {
+				if (key.compare(key2) != 0) {
+					found2 = itens->find(key2);
+
+					v2.clear();
+					v2 = found2->second;
+					res.clear();
+					intersecaoVetores(v1, v2, &res);
+
+					aux.clear();
+					aux.insert(res.begin(), res.end());
+
+					if (aux.size() > 0)
+						checkClasse(aux, classes, &foundClasses_aux->second);
+				}
+			}
+		}
+	}
+	// cout << endl << endl;
+}
+
+void Operacao::faz3(unordered_map < string, set<int>> *itens,
+	unordered_map < string, set<int>> *classes,
+	unordered_map < int, set<string>> *classesT,
+	unordered_map<int, unordered_map<string, int>> *classes_aux) {
+
+	unordered_map<int, unordered_map<string, int>>::iterator foundClasses_aux;
+	unordered_map < string, set<int>>::iterator found;
+	unordered_map < string, set<int>>::iterator found2;
+	unordered_map < string, set<int>>::iterator found3;
+	unordered_map < int, set<string>>::iterator itr;
+
+	unordered_map<string, int> value_class_aux;
+	int linha = 1;
 
 	set<int> v1;
 	set<int> v2;
 	set<int> v3;
-	set<int> v4;
 
 	vector<int>res;
-
-	// checkClasse(v1, classes);
-
-	// intersecaoVetores(v1, v2, &res);
-	// checkClasse(res, classes);
-
-	// checkClasse(v1, classes);
-	// checkClasse(v1, classes);
-
-	// checkClasse(individualmente, classes); (1) (2) (3) (4)
-	// checkClasse(intersection(dois vetores), classes); (1.2) (1.3) (1.4) (2.3) (2.4) (3.4)
-	// checkClasse(intersection(tres vetores), classes); ([1.2].3) ([1.2].4) ([1.3].4)
-	// checkClasse(intersection(quatro vetores), classes); ({[1.2].3}.4)
+	set<int>aux;
 
 	for (itr = classesT->begin();itr != classesT->end();++itr) {
+		// cout << linha++ << " ";
+		// value_class_aux.clear();
+		foundClasses_aux = classes_aux->find(linha++);
+
 		for (auto key : itr->second) {
 			found = itens->find(key);
 
+			v1.clear();
 			v1 = found->second;
-			cout << found->first << "\n";
 
-			checkClasse(v1, classes);
+			for (auto key2 : itr->second) {
+				if (key.compare(key2) != 0) {
+
+					found2 = itens->find(key2);
+
+					v2.clear();
+					v2 = found2->second;
+					res.clear();
+					intersecaoVetores(v1, v2, &res);
+
+					if (res.size() > 0) {
+						aux.clear();
+						aux.insert(res.begin(), res.end());
+
+						for (auto key3 : itr->second) {
+							if (key.compare(key3) != 0 && key2.compare(key3) != 0) {
+								found3 = itens->find(key3);
+
+								v3.clear();
+								v3 = found3->second;
+								res.clear();
+								intersecaoVetores(aux, v3, &res);
+
+								aux.clear();
+								aux.insert(res.begin(), res.end());
+
+								if (aux.size() > 0)
+									checkClasse(aux, classes, &foundClasses_aux->second);
+							}
+						}
+					}
+				}
+			}
 		}
-		cout << "================" << endl << endl;
 	}
+	// cout << endl << endl;
 }
 
-void Operacao::checkClasse(set<int> vecA, unordered_map < string, set<int>> *classes) {
+void Operacao::checkClasse(set<int> vecA,
+	unordered_map < string, set<int>> *classes,
+	unordered_map<string, int> *classes_aux) {
 	unordered_map < string, set<int>>::iterator itr;
 
-	unordered_map<string, int> classes_aux;
 	unordered_map<string, int>::iterator itr_aux;
 
 	vector<int> res;
-	int maior;
 	string classe;
 
 	for (itr = classes->begin();itr != classes->end();++itr) {
 		intersecaoVetores(vecA, itr->second, &res);
-		classes_aux.insert({ itr->first, res.size() });
-	}
-	cout << endl;
 
-	maior = -1;
-	for (itr_aux = classes_aux.begin();itr_aux != classes_aux.end();++itr_aux) {
-		if (itr_aux->second > maior) {
-			classe.assign(itr_aux->first);
-			maior = itr_aux->second;
-		}
-		cout << itr_aux->second << " -> " << itr_aux->first << endl;
+		// cout << classes_aux->size() << endl;
+
+		// cout << "procurando..." << itr->first << "\n";
+		itr_aux = classes_aux->find(itr->first);
+		// return;
+
+		if (itr_aux != classes_aux->end())
+			itr_aux->second = itr_aux->second + res.size();
 	}
-	cout << "--------> " << classe << endl;
 }
 
 void Operacao::intersecaoVetores(set<int> v1, set<int>v2, vector<int> *res) {
 	vector<int>::iterator itRes;
 
-	// size_t tam = (v1.size() >= v2.size()) ? v1.size() : v2.size();
 	res->resize(v1.size());
+	sort(res->begin(), res->end());
 
 	itRes = set_intersection(
 		v1.begin(), v1.end(),
