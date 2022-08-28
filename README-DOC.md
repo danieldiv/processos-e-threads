@@ -14,7 +14,7 @@
 
   - Como as chaves dos itens podem repetir em colunas diferentes, a indexação será feita de forma separada, ou seja, se um item aparece na coluna 1 e 3 com valor 23.4, a chave da hash sera (1,23.4) e (3,23.4) sem os parenteses
 
-- [Exemplo]: Ao fazer a leitura das linhas `8, 9 e 10` a tokenização será feita da seguinte maneira
+- [Exemplo] Ao fazer a leitura das linhas `8, 9 e 10` a tokenização será feita da seguinte maneira
 
 ![Scrennshot](src/files/imgs/linhasD.png)
 
