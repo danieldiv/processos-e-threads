@@ -29,7 +29,7 @@
 
 ## Sistema multitarefa: Etapa III
 
-- Para executar a etapa III é necessario liberar a opção `3`, que ficará bloqueada até fazer a leitura dos arquivos `D` e `T`. Nesta etapa é feita a operação para encontrar a classe da tarefa em T.
+- Para executar a etapa III é necessario liberar a opção `3`, que ficará bloqueada até fazer a leitura dos arquivos `T` e `T`. Nesta etapa é feita a operação para encontrar a classe da tarefa em T.
 
 # Compilação e Execução
 
