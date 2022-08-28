@@ -49,6 +49,8 @@
   - `30` -> `1,7.2`, `2,3.2`, `3,6.0`, `4,1.8`
   - `31` -> `1,5.4`, `2,3.9`, `3,1.7`, `4,0.4`
 
+- Após o mapeamento da hash é feita uma permutação dos valores de `tarefasT` com as chaves dos `itens`, onde será feita a seleção apenas do itens em comum salvando em uma nova hash com os valores removidos, ou seja, caso o valor `3,6.0` não exista na hash `itens`, não tem a necessidade de manter o valor salvo.
+
 ## Etapa III
 
 ## Etapa IV
