@@ -14,11 +14,11 @@
 
   - Como as chaves dos itens podem repetir em colunas diferentes, a indexação será feita de forma separada, ou seja, se um item aparece na coluna 1 e 3 com valor 23.4, a chave da hash sera (1,23.4) e (3,23.4) sem os parenteses
 
-![Scrennshot](src/files/imgs/linhasD.png)
-
 - Ao fazer a leitura das linhas `8, 9 e 10` a tokenização será feita da seguinte maneira
 
-  - Faz a leitura da linha `8` e chama um metodo de tokenização que irá separar a string em varios tokens utilizando a `,` como separador, cada token será utilizando como chave adicionando a linha `8` em um vetor de valores para cada item. O mesmo processo será realizado na linha `9` e `10`.
+![Scrennshot](src/files/imgs/linhasD.png)
+
+- Faz a leitura da linha `8` e chama um metodo de tokenização que irá separar a string em varios tokens utilizando a `,` como separador, cada token será utilizando como chave adicionando a linha `8` em um vetor de valores para cada item. O mesmo processo será realizado na linha `9` e `10`.
 
 - Após o processamento das linhas acima, a hash dos `itens` ficará da seguinte maneira.
 
