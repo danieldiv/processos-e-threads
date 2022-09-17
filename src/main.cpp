@@ -41,8 +41,10 @@ int main() {
 			control(&itens, &classes, "D");
 			break;
 		case 2:
-			control(&tarefaT, &classesT, "T");
-			opr.itensInComum(&itens, &tarefaT, &classesT);
+			if (!itens.empty()) {
+				control(&tarefaT, &classesT, "T");
+				opr.itensInComum(&itens, &tarefaT, &classesT);
+			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
 			break;
 		case 3:
 			if (!itens.empty() && !tarefaT.empty()) {
@@ -73,7 +75,13 @@ int menu(T *itens, D *tarefaT) {
 	cout << (itens->empty() ? RED "Nao lido" : GREEN "Lido") << RESET << endl;
 
 	cout << "2 - Ler arquivo T ";
-	cout << (tarefaT->empty() ? RED "Nao lido" : GREEN "Lido") << RESET << endl;
+
+	if (itens->empty())
+		cout << (BLUE "Bloqueado" RESET) << endl;
+	else if (tarefaT->empty())
+		cout << (RED "Nao lido" RESET) << endl;
+	else
+		cout << (GREEN "Lido" RESET) << endl;
 
 	cout << "3 - Realizar operacoes ";
 	cout << (!(!itens->empty() && !tarefaT->empty()) ? BLUE "Bloqueado" : GREEN "Liberado") << RESET << endl;
