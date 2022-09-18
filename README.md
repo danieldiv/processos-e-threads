@@ -25,11 +25,11 @@
 
 ## Sistema multitarefa: Etapa II
 
-- Na etapa II é realizada a leitura, tokenização e processamento do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-treads/blob/main/src/util.hpp#L82) linha a linha utilizando as colunas como valores e linha como chave.
+- Para executar a etapa II é necessario liberar a opção `2`, que ficará bloqueada até fazer a leitura do arquivos `D`. Na etapa II é realizada a leitura, tokenização e processamento do arquivo `T`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-treads/blob/main/src/util.hpp#L82) linha a linha utilizando as colunas como valores e linha como chave.
 
 ## Sistema multitarefa: Etapa III
 
-- Para executar a etapa III é necessario liberar a opção `3`, que ficará bloqueada até fazer a leitura dos arquivos `T` e `T`. Nesta etapa é feita a operação para encontrar a classe da tarefa em T.
+- Para executar a etapa III é necessario liberar a opção `3`, que ficará bloqueada até fazer a leitura dos arquivos `D` e `T`. Nesta etapa é feita a operação para encontrar a classe da tarefa em T.
 
 - Ao executar a opção `3` será feita a permutação das `tarefasT` com os `itens`, imprimindo no resultado as linhas com as possiveis classes.
   - Neste teste teve um acerto de 72% das 50 linhas do arquivo `T`, as diferenças podem ser conferidas em [diferencas](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/diferencas). As linhas com diferenças possuem um `*` no inicio da linha.
