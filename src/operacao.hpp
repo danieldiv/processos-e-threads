@@ -13,7 +13,11 @@ public:
 	void itensInComum(
 		unordered_map < string, set<int>> *itens,
 		unordered_map < int, set<string>> *tarefaT,
-		unordered_map < int, set<string>> *classesT);
+		unordered_map < int, set<string>> *tarefaT_processamento,
+		unordered_map < int, vector<string>> *tarefaT_permutacoes);
+
+	void fazPermutacoes(int key, set<string> vetor,
+		unordered_map < int, vector<string>> *tarefaT_permutacoes);
 
 	void fazIntersecoes(
 		unordered_map < string, set<int>> *itens,

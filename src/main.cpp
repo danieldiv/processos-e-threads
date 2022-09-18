@@ -18,68 +18,6 @@ void imprimirMap(T *itens) {
 template <typename T, typename D>
 int menu(T *itens, D *tarefaT);
 
-void insere_permutacoes(vector<set<string>> *permutacoes, string str) {
-	set<string> valores;
-
-	valores.insert(str);
-	permutacoes->push_back(valores);
-}
-
-void perm(int tam) {
-	set<string>::iterator it_1;
-	set<string>::iterator it_2;
-	set<string>::iterator it_3;
-	set<string>::iterator it_aux;
-
-	set<string> s1;
-	s1.insert("A");
-	s1.insert("C");
-	s1.insert("B");
-	s1.insert("D");
-
-	vector<set<string>> permutacoes;
-
-	string auxFinal("");
-	string aux;
-
-	for (it_1 = s1.begin(); it_1 != s1.end();++it_1) {
-		auxFinal.append(*it_1).append(",");
-		insere_permutacoes(&permutacoes, *it_1);
-	}
-
-	for (it_1 = s1.begin(); it_1 != s1.end();++it_1) {
-		it_aux = it_1;
-
-		for (it_2 = ++it_aux; it_2 != s1.end();++it_2) {
-			aux.assign(*it_1).append(",").append(*it_2);
-			insere_permutacoes(&permutacoes, aux);
-		}
-	}
-
-	for (it_1 = s1.begin(); it_1 != s1.end();++it_1) {
-		it_aux = it_1;
-
-		for (it_2 = ++it_aux; it_2 != s1.end();++it_2) {
-			it_aux = it_2;
-
-			for (it_3 = ++it_aux; it_3 != s1.end();++it_3) {
-				aux.assign(*it_1).append(",").append(*it_2).append(",").append(*it_3);
-				insere_permutacoes(&permutacoes, aux);
-			}
-		}
-	}
-
-	auxFinal.erase(auxFinal.end() - 1, auxFinal.end());
-	insere_permutacoes(&permutacoes, auxFinal);
-
-	for (auto val : permutacoes) {
-		cout << "-> ";
-		for (auto v : val)
-			cout << v << " ";
-		cout << endl;
-	}
-}
-
 int main() {
 	clock_t start, end;
 
@@ -87,47 +25,11 @@ int main() {
 	unordered_map<string, set<int>> classes;
 
 	unordered_map<int, set<string>> tarefaT;
-	unordered_map<int, set<string>> classesT;
-	// unordered_map<int, vector<set<string>>> tarefaT_permutacoes;
+	unordered_map<int, set<string>> tarefaT_processamento;
+	unordered_map<int, vector<string>> tarefaT_permutacoes;
 
 	Operacao opr;
 	int op = -1;
-
-	perm(4);
-
-	// vector<set<int>> vec;
-	// set<int> vec;
-
-	// vec.insert(6);
-	// vec.insert(3);
-	// vec.insert(1);
-	// vec.insert(2);
-	// vec.insert(2);
-	// vec.insert(5);
-
-	// for (auto v : vec)
-	// 	cout << v << " ";
-	// cout << endl;
-
-	// set<int> v;
-
-	// v.insert(1);
-	// v.insert(2);
-	// v.insert(3);
-
-	// vec.push_back(v);
-
-	// do {
-	// 	for (auto v : vec) {
-	// 		cout << v << " ";
-			// for (auto s : v)
-			// 	cout << s << " ";
-			// cout << endl;
-	// 	}
-	// 	cout << endl;
-	// } while (next_permutation(vec.begin(), vec.end()));
-
-	return 0;
 
 	while (op != 0) {
 		system("clear");
@@ -141,15 +43,14 @@ int main() {
 			break;
 		case 2:
 			if (!itens.empty()) {
-				control(&tarefaT, &classesT, "T");
-				opr.itensInComum(&itens, &tarefaT, &classesT);
-				// opr.fazPermutacoes();
+				control(&tarefaT, &tarefaT_processamento, "T");
+				opr.itensInComum(&itens, &tarefaT, &tarefaT_processamento, &tarefaT_permutacoes);
 			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
 			break;
 		case 3:
 			if (!itens.empty() && !tarefaT.empty()) {
 				start = clock();
-				opr.fazIntersecoes(&itens, &classes, &classesT);
+				opr.fazIntersecoes(&itens, &classes, &tarefaT_processamento);
 				end = clock();
 				printf("\nTempo total: %0.8f\n", ((float)end - start) / CLOCKS_PER_SEC);
 			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;

@@ -40,6 +40,15 @@ Util<T>::Util() {}
 template<typename T>
 Util<T>::~Util() {}
 
+/**
+ * @brief realiza a tokenizacao do texto passado e armazena nos mapas itens e classes
+ *
+ * @tparam T
+ * @param text linha lida do arquivo D
+ * @param linha numero da linha atual que sera inserido em um vector de itens
+ * @param itens mapa para armazenar a coluna como chave
+ * @param classes mapa para armazenar a coluna da classe do arquivo D
+ */
 template<typename T>
 void Util<T>::tokenizar(string text, int linha,
 	unordered_map < string, set<int>> *itens,
@@ -78,6 +87,15 @@ void Util<T>::tokenizar(string text, int linha,
 	}
 }
 
+/**
+ * @brief realiza a tokenizacao do texto passado e armazena nos mapas itens e classes
+ *
+ * @tparam T
+ * @param text linha lida do arquivo T
+ * @param linha numero da linha atual do arquivo T
+ * @param itens mapa que ira armazenar cada linha como chave e as colunas como valores
+ * @param classes mapa para inicializar o processamento
+ */
 template<typename T>
 void Util<T>::tokenizar(string text, int linha,
 	unordered_map < int, set<string>> *itens,
