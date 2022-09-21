@@ -19,6 +19,7 @@ template <typename T, typename D>
 int menu(T *itens, D *tarefaT);
 
 int main() {
+
 	clock_t start, end;
 
 	unordered_map<string, set<int>> itens;
