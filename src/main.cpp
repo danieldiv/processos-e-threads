@@ -26,8 +26,6 @@ int main() {
 	unordered_map<string, set<int>> itens;
 	unordered_map<string, set<int>> classes;
 
-	// unordered_map<string, set<int>> classes;
-
 	unordered_map<int, set<string>> tarefaT;
 	unordered_map<int, set<string>> tarefaT_processamento;
 	unordered_map<int, vector<string>> tarefaT_permutacoes;
