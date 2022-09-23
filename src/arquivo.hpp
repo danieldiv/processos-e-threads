@@ -8,6 +8,7 @@ template <typename T>
 class Arquivo {
 public:
 	Arquivo();
+
 	~Arquivo();
 
 	void readFile(string file, T *itens, T *classes);
