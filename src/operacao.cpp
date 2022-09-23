@@ -107,13 +107,13 @@ void Operacao::fazPermutacoes(int key, set<string> vetor,
 void Operacao::fazIntersecoes(
 	unordered_map < string, set<int>> *itens,
 	unordered_map < string, set<int>> *classes,
-	unordered_map < int, set<string>> *classesT) {
+	unordered_map < int, set<string>> *tarefaT_processamento) {
 
 	unordered_map<int, unordered_map<string, int>> classes_aux;
 
-	faz1(itens, classes, classesT, &classes_aux);
-	faz2(itens, classes, classesT, &classes_aux);
-	faz3(itens, classes, classesT, &classes_aux);
+	faz1(itens, classes, tarefaT_processamento, &classes_aux);
+	faz2(itens, classes, tarefaT_processamento, &classes_aux);
+	faz3(itens, classes, tarefaT_processamento, &classes_aux);
 
 	unordered_map<int, unordered_map<string, int>>::iterator itr_aux;
 	unordered_map<string, int>::iterator itr_aux_values;
@@ -140,7 +140,7 @@ void Operacao::fazIntersecoes(
 
 void Operacao::faz1(unordered_map < string, set<int>> *itens,
 	unordered_map < string, set<int>> *classes,
-	unordered_map < int, set<string>> *classesT,
+	unordered_map < int, set<string>> *tarefaT_processamento,
 	unordered_map<int, unordered_map<string, int>> *classes_aux) {
 
 	unordered_map<int, unordered_map<string, int>>::iterator foundClasses_aux;
@@ -155,7 +155,7 @@ void Operacao::faz1(unordered_map < string, set<int>> *itens,
 	for (itrClasses = classes->begin();itrClasses != classes->end();++itrClasses)
 		value_class_aux.insert({ itrClasses->first, 0 });
 
-	for (itr = classesT->begin();itr != classesT->end();++itr) {
+	for (itr = tarefaT_processamento->begin();itr != tarefaT_processamento->end();++itr) {
 		classes_aux->insert({ itr->first, value_class_aux });
 		foundClasses_aux = classes_aux->find(itr->first);
 
@@ -169,7 +169,7 @@ void Operacao::faz1(unordered_map < string, set<int>> *itens,
 
 void Operacao::faz2(unordered_map < string, set<int>> *itens,
 	unordered_map < string, set<int>> *classes,
-	unordered_map < int, set<string>> *classesT,
+	unordered_map < int, set<string>> *tarefaT_processamento,
 	unordered_map<int, unordered_map<string, int>> *classes_aux) {
 
 	unordered_map<int, unordered_map<string, int>>::iterator foundClasses_aux;
@@ -186,7 +186,7 @@ void Operacao::faz2(unordered_map < string, set<int>> *itens,
 	vector<int>res;
 	set<int>aux;
 
-	for (itr = classesT->begin();itr != classesT->end();++itr) {
+	for (itr = tarefaT_processamento->begin();itr != tarefaT_processamento->end();++itr) {
 		foundClasses_aux = classes_aux->find(linha++);
 
 		for (auto key : itr->second) {
@@ -217,7 +217,7 @@ void Operacao::faz2(unordered_map < string, set<int>> *itens,
 
 void Operacao::faz3(unordered_map < string, set<int>> *itens,
 	unordered_map < string, set<int>> *classes,
-	unordered_map < int, set<string>> *classesT,
+	unordered_map < int, set<string>> *tarefaT_processamento,
 	unordered_map<int, unordered_map<string, int>> *classes_aux) {
 
 	unordered_map<int, unordered_map<string, int>>::iterator foundClasses_aux;
@@ -236,7 +236,7 @@ void Operacao::faz3(unordered_map < string, set<int>> *itens,
 	vector<int>res;
 	set<int>aux;
 
-	for (itr = classesT->begin();itr != classesT->end();++itr) {
+	for (itr = tarefaT_processamento->begin();itr != tarefaT_processamento->end();++itr) {
 		foundClasses_aux = classes_aux->find(linha++);
 
 		for (auto key : itr->second) {

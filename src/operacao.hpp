@@ -22,7 +22,7 @@ public:
 	void fazIntersecoes(
 		unordered_map < string, set<int>> *itens,
 		unordered_map < string, set<int>> *classes,
-		unordered_map < int, set<string>> *classesT);
+		unordered_map < int, set<string>> *tarefaT_processamento);
 
 	void checkClasse(set<int> vecA,
 		unordered_map < string, set<int>> *classes,
@@ -30,17 +30,17 @@ public:
 
 	void faz1(unordered_map < string, set<int>> *itens,
 		unordered_map < string, set<int>> *classes,
-		unordered_map < int, set<string>> *classesT,
+		unordered_map < int, set<string>> *tarefaT_processamento,
 		unordered_map<int, unordered_map<string, int>> *classes_aux);
 
 	void faz2(unordered_map < string, set<int>> *itens,
 		unordered_map < string, set<int>> *classes,
-		unordered_map < int, set<string>> *classesT,
+		unordered_map < int, set<string>> *tarefaT_processamento,
 		unordered_map<int, unordered_map<string, int>> *classes_aux);
 
 	void faz3(unordered_map < string, set<int>> *itens,
 		unordered_map < string, set<int>> *classes,
-		unordered_map < int, set<string>> *classesT,
+		unordered_map < int, set<string>> *tarefaT_processamento,
 		unordered_map<int, unordered_map<string, int>> *classes_aux);
 
 	void intersecaoVetores(set<int> v1, set<int>v2, vector<int> *res);
