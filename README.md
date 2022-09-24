@@ -33,7 +33,7 @@
 - Para executar a etapa III é necessario liberar a opção `3`, que ficará bloqueada até fazer a leitura dos arquivos `D` e `T`. Nesta etapa é feita a operação para encontrar a classe da tarefa em T.
 
 - Ao executar a opção `3` será feita a intercessão das `tarefasT` com os `itens`, imprimindo no resultado as linhas com as possiveis classes.
-  - Neste teste teve um acerto de 72% das 50 linhas do arquivo `T`, as diferenças podem ser conferidas em [diferencas](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/diferencas). As linhas com diferenças possuem um `*` no inicio da linha.
+  - Neste teste teve um acerto de 72% das 50 linhas do arquivo `T`, as diferenças podem ser conferidas em [diferencas](https://github.com/danieldiv/processos-e-threads/blob/main/src/resource/diferencas). As linhas com diferenças possuem um `*` no inicio da linha.
 
 # Compilação e Execução
 
