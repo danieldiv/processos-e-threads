@@ -126,10 +126,10 @@ void Util<T>::printMap(T *itens) {
 	typename T::iterator itr;
 
 	for (itr = itens->begin();itr != itens->end();itr++) {
-		cout << itr->first << "-> ";
+		cout << "[" << itr->first << "] -> ";
 
-		for (auto v : itr->second) cout << v << " ";
-		cout << endl;
+		for (auto v : itr->second) cout << "(" << v << ") ";
+		cout << endl << endl;
 	}
 }
 

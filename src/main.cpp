@@ -1,5 +1,5 @@
-#include "arquivo.hpp"
-#include "operacao.hpp"
+#include "./class/template/arquivo.hpp"
+#include "./class/operacao.hpp"
 
 #include <ctime>
 
@@ -26,7 +26,7 @@ int main() {
 
 	unordered_map<int, set<string>> tarefaT;
 	unordered_map<int, set<string>> tarefaT_processamento;
-	unordered_map<int, vector<string>> tarefaT_permutacoes;
+	unordered_map<int, vector<string>> tarefaT_combinacoes;
 
 	Operacao opr;
 	int op = -1;
@@ -44,7 +44,8 @@ int main() {
 		case 2:
 			if (!itens.empty()) {
 				control(&tarefaT, &tarefaT_processamento, "T");
-				opr.itensInComum(&itens, &tarefaT, &tarefaT_processamento, &tarefaT_permutacoes);
+				opr.itensInComum(&itens, &tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
+				imprimirMap(&tarefaT_combinacoes);
 			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
 			break;
 		case 3:
@@ -63,7 +64,6 @@ int main() {
 		}
 		system("read -p \"\nPressione enter para continuar...\" continue");
 	}
-
 	return EXIT_SUCCESS;
 }
 
