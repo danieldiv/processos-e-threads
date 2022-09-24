@@ -31,6 +31,8 @@ public:
 		unordered_map < int, set<string>> *itens,
 		unordered_map < int, set<string>> *classes);
 
+	void tokenizar(string text, vector<string> *tokens);
+
 	void printMap(T *itens);
 };
 
@@ -119,6 +121,16 @@ void Util<T>::tokenizar(string text, int linha,
 		}
 	}
 	itens->insert({ linha, vec });
+}
+
+template<typename T>
+void Util<T>::tokenizar(string text, vector<string> *tokens) {
+	char del = '-';
+
+	stringstream sstream(text);
+	string token;
+
+	while (getline(sstream, token, del)) tokens->push_back(token);
 }
 
 template<typename T>

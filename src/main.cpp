@@ -39,19 +39,19 @@ int main() {
 		switch (op) {
 		case 1:
 			control(&itens, &classes, "D");
-			imprimirMap(&itens);
+			// imprimirMap(&itens);
 			break;
 		case 2:
 			if (!itens.empty()) {
 				control(&tarefaT, &tarefaT_processamento, "T");
 				opr.itensInComum(&itens, &tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
-				imprimirMap(&tarefaT_combinacoes);
+				// imprimirMap(&tarefaT_combinacoes);
 			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
 			break;
 		case 3:
 			if (!itens.empty() && !tarefaT.empty()) {
 				start = clock();
-				opr.fazIntersecoes(&itens, &classes, &tarefaT_processamento);
+				opr.fazIntersecoes(&itens, &classes, &tarefaT_combinacoes);
 				end = clock();
 				printf("\nTempo total: %0.8f\n", ((float)end - start) / CLOCKS_PER_SEC);
 			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
