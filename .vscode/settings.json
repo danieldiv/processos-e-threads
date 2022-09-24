@@ -45,6 +45,8 @@
     "xstddef": "cpp",
     "xtr1common": "cpp",
     "set": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "ctime": "cpp",
+    "iterator": "cpp"
   }
 }

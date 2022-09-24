@@ -60,3 +60,7 @@
 ## Etapa V
 
 ## Etapa VI
+
+## Referencias
+
+- https://stackoverflow.com/questions/9430568/generating-combinations-in-c

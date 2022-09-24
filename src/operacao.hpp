@@ -1,7 +1,7 @@
 #ifndef OPERACAO_HPP
 #define OPERACAO_HPP
 
-#include "util.hpp"
+#include "./utils/util.hpp"
 
 #include <algorithm>
 
