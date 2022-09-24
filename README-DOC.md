@@ -41,7 +41,7 @@
 
 - Na etapa II segue um processo bem parecido com a etapa I, com a diferença de que agora será feita a leitura do arquivo `T`, e sua tokenização irá utilizar a linha como chave e as 4 primeiras colunas como valores. A hash utilizada será a `tarefasT`
 
-![Scrennshot](src/files/imgs/linhasT.png)
+![Scrennshot](src/resource/imgs/linhasT.png)
 
 - [Exemplo] Ao fazer a leitura das linhas `29, 30 e 31` a hash `tarefasT` ficará da seguinte maneira
 
