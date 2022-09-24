@@ -18,6 +18,7 @@ public:
 
 	void combinate(vector<string> *vetor, vector<bool> *perm, int index, int n, int k);
 	void printCombinations();
+	void atribuiCombinations(vector<string> *combinations);
 };
 
 #endif

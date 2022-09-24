@@ -19,10 +19,12 @@ void Combination::combinate(vector<string> *vetor, vector<bool> *perm, int index
 		temp.assign("");
 		for (int i = 0; i < n; i++)
 			if (perm->at(i))
-				temp.append(vetor->at(i));
+				temp.append(vetor->at(i)).append("-");
 
-		if (!temp.empty())
+		if (!temp.empty()) {
+			temp.erase(temp.end() - 1);
 			combinations.push_back(temp);
+		}
 
 	} else if ((n - index) >= (k - count)) {
 		perm->at(index) = true;
@@ -35,8 +37,12 @@ void Combination::combinate(vector<string> *vetor, vector<bool> *perm, int index
 	}
 }
 
+void Combination::atribuiCombinations(vector<string> *combinations) {
+	combinations->assign(this->combinations.begin(), this->combinations.end());
+}
+
 void Combination::printCombinations() {
 	for (auto item : combinations)
-		cout << item << " ";
+		cout << "[" << item << "] ";
 	cout << endl;
 }
