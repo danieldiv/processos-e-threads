@@ -1,7 +1,8 @@
 #ifndef OPERACAO_HPP
 #define OPERACAO_HPP
 
-#include "./utils/util.hpp"
+#include "./template/util.hpp"
+#include "./combination.hpp"
 
 #include <algorithm>
 
@@ -27,6 +28,8 @@ public:
 	void checkClasse(set<int> vecA,
 		unordered_map < string, set<int>> *classes,
 		unordered_map<string, int> *classes_aux);
+
+	// void fazCombinacoes();
 
 	void faz1(unordered_map < string, set<int>> *itens,
 		unordered_map < string, set<int>> *classes,

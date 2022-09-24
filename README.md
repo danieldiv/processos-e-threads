@@ -15,8 +15,8 @@
 - Ao executar o programa tera as seguintes opções:
 
   - `0` - Finalizar o programa
-  - `1` - Realizar a leitura do arquivo [D](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/D.csv)
-  - `2` - Realizar a leitura do arquivo [T](https://github.com/danieldiv/processos-e-treads/blob/main/src/files/T.csv)
+  - `1` - Realizar a leitura do arquivo [D](https://github.com/danieldiv/processos-e-treads/blob/main/src/resource/D.csv)
+  - `2` - Realizar a leitura do arquivo [T](https://github.com/danieldiv/processos-e-treads/blob/main/src/resource/T.csv)
   - `3` - Fazer as operacoes envolvendo os arquivod `D` e `T`
 
 ## Sistema multitarefa: Etapa I

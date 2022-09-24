@@ -1,4 +1,4 @@
-#include "operacao.hpp"
+#include "./class/operacao.hpp"
 
 Operacao::Operacao() {}
 Operacao::~Operacao() {}

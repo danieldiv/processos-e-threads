@@ -21,7 +21,7 @@ Arquivo<T>::~Arquivo() {}
 
 template <typename T>
 void Arquivo<T>::readFile(string file, T *itens, T *classes) {
-	file.insert(0, "src/files/").append(".csv");
+	file.insert(0, "src/resource/").append(".csv");
 
 	ifstream myfile(file);
 	string line;

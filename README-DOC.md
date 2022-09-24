@@ -16,7 +16,7 @@
 
 - [Exemplo] Ao fazer a leitura das linhas `8, 9 e 10` a tokenização será feita da seguinte maneira
 
-![Scrennshot](src/files/imgs/linhasD.png)
+![Scrennshot](src/resource/imgs/linhasD.png)
 
 - Faz a leitura da linha `8` e chama um metodo de tokenização, que irá separar a string em varios tokens utilizando a `,` como separador, cada token será utilizando como chave adicionando a linha `8` em um vetor de valores para cada item. O mesmo processo será realizado na linha `9` e `10`.
 
