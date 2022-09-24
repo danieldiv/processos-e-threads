@@ -1,4 +1,4 @@
-#include "operacao.hpp"
+#include "./class/operacao.hpp"
 
 Operacao::Operacao() {}
 Operacao::~Operacao() {}
@@ -9,7 +9,7 @@ Operacao::~Operacao() {}
  * @param itens mapeamento do arquivo D
  * @param tarefaT mapeamento do arquivo T
  * @param tarefaT_processamento mapa para armazenar o processamento
- * @param tarefaT_permutacoes mapa para armazenar as permutacoes do itens processados em tarefaT_processamento
+ * @param tarefaT_combinacoes mapa para armazenar as permutacoes do itens processados em tarefaT_processamento
  *
  * chamado no main
  */
@@ -17,7 +17,7 @@ void Operacao::itensInComum(
 	unordered_map < string, set<int>> *itens,
 	unordered_map < int, set<string>> *tarefaT,
 	unordered_map < int, set<string>> *tarefaT_processamento,
-	unordered_map < int, vector<string>> *tarefaT_permutacoes) {
+	unordered_map < int, vector<string>> *tarefaT_combinacoes) {
 
 	unordered_map < int, set<string>>::iterator itr;
 	unordered_map < int, vector<string>>::iterator itr_per;
@@ -32,76 +32,24 @@ void Operacao::itensInComum(
 			if (foundItem != itens->end()) foundLinha->second.insert(item);
 		}
 	}
-	for (itr = tarefaT_processamento->begin();itr != tarefaT_processamento->end();++itr)
-		fazPermutacoes(itr->first, itr->second, tarefaT_permutacoes);
 
-	for (itr_per = tarefaT_permutacoes->begin();itr_per != tarefaT_permutacoes->end();++itr_per) {
-		cout << itr_per->first << " -> ";
+	Combination *c;
+	vector<bool> perm(N);
+	vector<string> vetor;
+	vector<string> res;
 
-		for (auto val : itr_per->second)
-			cout << "[" << val << "] ";
-		cout << endl << endl;
+	int cont = 0;
+
+	for (itr = tarefaT_processamento->begin();itr != tarefaT_processamento->end();++itr) {
+		c = new Combination();
+		vetor.assign(itr->second.begin(), itr->second.end());
+		cont = 1;
+
+		for (auto item : itr->second)
+			c->combinate(&vetor, &perm, 0, itr->second.size(), cont++);
+		c->atribuiCombinations(&res);
+		tarefaT_combinacoes->insert({ itr->first, res });
 	}
-}
-
-/**
- * @brief realiza as permutacoes apos fazer a operacao dos itens em comun
- *
- * @param key
- * @param vetor itens para fazer as permutacoes
- * @param tarefaT_permutacoes mapa que ira salvar as permutacoes
- *
- * utilizado pelo metodo itensInComum
- */
-void Operacao::fazPermutacoes(int key, set<string> vetor,
-	unordered_map < int, vector<string>> *tarefaT_permutacoes) {
-
-	set<string>::iterator it_1;
-	set<string>::iterator it_2;
-	set<string>::iterator it_3;
-	set<string>::iterator it_aux;
-
-	vector<string> permutacoes;
-
-	string auxFinal("");
-	string aux;
-
-	for (it_1 = vetor.begin(); it_1 != vetor.end();++it_1) {
-		auxFinal.append(*it_1).append("-");
-		permutacoes.push_back(*it_1);
-	}
-
-	if (1 < vetor.size()) {
-		for (it_1 = vetor.begin(); it_1 != vetor.end();++it_1) {
-			it_aux = it_1;
-
-			for (it_2 = ++it_aux; it_2 != vetor.end();++it_2) {
-				aux.assign(*it_1).append("-").append(*it_2);
-				permutacoes.push_back(aux);
-			}
-		}
-	}
-
-	if (2 < vetor.size()) {
-		for (it_1 = vetor.begin(); it_1 != vetor.end();++it_1) {
-			it_aux = it_1;
-
-			for (it_2 = ++it_aux; it_2 != vetor.end();++it_2) {
-				it_aux = it_2;
-
-				for (it_3 = ++it_aux; it_3 != vetor.end();++it_3) {
-					aux.assign(*it_1).append("-").append(*it_2).append("-").append(*it_3);
-					permutacoes.push_back(aux);
-				}
-			}
-		}
-	}
-
-	if (3 < vetor.size()) {
-		auxFinal.erase(auxFinal.end() - 1, auxFinal.end());
-		permutacoes.push_back(auxFinal);
-	}
-	tarefaT_permutacoes->insert({ key, permutacoes });
 }
 
 void Operacao::fazIntersecoes(
