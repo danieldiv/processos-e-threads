@@ -15,8 +15,8 @@ void imprimirMap(T *itens) {
 	u.printMap(itens);
 }
 
-template <typename T, typename D>
-int menu(T *itens, D *tarefaT);
+template <typename T, typename D, typename U>
+int menu(T *itens, D *tarefaT, U *combinacoes);
 
 int main() {
 	clock_t start, end;
@@ -33,28 +33,37 @@ int main() {
 
 	while (op != 0) {
 		system("clear");
-		op = menu(&itens, &tarefaT);
+		op = menu(&itens, &tarefaT, &tarefaT_combinacoes);
 		cout << endl;
 
 		switch (op) {
 		case 1:
 			control(&itens, &classes, "D");
-			imprimirMap(&itens);
 			break;
 		case 2:
 			if (!itens.empty()) {
 				control(&tarefaT, &tarefaT_processamento, "T");
-				opr.itensInComum(&itens, &tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
-				imprimirMap(&tarefaT_combinacoes);
+
+				opr.setItens(itens);
+				opr.setClasses(classes);
+				opr.itensInComum(&tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
 			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
 			break;
 		case 3:
 			if (!itens.empty() && !tarefaT.empty()) {
 				start = clock();
-				opr.fazIntersecoes(&itens, &classes, &tarefaT_processamento);
+				opr.fazIntersecoes(&tarefaT_combinacoes);
 				end = clock();
 				printf("\nTempo total: %0.8f\n", ((float)end - start) / CLOCKS_PER_SEC);
 			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
+			break;
+		case 4:
+			if (!itens.empty()) imprimirMap(&itens);
+			else cout << (RED "Opcao invalida!" RESET) << endl;
+			break;
+		case 5:
+			if (!tarefaT_combinacoes.empty()) imprimirMap(&tarefaT_combinacoes);
+			else cout << (RED "Opcao invalida!" RESET) << endl;
 			break;
 		case 0:
 			cout << "O programa sera finalizado!" << endl;
@@ -67,8 +76,8 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-template <typename T, typename D>
-int menu(T *itens, D *tarefaT) {
+template <typename T, typename D, typename U>
+int menu(T *itens, D *tarefaT, U *combinacao) {
 	cout << "=================" << endl;
 	cout << "   MENU OPCOES" << endl;
 	cout << "=================" << endl << endl;
@@ -87,6 +96,9 @@ int menu(T *itens, D *tarefaT) {
 
 	cout << "3 - Realizar operacoes ";
 	cout << (!(!itens->empty() && !tarefaT->empty()) ? BLUE "Bloqueado" : GREEN "Liberado") << RESET << endl;
+
+	if (itens->size() > 0) cout << "4 - Imprimir dados arquivo D" << endl;
+	if (combinacao->size() > 0) cout << "5 - Imprimir dados arquivo T combinados" << endl;
 
 	cout << "0 - Sair" << endl;
 	cout << "\nEscolha uma opcao: ";
