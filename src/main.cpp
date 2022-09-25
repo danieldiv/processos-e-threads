@@ -15,8 +15,8 @@ void imprimirMap(T *itens) {
 	u.printMap(itens);
 }
 
-template <typename T, typename D, typename U>
-int menu(T *itens, D *tarefaT, U *operacoes);
+template <typename T, typename D>
+int menu(T *itens, D *tarefaT);
 
 int main() {
 	clock_t start, end;
@@ -33,7 +33,7 @@ int main() {
 
 	while (op != 0) {
 		system("clear");
-		op = menu(&itens, &tarefaT, &tarefaT_combinacoes);
+		op = menu(&itens, &tarefaT);
 		cout << endl;
 
 		switch (op) {
@@ -43,13 +43,16 @@ int main() {
 		case 2:
 			if (!itens.empty()) {
 				control(&tarefaT, &tarefaT_processamento, "T");
-				opr.itensInComum(&itens, &tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
+
+				opr.setItens(itens);
+				opr.setClasses(classes);
+				opr.itensInComum(&tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
 			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
 			break;
 		case 3:
 			if (!itens.empty() && !tarefaT.empty()) {
 				start = clock();
-				opr.fazIntersecoes(&itens, &classes, &tarefaT_combinacoes);
+				opr.fazIntersecoes(&tarefaT_combinacoes);
 				end = clock();
 				printf("\nTempo total: %0.8f\n", ((float)end - start) / CLOCKS_PER_SEC);
 			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
@@ -73,8 +76,8 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-template <typename T, typename D, typename U>
-int menu(T *itens, D *tarefaT, U *operacoes) {
+template <typename T, typename D>
+int menu(T *itens, D *tarefaT) {
 	cout << "=================" << endl;
 	cout << "   MENU OPCOES" << endl;
 	cout << "=================" << endl << endl;
