@@ -15,8 +15,8 @@ void imprimirMap(T *itens) {
 	u.printMap(itens);
 }
 
-template <typename T, typename D>
-int menu(T *itens, D *tarefaT);
+template <typename T, typename D, typename U>
+int menu(T *itens, D *tarefaT, U *combinacoes);
 
 int main() {
 	clock_t start, end;
@@ -33,7 +33,7 @@ int main() {
 
 	while (op != 0) {
 		system("clear");
-		op = menu(&itens, &tarefaT);
+		op = menu(&itens, &tarefaT, &tarefaT_combinacoes);
 		cout << endl;
 
 		switch (op) {
@@ -62,7 +62,7 @@ int main() {
 			else cout << (RED "Opcao invalida!" RESET) << endl;
 			break;
 		case 5:
-			if (!tarefaT_processamento.empty()) imprimirMap(&tarefaT_processamento);
+			if (!tarefaT_combinacoes.empty()) imprimirMap(&tarefaT_combinacoes);
 			else cout << (RED "Opcao invalida!" RESET) << endl;
 			break;
 		case 0:
@@ -76,8 +76,8 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-template <typename T, typename D>
-int menu(T *itens, D *tarefaT) {
+template <typename T, typename D, typename U>
+int menu(T *itens, D *tarefaT, U *combinacao) {
 	cout << "=================" << endl;
 	cout << "   MENU OPCOES" << endl;
 	cout << "=================" << endl << endl;
@@ -98,7 +98,7 @@ int menu(T *itens, D *tarefaT) {
 	cout << (!(!itens->empty() && !tarefaT->empty()) ? BLUE "Bloqueado" : GREEN "Liberado") << RESET << endl;
 
 	if (itens->size() > 0) cout << "4 - Imprimir dados arquivo D" << endl;
-	if (tarefaT->size() > 0) cout << "5 - Imprimir dados arquivo T" << endl;
+	if (combinacao->size() > 0) cout << "5 - Imprimir dados arquivo T combinados" << endl;
 
 	cout << "0 - Sair" << endl;
 	cout << "\nEscolha uma opcao: ";
