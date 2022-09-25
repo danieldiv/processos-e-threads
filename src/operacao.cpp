@@ -81,7 +81,6 @@ void Operacao::fazIntersecoes(
 		value_class_aux.insert({ itrClasses->first, 0 });
 
 	for (itr = tarefaT_combinacoes->begin(); itr != tarefaT_combinacoes->end(); ++itr) {
-		classes_aux.clear();
 		classes_aux.insert({ itr->first, value_class_aux });
 		foundClasses_aux = classes_aux.find(itr->first);
 
@@ -91,27 +90,36 @@ void Operacao::fazIntersecoes(
 
 			if (dados.size() > 1) {
 				it_vec = dados.begin();
+				v1.clear();
 				v1 = itens->find(*it_vec)->second;
 
 				++it_vec;
+				res.clear();
 				res.push_back(0); // apenas para inicializar
 
 				for (; it_vec != dados.end() && res.size() > 0; ++it_vec) {
 					v2 = itens->find(*it_vec)->second;
 					intersecaoVetores(v1, v2, &res);
+
+					v1.clear();
+					v2.clear();
+					res.clear();
+
 					v1.insert(res.begin(), res.end());
 				}
+				aux.clear();
 				aux.insert(res.begin(), res.end());
 
-				if (aux.size() > 0)
+				if (aux.size() > 0) {
 					checkClasse(aux, classes, &foundClasses_aux->second);
+				}
 			} else {
 				v1 = itens->find(item)->second;
 				checkClasse(v1, classes, &foundClasses_aux->second);
 			}
 		}
-		printResult(classes_aux);
 	}
+	printResult(classes_aux);
 }
 
 void Operacao::checkClasse(set<int> vecA,
@@ -156,12 +164,14 @@ void Operacao::printResult(unordered_map < int, unordered_map<string, int>> clas
 	string classe;
 
 	for (itr_aux = classes_aux.begin();itr_aux != classes_aux.end();++itr_aux) {
-		printf("[ %2d ] ", itr_aux->first);
+		printf("[ %2d ]\n", itr_aux->first);
 
 		maior = 0;
 		for (itr_aux_values = itr_aux->second.begin();
 			itr_aux_values != itr_aux->second.end();
 			++itr_aux_values) {
+
+			cout << itr_aux_values->second << " -> " << itr_aux_values->first << endl;
 
 			if (itr_aux_values->second > maior) {
 				classe.assign(itr_aux_values->first);
@@ -169,5 +179,6 @@ void Operacao::printResult(unordered_map < int, unordered_map<string, int>> clas
 			}
 		}
 		cout << "----> " << ((maior > 0) ? classe : "NULL") << endl;
+		cout << "\n===================================\n\n";
 	}
 }
