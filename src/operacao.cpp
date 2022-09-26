@@ -50,6 +50,8 @@ void Operacao::itensInComum(
  * @param key chave para utilizar no map de tarefaT_combinacoes
  * @param colunas vetor da tarefaT
  * @param tarefaT_combinacoes
+ *
+ * utilizada pelo metodo itenInComum
  */
 void Operacao::fazCombinacoes(int key, set<string> colunas,
 	unordered_map < int, vector<string>> *tarefaT_combinacoes) {
@@ -78,6 +80,8 @@ void Operacao::fazCombinacoes(int key, set<string> colunas,
  * tarefa T
  *
  * @param tarefaT_combinacoes
+ *
+ * chamado no main
  */
 void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combinacoes) {
 
@@ -150,6 +154,8 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
  *
  * @param vecA
  * @param classes_aux
+ *
+ * utilizada pelo metodo fazIntersecoes
  */
 void Operacao::checkClasse(set<int> vecA, unordered_map<string, int> *classes_aux) {
 
@@ -174,6 +180,8 @@ void Operacao::checkClasse(set<int> vecA, unordered_map<string, int> *classes_au
  * @param v1
  * @param v2
  * @param res
+ *
+ * utilizada pelo metodo fazIntersecoes e checkClasse
  */
 void Operacao::intersecaoVetores(set<int> v1, set<int>v2, vector<int> *res) {
 	vector<int>::iterator itRes;
@@ -189,6 +197,14 @@ void Operacao::intersecaoVetores(set<int> v1, set<int>v2, vector<int> *res) {
 	res->resize(itRes - res->begin());
 }
 
+/**
+ * @brief imprime a classe de maior ocorrencia do processo passado
+ * em caso de empate, o primeiro a ser econtrado sera o resultado final
+ *
+ * @param classes_aux
+ *
+ * utilizada pelo metodo fazIntersecoes
+ */
 void Operacao::printResult(unordered_map < int, unordered_map<string, int>> classes_aux) {
 
 	unordered_map < int, unordered_map<string, int>>::iterator itr_aux;
