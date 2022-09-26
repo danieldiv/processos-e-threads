@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <set>
+// #include <vector>
 
 #define N 5
 
@@ -24,12 +24,12 @@ public:
 	~Util();
 
 	void tokenizar(string text, int linha,
-		unordered_map < string, set<int>> *itens,
-		unordered_map < string, set<int>> *classes);
+		unordered_map < string, vector<int>> *itens,
+		unordered_map < string, vector<int>> *classes);
 
 	void tokenizar(string text, int linha,
-		unordered_map < int, set<string>> *itens,
-		unordered_map < int, set<string>> *classes);
+		unordered_map < int, vector<string>> *itens,
+		unordered_map < int, vector<string>> *classes);
 
 	void tokenizar(string text, vector<string> *tokens);
 
@@ -53,8 +53,8 @@ Util<T>::~Util() {}
  */
 template<typename T>
 void Util<T>::tokenizar(string text, int linha,
-	unordered_map < string, set<int>> *itens,
-	unordered_map < string, set<int>> *classes) {
+	unordered_map < string, vector<int>> *itens,
+	unordered_map < string, vector<int>> *classes) {
 
 	char del = ',';
 	int cont = 1;
@@ -62,7 +62,7 @@ void Util<T>::tokenizar(string text, int linha,
 	stringstream sstream(text);
 	string word;
 
-	set<int> vec;
+	vector<int> vec;
 	typename T::iterator itr;
 
 	while (getline(sstream, word, del)) {
@@ -70,19 +70,19 @@ void Util<T>::tokenizar(string text, int linha,
 			word.assign(to_string(cont++).append(",").append(word));
 			itr = itens->find(word);
 
-			if (itr != itens->end()) itr->second.insert(linha);
+			if (itr != itens->end()) itr->second.push_back(linha);
 			else {
 				vec.clear();
-				vec.insert(linha);
+				vec.push_back(linha);
 				itens->insert({ word, vec });
 			}
 		} else {
 			itr = classes->find(word);
 
-			if (itr != classes->end()) itr->second.insert(linha);
+			if (itr != classes->end()) itr->second.push_back(linha);
 			else {
 				vec.clear();
-				vec.insert(linha);
+				vec.push_back(linha);
 				classes->insert({ word, vec });
 			}
 		}
@@ -100,8 +100,8 @@ void Util<T>::tokenizar(string text, int linha,
  */
 template<typename T>
 void Util<T>::tokenizar(string text, int linha,
-	unordered_map < int, set<string>> *itens,
-	unordered_map < int, set<string>> *classes) {
+	unordered_map < int, vector<string>> *itens,
+	unordered_map < int, vector<string>> *classes) {
 
 	char del = ',';
 	int cont = 1;
@@ -109,7 +109,7 @@ void Util<T>::tokenizar(string text, int linha,
 	stringstream sstream(text);
 	string word;
 
-	set<string> vec;
+	vector<string> vec;
 	typename T::iterator itr;
 
 	classes->insert({ linha, vec });
@@ -117,7 +117,7 @@ void Util<T>::tokenizar(string text, int linha,
 	while (getline(sstream, word, del)) {
 		if (cont < N) {
 			word.assign(to_string(cont++).append(",").append(word));
-			vec.insert(word);
+			vec.push_back(word);
 		}
 	}
 	itens->insert({ linha, vec });

@@ -3,11 +3,11 @@
 Operacao::Operacao() {}
 Operacao::~Operacao() {}
 
-void Operacao::setItens(unordered_map < string, set<int>> itens) {
+void Operacao::setItens(unordered_map < string, vector<int>> itens) {
 	this->itens.insert(itens.begin(), itens.end());
 }
 
-void Operacao::setClasses(unordered_map < string, set<int>> classes) {
+void Operacao::setClasses(unordered_map < string, vector<int>> classes) {
 	this->classes.insert(classes.begin(), classes.end());
 }
 
@@ -22,21 +22,22 @@ void Operacao::setClasses(unordered_map < string, set<int>> classes) {
  * chamado no main
  */
 void Operacao::itensInComum(
-	unordered_map < int, set<string>> *tarefaT,
-	unordered_map < int, set<string>> *tarefaT_processamento,
+	unordered_map < int, vector<string>> *tarefaT,
+	unordered_map < int, vector<string>> *tarefaT_processamento,
 	unordered_map < int, vector<string>> *tarefaT_combinacoes
 ) {
 
-	unordered_map < int, set<string>>::iterator itr;
-	unordered_map < int, set<string>>::iterator foundLinha;
-	unordered_map < string, set<int>>::iterator foundItem;
+	unordered_map < int, vector<string>>::iterator itr;
+	unordered_map < int, vector<string>>::iterator foundLinha;
+	unordered_map < string, vector<int>>::iterator foundItem;
 
 	for (itr = tarefaT->begin();itr != tarefaT->end();++itr) {
 		foundLinha = tarefaT_processamento->find(itr->first);
 
 		for (auto item : itr->second) {
 			foundItem = itens.find(item);
-			if (foundItem != itens.end()) foundLinha->second.insert(item);
+			if (foundItem != itens.end()) foundLinha->second.push_back(item);
+			// if (foundItem != itens.end()) foundLinha->second.insert(item);
 		}
 	}
 
@@ -53,7 +54,7 @@ void Operacao::itensInComum(
  *
  * utilizada pelo metodo itenInComum
  */
-void Operacao::fazCombinacoes(int key, set<string> colunas,
+void Operacao::fazCombinacoes(int key, vector<string> colunas,
 	unordered_map < int, vector<string>> *tarefaT_combinacoes) {
 
 	Combination c;
@@ -87,9 +88,9 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
 
 	Util <string> u;
 
-	set<int> v1;
-	set<int> v2;
-	set<int> aux;
+	vector<int> v1;
+	vector<int> v2;
+	vector<int> aux;
 
 	vector<int> res;
 	vector<string> dados;
@@ -102,7 +103,7 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
 	unordered_map < int, vector<string>>::iterator itr_combinacoes;
 
 	unordered_map < string, int> value_class_aux;
-	unordered_map < string, set<int>>::iterator itr_classes;
+	unordered_map < string, vector<int>>::iterator itr_classes;
 
 	// cria um map das classes com valor igual a 0
 	for (itr_classes = classes.begin(); itr_classes != classes.end(); ++itr_classes)
@@ -133,10 +134,13 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
 					v2.clear();
 					res.clear();
 
-					v1.insert(res.begin(), res.end());
+					// v1.insert(res.begin(), res.end());
+					// v1.insert(res);
+					v1.assign(res.begin(), res.end());
 				}
 				aux.clear();
-				aux.insert(res.begin(), res.end());
+				aux.assign(res.begin(), res.end());
+				// aux.insert(res.begin(), res.end());
 
 				if (aux.size() > 0) {
 					checkClasse(aux, &foundClasses_aux->second);
@@ -159,9 +163,9 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
  *
  * utilizada pelo metodo fazIntersecoes
  */
-void Operacao::checkClasse(set<int> vecA, unordered_map<string, int> *classes_aux) {
+void Operacao::checkClasse(vector<int> vecA, unordered_map<string, int> *classes_aux) {
 
-	unordered_map < string, set<int>>::iterator itr;
+	unordered_map < string, vector<int>>::iterator itr;
 	unordered_map<string, int>::iterator itr_aux;
 
 	vector<int> res;
@@ -185,7 +189,7 @@ void Operacao::checkClasse(set<int> vecA, unordered_map<string, int> *classes_au
  *
  * utilizada pelo metodo fazIntersecoes e checkClasse
  */
-void Operacao::intersecaoVetores(set<int> v1, set<int>v2, vector<int> *res) {
+void Operacao::intersecaoVetores(vector<int> v1, vector<int>v2, vector<int> *res) {
 	vector<int>::iterator itRes;
 
 	res->clear();

@@ -21,11 +21,11 @@ int menu(T *itens, D *tarefaT, U *combinacoes);
 int main() {
 	clock_t start, end;
 
-	unordered_map<string, set<int>> itens;
-	unordered_map<string, set<int>> classes;
+	unordered_map<string, vector<int>> itens;
+	unordered_map<string, vector<int>> classes;
 
-	unordered_map<int, set<string>> tarefaT;
-	unordered_map<int, set<string>> tarefaT_processamento;
+	unordered_map<int, vector<string>> tarefaT;
+	unordered_map<int, vector<string>> tarefaT_processamento;
 	unordered_map<int, vector<string>> tarefaT_combinacoes;
 
 	Operacao opr;
