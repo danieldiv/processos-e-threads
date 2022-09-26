@@ -95,22 +95,24 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
 	vector<string> dados;
 	vector<string>::iterator it_vec;
 
-	unordered_map < int, unordered_map<string, int>>::iterator foundClasses_aux;
 	unordered_map < int, unordered_map<string, int>> classes_aux;
-	unordered_map < int, vector<string>>::iterator itr;
+	unordered_map < int, unordered_map<string, int>>::iterator foundClasses_aux;
 
-	unordered_map < string, set<int>>::iterator itrClasses;
+	unordered_map < int, vector<int>>::iterator found_cache;
+	unordered_map < int, vector<string>>::iterator itr_combinacoes;
+
 	unordered_map < string, int> value_class_aux;
+	unordered_map < string, set<int>>::iterator itr_classes;
 
 	// cria um map das classes com valor igual a 0
-	for (itrClasses = classes.begin(); itrClasses != classes.end(); ++itrClasses)
-		value_class_aux.insert({ itrClasses->first, 0 });
+	for (itr_classes = classes.begin(); itr_classes != classes.end(); ++itr_classes)
+		value_class_aux.insert({ itr_classes->first, 0 });
 
-	for (itr = tarefaT_combinacoes->begin(); itr != tarefaT_combinacoes->end(); ++itr) {
-		classes_aux.insert({ itr->first, value_class_aux });
-		foundClasses_aux = classes_aux.find(itr->first);
+	for (itr_combinacoes = tarefaT_combinacoes->begin(); itr_combinacoes != tarefaT_combinacoes->end(); ++itr_combinacoes) {
+		classes_aux.insert({ itr_combinacoes->first, value_class_aux });
+		foundClasses_aux = classes_aux.find(itr_combinacoes->first);
 
-		for (auto item : itr->second) {
+		for (auto item : itr_combinacoes->second) {
 			dados.clear();
 			u.tokenizar(item, &dados);
 
