@@ -44,6 +44,13 @@ void Operacao::itensInComum(
 		fazCombinacoes(itr->first, itr->second, tarefaT_combinacoes);
 }
 
+/**
+ * @brief realiza a combinacao dos elementos processados do arquivo T
+ *
+ * @param key chave para utilizar no map de tarefaT_combinacoes
+ * @param colunas vetor da tarefaT
+ * @param tarefaT_combinacoes
+ */
 void Operacao::fazCombinacoes(int key, set<string> colunas,
 	unordered_map < int, vector<string>> *tarefaT_combinacoes) {
 
@@ -62,6 +69,16 @@ void Operacao::fazCombinacoes(int key, set<string> colunas,
 	tarefaT_combinacoes->insert({ key, res });
 }
 
+/**
+ * @brief realiza a intercessao das combinacoes realizadas
+ *
+ * Se uma tarefa T possui todas a N colunas existentes, sera feita a intercessao
+ * inicialmente de cada elemento, depois de dois em dois elementos, tres em tres
+ * ate N, para cada intercessao eh impresso o resultado a qual classe pertence a
+ * tarefa T
+ *
+ * @param tarefaT_combinacoes
+ */
 void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combinacoes) {
 
 	Util <string> u;
@@ -127,6 +144,13 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
 	printResult(classes_aux);
 }
 
+/**
+ * @brief realiza a intercao do vetor vecA com cada vetor de classe
+ * e armazena o resultado no map classes_aux
+ *
+ * @param vecA
+ * @param classes_aux
+ */
 void Operacao::checkClasse(set<int> vecA, unordered_map<string, int> *classes_aux) {
 
 	unordered_map < string, set<int>>::iterator itr;
@@ -144,6 +168,13 @@ void Operacao::checkClasse(set<int> vecA, unordered_map<string, int> *classes_au
 	}
 }
 
+/**
+ * @brief realiza a intersecao entre dois vetores e salva o resultado em res
+ *
+ * @param v1
+ * @param v2
+ * @param res
+ */
 void Operacao::intersecaoVetores(set<int> v1, set<int>v2, vector<int> *res) {
 	vector<int>::iterator itRes;
 
