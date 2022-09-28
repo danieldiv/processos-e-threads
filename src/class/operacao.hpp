@@ -9,15 +9,15 @@
 
 class Operacao {
 private:
-	unordered_map < string, vector<int>> itens;
-	unordered_map < string, vector<int>> classes;
-	unordered_map < string, vector<int>> cache;
+	unordered_map < string, vector<int>> *itens;
+	unordered_map < string, vector<int>> *classes;
+	unordered_map < string, vector<int>> *cache;
 public:
 	Operacao();
 	~Operacao();
 
-	void setItens(unordered_map < string, vector<int>> itens);
-	void setClasses(unordered_map < string, vector<int>> classes);
+	void setItens(unordered_map < string, vector<int>> *itens);
+	void setClasses(unordered_map < string, vector<int>> *classes);
 
 	void itensInComum(
 		unordered_map < int, vector<string>> *tarefaT,

@@ -3,12 +3,14 @@
 Operacao::Operacao() {}
 Operacao::~Operacao() {}
 
-void Operacao::setItens(unordered_map < string, vector<int>> itens) {
-	this->itens.insert(itens.begin(), itens.end());
+void Operacao::setItens(unordered_map < string, vector<int>> *itens) {
+	// this->itens->insert(itens->begin(), itens->end());
+	this->itens = itens;
 }
 
-void Operacao::setClasses(unordered_map < string, vector<int>> classes) {
-	this->classes.insert(classes.begin(), classes.end());
+void Operacao::setClasses(unordered_map < string, vector<int>> *classes) {
+	this->classes = classes;
+	// this->classes->insert(classes->begin(), classes->end());
 }
 
 /**
@@ -35,9 +37,9 @@ void Operacao::itensInComum(
 		foundLinha = tarefaT_processamento->find(itr->first);
 
 		for (auto item : itr->second) {
-			foundItem = itens.find(item);
-			if (foundItem != itens.end()) foundLinha->second.push_back(item);
-			// if (foundItem != itens.end()) foundLinha->second.insert(item);
+			foundItem = itens->find(item);
+			if (foundItem != itens->end()) foundLinha->second.push_back(item);
+			// if (foundItem != itens->end()) foundLinha->second.insert(item);
 		}
 	}
 
@@ -58,7 +60,14 @@ void Operacao::fazCombinacoes(int key, vector<string> colunas,
 	unordered_map < int, vector<string>> *tarefaT_combinacoes) {
 
 	Combination c;
-	vector<bool> perm(N);
+	// vector<bool> perm(5);
+	// perm.clear();
+
+	int perm[5] = { 0 };
+	// int *perm;
+	// perm = (int *)malloc(sizeof(int) * 5);
+	// perm.clear();
+	// perm(5);
 	vector<string> vetor;
 	vector<string> res;
 
@@ -67,7 +76,8 @@ void Operacao::fazCombinacoes(int key, vector<string> colunas,
 	vetor.assign(colunas.begin(), colunas.end());
 
 	for (auto item : colunas)
-		c.combinate(&vetor, &perm, 0, colunas.size(), cont++);
+		c.combinate(vetor, perm, 0, colunas.size(), cont++);
+	// return;
 	c.atribuiCombinations(&res);
 	tarefaT_combinacoes->insert({ key, res });
 }
@@ -106,7 +116,7 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
 	unordered_map < string, vector<int>>::iterator itr_classes;
 
 	// cria um map das classes com valor igual a 0
-	for (itr_classes = classes.begin(); itr_classes != classes.end(); ++itr_classes)
+	for (itr_classes = classes->begin(); itr_classes != classes->end(); ++itr_classes)
 		value_class_aux.insert({ itr_classes->first, 0 });
 
 	for (itr_combinacoes = tarefaT_combinacoes->begin(); itr_combinacoes != tarefaT_combinacoes->end(); ++itr_combinacoes) {
@@ -120,14 +130,14 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
 			if (dados.size() > 1) {
 				it_vec = dados.begin();
 				v1.clear();
-				v1 = itens.find(*it_vec)->second;
+				v1 = itens->find(*it_vec)->second;
 
 				++it_vec;
 				res.clear();
 				res.push_back(0); // apenas para inicializar
 
 				for (; it_vec != dados.end() && res.size() > 0; ++it_vec) {
-					v2 = itens.find(*it_vec)->second;
+					v2 = itens->find(*it_vec)->second;
 					intersecaoVetores(v1, v2, &res);
 
 					v1.clear();
@@ -146,7 +156,7 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
 					checkClasse(aux, &foundClasses_aux->second);
 				}
 			} else {
-				v1 = itens.find(item)->second;
+				v1 = itens->find(item)->second;
 				checkClasse(v1, &foundClasses_aux->second);
 			}
 		}
@@ -171,7 +181,7 @@ void Operacao::checkClasse(vector<int> vecA, unordered_map<string, int> *classes
 	vector<int> res;
 	string classe;
 
-	for (itr = classes.begin();itr != classes.end();++itr) {
+	for (itr = classes->begin();itr != classes->end();++itr) {
 		intersecaoVetores(vecA, itr->second, &res);
 		itr_aux = classes_aux->find(itr->first);
 

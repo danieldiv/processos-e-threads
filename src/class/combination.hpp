@@ -16,7 +16,8 @@ public:
 	Combination();
 	~Combination();
 
-	void combinate(vector<string> *vetor, vector<bool> *perm, int index, int n, int k);
+	// void combinate(vector<string> vetor, int perm[], int index, int n, int k);
+	void combinate(vector<string> vetor, int perm[], int index, int n, int k);
 	void printCombinations();
 	void atribuiCombinations(vector<string> *combinations);
 };

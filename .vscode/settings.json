@@ -47,6 +47,8 @@
     "set": "cpp",
     "algorithm": "cpp",
     "ctime": "cpp",
-    "iterator": "cpp"
+    "iterator": "cpp",
+    "array": "cpp",
+    "string_view": "cpp"
   }
 }
