@@ -7,14 +7,14 @@
 #include <algorithm>
 // #include <map>
 
-class Operacao {
+class Kernel {
 private:
 	unordered_map < string, vector<int>> *itens;
 	unordered_map < string, vector<int>> *classes;
 	unordered_map < string, vector<int>> *cache;
 public:
-	Operacao();
-	~Operacao();
+	Kernel();
+	~Kernel();
 
 	void setItens(unordered_map < string, vector<int>> *itens);
 	void setClasses(unordered_map < string, vector<int>> *classes);

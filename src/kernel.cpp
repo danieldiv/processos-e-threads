@@ -1,16 +1,14 @@
-#include "./class/operacao.hpp"
+#include "./include/kernel.hpp"
 
-Operacao::Operacao() {}
-Operacao::~Operacao() {}
+Kernel::Kernel() {}
+Kernel::~Kernel() {}
 
-void Operacao::setItens(unordered_map < string, vector<int>> *itens) {
-	// this->itens->insert(itens->begin(), itens->end());
+void Kernel::setItens(unordered_map < string, vector<int>> *itens) {
 	this->itens = itens;
 }
 
-void Operacao::setClasses(unordered_map < string, vector<int>> *classes) {
+void Kernel::setClasses(unordered_map < string, vector<int>> *classes) {
 	this->classes = classes;
-	// this->classes->insert(classes->begin(), classes->end());
 }
 
 /**
@@ -23,7 +21,7 @@ void Operacao::setClasses(unordered_map < string, vector<int>> *classes) {
  *
  * chamado no main
  */
-void Operacao::itensInComum(
+void Kernel::itensInComum(
 	unordered_map < int, vector<string>> *tarefaT,
 	unordered_map < int, vector<string>> *tarefaT_processamento,
 	unordered_map < int, vector<string>> *tarefaT_combinacoes
@@ -39,7 +37,6 @@ void Operacao::itensInComum(
 		for (auto item : itr->second) {
 			foundItem = itens->find(item);
 			if (foundItem != itens->end()) foundLinha->second.push_back(item);
-			// if (foundItem != itens->end()) foundLinha->second.insert(item);
 		}
 	}
 
@@ -56,18 +53,13 @@ void Operacao::itensInComum(
  *
  * utilizada pelo metodo itenInComum
  */
-void Operacao::fazCombinacoes(int key, vector<string> colunas,
+void Kernel::fazCombinacoes(int key, vector<string> colunas,
 	unordered_map < int, vector<string>> *tarefaT_combinacoes) {
 
 	Combination c;
-	// vector<bool> perm(5);
-	// perm.clear();
 
 	int perm[5] = { 0 };
-	// int *perm;
-	// perm = (int *)malloc(sizeof(int) * 5);
-	// perm.clear();
-	// perm(5);
+
 	vector<string> vetor;
 	vector<string> res;
 
@@ -77,7 +69,6 @@ void Operacao::fazCombinacoes(int key, vector<string> colunas,
 
 	for (auto item : colunas)
 		c.combinate(vetor, perm, 0, colunas.size(), cont++);
-	// return;
 	c.atribuiCombinations(&res);
 	tarefaT_combinacoes->insert({ key, res });
 }
@@ -94,7 +85,7 @@ void Operacao::fazCombinacoes(int key, vector<string> colunas,
  *
  * chamado no main
  */
-void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combinacoes) {
+void Kernel::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combinacoes) {
 
 	Util <string> u;
 
@@ -144,13 +135,10 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
 					v2.clear();
 					res.clear();
 
-					// v1.insert(res.begin(), res.end());
-					// v1.insert(res);
 					v1.assign(res.begin(), res.end());
 				}
 				aux.clear();
 				aux.assign(res.begin(), res.end());
-				// aux.insert(res.begin(), res.end());
 
 				if (aux.size() > 0) {
 					checkClasse(aux, &foundClasses_aux->second);
@@ -173,7 +161,7 @@ void Operacao::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_comb
  *
  * utilizada pelo metodo fazIntersecoes
  */
-void Operacao::checkClasse(vector<int> vecA, unordered_map<string, int> *classes_aux) {
+void Kernel::checkClasse(vector<int> vecA, unordered_map<string, int> *classes_aux) {
 
 	unordered_map < string, vector<int>>::iterator itr;
 	unordered_map<string, int>::iterator itr_aux;
@@ -199,7 +187,7 @@ void Operacao::checkClasse(vector<int> vecA, unordered_map<string, int> *classes
  *
  * utilizada pelo metodo fazIntersecoes e checkClasse
  */
-void Operacao::intersecaoVetores(vector<int> v1, vector<int>v2, vector<int> *res) {
+void Kernel::intersecaoVetores(vector<int> v1, vector<int>v2, vector<int> *res) {
 	vector<int>::iterator itRes;
 
 	res->clear();
@@ -221,7 +209,7 @@ void Operacao::intersecaoVetores(vector<int> v1, vector<int>v2, vector<int> *res
  *
  * utilizada pelo metodo fazIntersecoes
  */
-void Operacao::printResult(unordered_map < int, unordered_map<string, int>> classes_aux) {
+void Kernel::printResult(unordered_map < int, unordered_map<string, int>> classes_aux) {
 
 	unordered_map < int, unordered_map<string, int>>::iterator itr_aux;
 	unordered_map < string, int>::iterator itr_aux_values;
