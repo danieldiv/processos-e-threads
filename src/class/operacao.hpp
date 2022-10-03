@@ -5,12 +5,13 @@
 #include "./combination.hpp"
 
 #include <algorithm>
-#include <map>
+// #include <map>
 
 class Operacao {
 private:
 	unordered_map < string, set<int>> itens;
 	unordered_map < string, set<int>> classes;
+	unordered_map < string, vector<int>> cache;
 public:
 	Operacao();
 	~Operacao();
