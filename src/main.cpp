@@ -15,56 +15,53 @@ void imprimirMap(T *itens) {
 	u.printMap(itens);
 }
 
-template <typename T, typename D, typename U>
-int menu(T *itens, D *tarefaT, U *combinacoes);
+int menu();
 
 int main() {
 	clock_t start, end;
 
-	unordered_map<string, set<int>> itens;
-	unordered_map<string, set<int>> classes;
+	unordered_map<string, vector<int>> itens;
+	unordered_map<string, vector<int>> classes;
 
-	unordered_map<int, set<string>> tarefaT;
-	unordered_map<int, set<string>> tarefaT_processamento;
+	unordered_map<int, vector<string>> tarefaT;
+	unordered_map<int, vector<string>> tarefaT_processamento;
 	unordered_map<int, vector<string>> tarefaT_combinacoes;
 
-	Operacao opr;
 	int op = -1;
 
+	float t_arquivos;
+	float t_processamento;
+	float t_intercessao;
+
+	Operacao opr;
 	while (op != 0) {
 		system("clear");
-		op = menu(&itens, &tarefaT, &tarefaT_combinacoes);
+		// op = menu();
+		op = 1;
 		cout << endl;
 
 		switch (op) {
 		case 1:
+			start = clock();
 			control(&itens, &classes, "D");
-			break;
-		case 2:
-			if (!itens.empty()) {
-				control(&tarefaT, &tarefaT_processamento, "T");
+			control(&tarefaT, &tarefaT_processamento, "T");
+			t_arquivos = (float)clock() / CLOCKS_PER_SEC;
 
-				opr.setItens(itens);
-				opr.setClasses(classes);
-				opr.itensInComum(&tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
-			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
-			break;
-		case 3:
-			if (!itens.empty() && !tarefaT.empty()) {
-				start = clock();
-				opr.fazIntersecoes(&tarefaT_combinacoes);
-				end = clock();
-				printf("\nTempo total: %0.8f\n", ((float)end - start) / CLOCKS_PER_SEC);
-			} else cout << (RED "Nao e possivel executar a operacao!" RESET) << endl;
-			break;
-		case 4:
-			if (!itens.empty()) imprimirMap(&itens);
-			else cout << (RED "Opcao invalida!" RESET) << endl;
-			break;
-		case 5:
-			if (!tarefaT_combinacoes.empty()) imprimirMap(&tarefaT_combinacoes);
-			else cout << (RED "Opcao invalida!" RESET) << endl;
-			break;
+			start = clock();
+			opr.setItens(&itens);
+			opr.setClasses(&classes);
+			opr.itensInComum(&tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
+			t_processamento = (float)clock() / CLOCKS_PER_SEC;
+
+			start = clock();
+			opr.fazIntersecoes(&tarefaT_combinacoes);
+			t_intercessao = (float)clock() / CLOCKS_PER_SEC;
+
+			printf("\nTempo leitura de arquivos: %0.8f\n", t_arquivos);
+			printf("Tempo de processamento: %0.8f\n", t_processamento);
+			printf("Tempo de intercessoes: %0.8f\n", t_intercessao);
+
+			return EXIT_SUCCESS;
 		case 0:
 			cout << "O programa sera finalizado!" << endl;
 			return EXIT_SUCCESS;
@@ -76,31 +73,14 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-template <typename T, typename D, typename U>
-int menu(T *itens, D *tarefaT, U *combinacao) {
+int menu() {
 	cout << "=================" << endl;
 	cout << "   MENU OPCOES" << endl;
 	cout << "=================" << endl << endl;
 
-	cout << "1 - Ler arquivo D ";
-	cout << (itens->empty() ? RED "Nao lido" : GREEN "Lido") << RESET << endl;
-
-	cout << "2 - Ler arquivo T ";
-
-	if (itens->empty())
-		cout << (BLUE "Bloqueado" RESET) << endl;
-	else if (tarefaT->empty())
-		cout << (RED "Nao lido" RESET) << endl;
-	else
-		cout << (GREEN "Lido" RESET) << endl;
-
-	cout << "3 - Realizar operacoes ";
-	cout << (!(!itens->empty() && !tarefaT->empty()) ? BLUE "Bloqueado" : GREEN "Liberado") << RESET << endl;
-
-	if (itens->size() > 0) cout << "4 - Imprimir dados arquivo D" << endl;
-	if (combinacao->size() > 0) cout << "5 - Imprimir dados arquivo T combinados" << endl;
-
+	cout << "1 - Processar" << endl;
 	cout << "0 - Sair" << endl;
+
 	cout << "\nEscolha uma opcao: ";
 
 	int op;
