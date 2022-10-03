@@ -1,4 +1,4 @@
-#include "./class/combination.hpp"
+#include "./include/combination.hpp"
 
 Combination::Combination() {}
 Combination::~Combination() {}
@@ -21,7 +21,6 @@ void Combination::combinate(vector<string> vetor, int perm[], int index, int n, 
 		for (int i = 0; i < n; i++)
 			if (perm[i])
 				temp.append(vetor.at(i)).append("-");
-		// if (perm.at(i))
 
 		if (!temp.empty()) {
 			temp.erase(temp.end() - 1);
@@ -29,12 +28,10 @@ void Combination::combinate(vector<string> vetor, int perm[], int index, int n, 
 		}
 
 	} else if ((n - index) >= (k - count)) {
-		// perm.at(index) = true;
 		perm[index] = 1;
 		count++;
 		combinate(vetor, perm, index + 1, n, k);
 
-		// perm.at(index) = false;
 		perm[index] = 0;
 		count--;
 		combinate(vetor, perm, index + 1, n, k);
