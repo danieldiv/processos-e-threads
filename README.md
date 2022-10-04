@@ -6,29 +6,18 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 	O trabalho constitui de um sistema de classificação cujas características serão utilizadas para observar conceitos importantes como: escalonamento e gestão de memória primária. No sistema será utilizado dois arquivos, D e T. A base D será utilizada para simular a inicialização, fornecendo assim o conceito de bootstrapping, tal como no sistema operacional. A base T irá representar os processos a serem executados.
 </p>
 
-<!-- ## Documentação
-
-- Mais informações sobre o problema do trabalho pode ser encontrado em [Documentação](https://github.com/danieldiv/processos-e-treads/blob/main/README-DOC.md) -->
-
 ## Menu
 
 ![Scrennshot](src/resource/imgs/menuPrincipal.png)
 
-<!-- - Ao executar o programa tera as seguintes opções:
-
-  - `0` - Finalizar o programa
-  - `1` - Realizar a leitura do arquivo [D](https://github.com/danieldiv/processos-e-treads/blob/main/src/resource/D.csv)
-  - `2` - Realizar a leitura do arquivo [T](https://github.com/danieldiv/processos-e-treads/blob/main/src/resource/T.csv)
-  - `3` - Fazer as operacoes envolvendo os arquivod `D` e `T` -->
-
 ## Sistema multitarefa: Etapa I
 
-- Na etapa I é realizada a leitura e tokenização do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/class/template/util.hpp#L53) em 5 colunas que representam as chaves e as linhas representam os valores. As 4 primeiras colunas serão utilizadas como chaves dos itens e a ultima coluna sera utilizada como chave da classe.
+- Na etapa I é realizada a leitura e tokenização do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/template/util.hpp#L55) em 5 colunas que representam as chaves e as linhas representam os valores. As 4 primeiras colunas serão utilizadas como chaves dos itens e a ultima coluna sera utilizada como chave da classe.
 
 ## Sistema multitarefa: Etapa II
 
 - Para executar a etapa II é necessario liberar a opção `2`, que ficará bloqueada até fazer a leitura do arquivo `D`.
-- Na etapa II é realizada a leitura, tokenização, [processamento](https://github.com/danieldiv/processos-e-threads/blob/main/src/operacao.cpp#L16) e [combinação](https://github.com/danieldiv/processos-e-threads/blob/main/src/operacao.cpp#L49) do arquivo `T`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/class/template/util.hpp#L100) linha a linha utilizando as colunas como valores e linha como chave.
+- Na etapa II é realizada a leitura, tokenização, [processamento](https://github.com/danieldiv/processos-e-threads/blob/main/src/kernel.cpp#L24) e [combinação](https://github.com/danieldiv/processos-e-threads/blob/main/src/kernel.cpp#L56) do arquivo `T`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/template/util.hpp#L102) linha a linha utilizando as colunas como valores e linha como chave.
 
 ## Sistema multitarefa: Etapa III
 
