@@ -218,14 +218,12 @@ void Kernel::printResult(unordered_map < int, unordered_map<string, int>> classe
 	string classe;
 
 	for (itr_aux = classes_aux.begin();itr_aux != classes_aux.end();++itr_aux) {
-		printf("[ %2d ]\n", itr_aux->first);
+		printf("[ %2d ] ", itr_aux->first);
 
 		maior = 0;
 		for (itr_aux_values = itr_aux->second.begin();
 			itr_aux_values != itr_aux->second.end();
 			++itr_aux_values) {
-
-			cout << itr_aux_values->second << " -> " << itr_aux_values->first << endl;
 
 			if (itr_aux_values->second > maior) {
 				classe.assign(itr_aux_values->first);
@@ -233,6 +231,5 @@ void Kernel::printResult(unordered_map < int, unordered_map<string, int>> classe
 			}
 		}
 		cout << "----> " << ((maior > 0) ? classe : "NULL") << endl;
-		cout << "\n===================================\n\n";
 	}
 }
