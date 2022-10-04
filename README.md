@@ -1,12 +1,14 @@
+Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processos-e-threads/wiki)
+
 # Processos e treads
 
 <p align="justify">
 	O trabalho constitui de um sistema de classificação cujas características serão utilizadas para observar conceitos importantes como: escalonamento e gestão de memória primária. No sistema será utilizado dois arquivos, D e T. A base D será utilizada para simular a inicialização, fornecendo assim o conceito de bootstrapping, tal como no sistema operacional. A base T irá representar os processos a serem executados.
 </p>
 
-## Documentação
+<!-- ## Documentação
 
-- Mais informações sobre o problema do trabalho pode ser encontrado em [Documentação](https://github.com/danieldiv/processos-e-treads/blob/main/README-DOC.md)
+- Mais informações sobre o problema do trabalho pode ser encontrado em [Documentação](https://github.com/danieldiv/processos-e-treads/blob/main/README-DOC.md) -->
 
 ## Menu
 
