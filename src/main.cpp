@@ -1,11 +1,11 @@
-#include "./include/template/arquivo.hpp"
+#include "./include/template/file.hpp"
 #include "./include/kernel.hpp"
 
 #include <ctime>
 
 template <typename T>
 void control(T *itens, T *classes, string file) {
-	Arquivo<T> arq;
+	File<T> arq;
 	arq.readFile(file, itens, classes);
 }
 
