@@ -36,8 +36,8 @@ int main() {
 	Kernel k;
 	while (op != 0) {
 		system("clear");
-		// op = menu();
-		op = 1;
+		op = menu();
+		// op = 1;
 		cout << endl;
 
 		switch (op) {
@@ -45,17 +45,17 @@ int main() {
 			start = clock();
 			control(&itens, &classes, "D");
 			control(&tarefaT, &tarefaT_processamento, "T");
-			t_arquivos = (float)clock() / CLOCKS_PER_SEC;
+			t_arquivos = (float)start / CLOCKS_PER_SEC;
 
 			start = clock();
 			k.setItens(&itens);
 			k.setClasses(&classes);
 			k.itensInComum(&tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
-			t_processamento = (float)clock() / CLOCKS_PER_SEC;
+			t_processamento = (float)start / CLOCKS_PER_SEC;
 
 			start = clock();
 			k.fazIntersecoes(&tarefaT_combinacoes);
-			t_intercessao = (float)clock() / CLOCKS_PER_SEC;
+			t_intercessao = (float)start / CLOCKS_PER_SEC;
 
 			printf("\nTempo leitura de arquivos: %0.6f\n", t_arquivos);
 			printf("Tempo de processamento: %0.6f\n", t_processamento);
