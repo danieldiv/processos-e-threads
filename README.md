@@ -10,7 +10,7 @@
 
 ## Menu
 
-![Scrennshot](src/resource/imgs/menuPrincipal.png)
+![Scrennshot](src/resource/imgs/menu.png)
 
 - Ao executar o programa tera as seguintes opções:
 

@@ -13,7 +13,6 @@ Combination::~Combination() {}
  * @param k numero de permutacoes a serem feitas
  */
 void Combination::combinate(vector<string> vetor, int perm[], int index, int n, int k) {
-	// void Combination::combinate(vector<string> vetor, int perm[], int index, int n, int k) {
 	static int count = 0;
 
 	if (count == k) {

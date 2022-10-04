@@ -4,6 +4,8 @@
 #include "util.hpp"
 #include <fstream>
 
+#define PATH "src/resource/"
+
 template <typename T>
 class File {
 public:
@@ -22,7 +24,7 @@ File<T>::~File() {}
 
 template <typename T>
 void File<T>::readFile(string file, T *itens, T *classes) {
-	file.insert(0, "src/resource/").append(".csv");
+	file.insert(0, PATH).append(".csv");
 
 	ifstream myfile(file);
 	string line;
