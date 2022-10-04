@@ -5,7 +5,6 @@
 #include "./combination.hpp"
 
 #include <algorithm>
-// #include <map>
 
 class Kernel {
 private:

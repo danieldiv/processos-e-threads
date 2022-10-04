@@ -1,27 +1,27 @@
-#ifndef ARQUIVO_HPP
-#define ARQUIVO_HPP
+#ifndef FILE_HPP
+#define FILE_HPP
 
 #include "util.hpp"
 #include <fstream>
 
 template <typename T>
-class Arquivo {
+class File {
 public:
-	Arquivo();
+	File();
 
-	~Arquivo();
+	~File();
 
 	void readFile(string file, T *itens, T *classes);
 };
 
 template <typename T>
-Arquivo<T>::Arquivo() {}
+File<T>::File() {}
 
 template <typename T>
-Arquivo<T>::~Arquivo() {}
+File<T>::~File() {}
 
 template <typename T>
-void Arquivo<T>::readFile(string file, T *itens, T *classes) {
+void File<T>::readFile(string file, T *itens, T *classes) {
 	file.insert(0, "src/resource/").append(".csv");
 
 	ifstream myfile(file);
@@ -33,7 +33,7 @@ void Arquivo<T>::readFile(string file, T *itens, T *classes) {
 	if (myfile.is_open() && myfile.good()) {
 		while (getline(myfile, line))
 			u.tokenizar(line, ++contLinha, itens, classes);
-	} else cout << "nao foi possivel abrir o arquivo" << endl;
+	} else cout << "nao foi possivel abrir o File" << endl;
 }
 
 #endif
