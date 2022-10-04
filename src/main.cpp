@@ -36,7 +36,8 @@ int main() {
 	Kernel k;
 	while (op != 0) {
 		system("clear");
-		op = menu();
+		// op = menu();
+		op = 1;
 		cout << endl;
 
 		switch (op) {
@@ -56,9 +57,9 @@ int main() {
 			k.fazIntersecoes(&tarefaT_combinacoes);
 			t_intercessao = (float)clock() / CLOCKS_PER_SEC;
 
-			printf("\nTempo leitura de arquivos: %0.8f\n", t_arquivos);
-			printf("Tempo de processamento: %0.8f\n", t_processamento);
-			printf("Tempo de intercessoes: %0.8f\n", t_intercessao);
+			printf("\nTempo leitura de arquivos: %0.6f\n", t_arquivos);
+			printf("Tempo de processamento: %0.6f\n", t_processamento);
+			printf("Tempo de intercessoes: %0.6f\n", t_intercessao);
 
 			return EXIT_SUCCESS;
 		case 0:
