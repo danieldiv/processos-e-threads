@@ -1,6 +1,8 @@
 #include "./include/kernel.hpp"
 
-Kernel::Kernel() {}
+Kernel::Kernel() {
+	// this->cache = NULL;
+}
 Kernel::~Kernel() {}
 
 void Kernel::setItens(unordered_map < string, vector<int>> *itens) {
@@ -88,14 +90,7 @@ void Kernel::fazCombinacoes(int key, vector<string> colunas,
 void Kernel::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combinacoes) {
 
 	Util <string> u;
-
-	vector<int> v1;
-	vector<int> v2;
-	vector<int> aux;
-
-	vector<int> res;
 	vector<string> dados;
-	vector<string>::iterator it_vec;
 
 	unordered_map < int, unordered_map<string, int>> classes_aux;
 	unordered_map < int, unordered_map<string, int>>::iterator foundClasses_aux;
@@ -118,38 +113,97 @@ void Kernel::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combin
 			dados.clear();
 			u.tokenizar(item, &dados);
 
-			if (dados.size() > 1) {
-				it_vec = dados.begin();
-				v1.clear();
-				v1 = itens->find(*it_vec)->second;
+			checkCache(item, dados, &foundClasses_aux->second);
+		}
+		printResult(classes_aux);
+		classes_aux.clear();
+	}
+	cout << classes_aux.size() << endl;
+}
 
-				++it_vec;
-				res.clear();
-				res.push_back(0); // apenas para inicializar
+/**
+ * @brief pesquisa uma chave primeiro na cache antes de realizar as operacoes de intercessoes
+ *
+ * @param chave chave que sera pesquisa, que sao as combinacoes do arquivo T
+ * @param dados vetor que contem as chaves tokenizadas
+ * @param classes_aux mapa para armazenar o resultado das intercessoes
+ *
+ * utilizada pela funcao fazIntercessoes
+ */
+void Kernel::checkCache(string chave, vector<string> dados,
+	unordered_map<string, int> *classes_aux) {
 
-				for (; it_vec != dados.end() && res.size() > 0; ++it_vec) {
-					v2 = itens->find(*it_vec)->second;
-					intersecaoVetores(v1, v2, &res);
+	unordered_map < string, unordered_map<string, int>>::iterator itr_cache;
+	unordered_map < string, int>::iterator itr_aux;
+	unordered_map < string, int>::iterator itr;
 
-					v1.clear();
-					v2.clear();
-					res.clear();
+	itr_cache = cache.find(chave);
 
-					v1.assign(res.begin(), res.end());
-				}
-				aux.clear();
-				aux.assign(res.begin(), res.end());
+	if (itr_cache != cache.end()) {
+		for (itr = itr_cache->second.begin();itr != itr_cache->second.end();++itr) {
+			itr_aux = classes_aux->find(itr->first);
 
-				if (aux.size() > 0) {
-					checkClasse(aux, &foundClasses_aux->second);
-				}
-			} else {
-				v1 = itens->find(item)->second;
-				checkClasse(v1, &foundClasses_aux->second);
+			if (itr_aux != classes_aux->end()) {
+				itr_aux->second = itr_aux->second + itr->second;
 			}
 		}
+	} else {
+		checkDados(dados, chave, classes_aux);
 	}
-	printResult(classes_aux);
+}
+
+/**
+ * @brief caso a chave pesquisa em checkCache nao existir, esta funcao eh chamada
+ * eh executada a verificacao das combinacoes geradas
+ * caso uma conbinacao tenha um tamanho maior do que 1, primeiro deve ser feita
+ * a intercessa de todos os vetores da combinacao em questao para depois verificar com a classe
+ *
+ * caso o tamanho seja apenas 1, o check da classe eh chamado
+ *
+ * @param dados vetor que contem as chaves tokenizadas
+ * @param chave chave que sera pesquisa, que sao as combinacoes do arquivo T
+ * @param classes_aux mapa para armazenar o resultado das intercessoes
+ *
+ * utilizada pela funcao checkCache
+ */
+void Kernel::checkDados(vector<string> dados, string chave, unordered_map<string, int> *classes_aux) {
+
+	vector<string>::iterator it_vec;
+
+	vector<int> v1;
+	vector<int> v2;
+	vector<int> aux;
+	vector<int> res;
+
+	if (dados.size() > 1) {
+		it_vec = dados.begin();
+		v1.clear();
+		v1 = itens->find(*it_vec)->second;
+
+		++it_vec;
+		res.clear();
+		res.push_back(0); // apenas para inicializar
+
+		for (; it_vec != dados.end() && res.size() > 0; ++it_vec) {
+			v2 = itens->find(*it_vec)->second;
+			intersecaoVetores(v1, v2, &res);
+
+			v1.clear();
+			v2.clear();
+			res.clear();
+
+			v1.assign(res.begin(), res.end());
+		}
+		aux.clear();
+		aux.assign(res.begin(), res.end());
+
+		if (aux.size() > 0) {
+			checkClasse(chave, aux, classes_aux);
+		}
+	} else {
+		v1 = itens->find(chave)->second;
+		checkClasse(chave, v1, classes_aux);
+	}
 }
 
 /**
@@ -161,10 +215,11 @@ void Kernel::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combin
  *
  * utilizada pelo metodo fazIntersecoes
  */
-void Kernel::checkClasse(vector<int> vecA, unordered_map<string, int> *classes_aux) {
+void Kernel::checkClasse(string chave, vector<int> vecA, unordered_map<string, int> *classes_aux) {
 
 	unordered_map < string, vector<int>>::iterator itr;
 	unordered_map<string, int>::iterator itr_aux;
+	unordered_map<string, int> cache_aux;
 
 	vector<int> res;
 	string classe;
@@ -173,9 +228,12 @@ void Kernel::checkClasse(vector<int> vecA, unordered_map<string, int> *classes_a
 		intersecaoVetores(vecA, itr->second, &res);
 		itr_aux = classes_aux->find(itr->first);
 
-		if (itr_aux != classes_aux->end())
+		if (itr_aux != classes_aux->end()) {
 			itr_aux->second = itr_aux->second + res.size();
+			cache_aux.insert({ itr->first, res.size() });
+		}
 	}
+	this->cache.insert({ chave, cache_aux });
 }
 
 /**
@@ -228,7 +286,10 @@ void Kernel::printResult(unordered_map < int, unordered_map<string, int>> classe
 			if (itr_aux_values->second > maior) {
 				classe.assign(itr_aux_values->first);
 				maior = itr_aux_values->second;
+
 			}
+			// cout << itr_aux_values->second << " ";
+			// cout << itr_aux_values->first << endl;
 		}
 		cout << "----> " << ((maior > 0) ? classe : "NULL") << endl;
 	}

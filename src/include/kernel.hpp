@@ -10,10 +10,11 @@ class Kernel {
 private:
 	unordered_map < string, vector<int>> *itens;
 	unordered_map < string, vector<int>> *classes;
-	unordered_map < string, vector<int>> *cache;
+	unordered_map < string, unordered_map<string, int>> cache;
 public:
 	Kernel();
 	~Kernel();
+
 
 	void setItens(unordered_map < string, vector<int>> *itens);
 	void setClasses(unordered_map < string, vector<int>> *classes);
@@ -28,7 +29,9 @@ public:
 		unordered_map < int, vector<string>> *tarefaT_combinacoes);
 
 	void fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combinacoes);
-	void checkClasse(vector<int> vecA, unordered_map<string, int> *classes_aux);
+	void checkCache(string chave, vector<string> dados, unordered_map<string, int> *classes_aux);
+	void checkDados(vector<string> dados, string item, unordered_map<string, int> *classes_aux);
+	void checkClasse(string chave, vector<int> vecA, unordered_map<string, int> *classes_aux);
 	void intersecaoVetores(vector<int> v1, vector<int>v2, vector<int> *res);
 	void printResult(unordered_map < int, unordered_map<string, int>> classes_aux);
 };
