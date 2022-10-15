@@ -10,21 +10,19 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 
 ![Scrennshot](src/resource/imgs/menuPrincipal.png)
 
+- A opção 1 realizada todas as etapas e apresenta as classes encontradas bem como o tempo contabilizado da leitura, processamento e intercessoes.
+
 ## Sistema multitarefa: Etapa I
 
 - Na etapa I é realizada a leitura e tokenização do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/template/util.hpp#L55) em 5 colunas que representam as chaves e as linhas representam os valores. As 4 primeiras colunas serão utilizadas como chaves dos itens e a ultima coluna sera utilizada como chave da classe.
 
 ## Sistema multitarefa: Etapa II
 
-- Para executar a etapa II é necessario liberar a opção `2`, que ficará bloqueada até fazer a leitura do arquivo `D`.
 - Na etapa II é realizada a leitura, tokenização, [processamento](https://github.com/danieldiv/processos-e-threads/blob/main/src/kernel.cpp#L24) e [combinação](https://github.com/danieldiv/processos-e-threads/blob/main/src/kernel.cpp#L56) do arquivo `T`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/template/util.hpp#L102) linha a linha utilizando as colunas como valores e linha como chave.
 
 ## Sistema multitarefa: Etapa III
 
-- Para executar a etapa III é necessario liberar a opção `3`, que ficará bloqueada até fazer a leitura dos arquivos `D` e `T`. Nesta etapa é feita a operação para encontrar a classe da tarefa em T.
-
-- Ao executar a opção `3` será feita a intercessão das `tarefasT` com os `itens`, imprimindo no resultado as linhas com as possiveis classes.
-  - Neste teste teve um acerto de 72% das 50 linhas do arquivo `T`, as diferenças podem ser conferidas em [diferencas](https://github.com/danieldiv/processos-e-threads/blob/main/src/resource/diferencas). As linhas com diferenças possuem um `*` no inicio da linha.
+- Nesta etapa é feita a operação para encontrar a classe da tarefa em T, sendo impresso o resultado das linhas com as possiveis classes.
 
 # Compilação e Execução
 
