@@ -6,9 +6,10 @@
 
 template <typename T>
 class File {
+private:
+	Util<T> util;
 public:
 	File();
-
 	~File();
 
 	void readFile(string file, T *itens, T *classes);
@@ -28,12 +29,10 @@ void File<T>::readFile(string file, T *itens, T *classes) {
 	string line;
 	int contLinha = 0;
 
-	Util<T> u;
-
 	if (myfile.is_open() && myfile.good()) {
 		while (getline(myfile, line))
-			u.tokenizar(line, ++contLinha, itens, classes);
-	} else cout << "nao foi possivel abrir o File" << endl;
+			this->util.tokenizar(line, ++contLinha, itens, classes);
+	} else cout << "Nao foi possivel abrir o arquivo" << endl;
 }
 
 #endif

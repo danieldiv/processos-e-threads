@@ -13,7 +13,6 @@ Combination::~Combination() {}
  * @param k numero de permutacoes a serem feitas
  */
 void Combination::combinate(vector<string> vetor, int perm[], int index, int n, int k) {
-	// void Combination::combinate(vector<string> vetor, int perm[], int index, int n, int k) {
 	static int count = 0;
 
 	if (count == k) {
@@ -40,6 +39,7 @@ void Combination::combinate(vector<string> vetor, int perm[], int index, int n, 
 
 void Combination::atribuiCombinations(vector<string> *combinations) {
 	combinations->assign(this->combinations.begin(), this->combinations.end());
+	this->combinations.clear();
 }
 
 void Combination::printCombinations() {
