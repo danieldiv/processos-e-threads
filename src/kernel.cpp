@@ -44,8 +44,6 @@ void Kernel::itensInComum(
 
 	for (itr = tarefaT_processamento->begin();itr != tarefaT_processamento->end();++itr)
 		fazCombinacoes(itr->first, itr->second, tarefaT_combinacoes);
-	cout << tarefaT_combinacoes->size() << endl;
-	system("read -p \"\nPressione enter para continuar...\" continue");
 }
 
 /**
@@ -70,9 +68,12 @@ void Kernel::fazCombinacoes(int key, vector<string> colunas,
 	vetor.assign(colunas.begin(), colunas.end());
 
 	for (auto item : colunas)
-		this->combination.combinate(vetor, perm, 0, colunas.size(), cont++);
+		this->combination.combinate(vetor, perm, 0, colunas.size(), cont++, key);
 	this->combination.atribuiCombinations(&res);
 	tarefaT_combinacoes->insert({ key, res });
+
+	// this->combination.getPackage();
+
 }
 
 /**

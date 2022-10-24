@@ -4,6 +4,7 @@
 #include "./template/util.hpp"
 #include "./combination.hpp"
 #include "./intersetion.hpp"
+// #include "./packages.hpp"
 
 #include <algorithm>
 
@@ -16,6 +17,7 @@ private:
 	unordered_map < string, vector<int>> *classes;
 	unordered_map < string, unordered_map<string, int>> cache;
 
+	// Packages pkg;
 	Combination combination;
 	Intersection intersection;
 public:

@@ -50,6 +50,7 @@
     "iterator": "cpp",
     "array": "cpp",
     "string_view": "cpp",
-    "chrono": "cpp"
+    "chrono": "cpp",
+    "ratio": "cpp"
   }
 }
