@@ -2,6 +2,10 @@
 #include "./include/kernel.hpp"
 
 #include <ctime>
+#include <ratio>
+#include <chrono>
+
+using namespace std::chrono;
 
 template <typename T>
 void control(T *itens, T *classes, string file) {
@@ -18,7 +22,14 @@ void imprimirMap(T *itens) {
 int menu();
 
 int main() {
-	clock_t start, end;
+	// clock_t start, end;
+
+	steady_clock::time_point t1;
+	steady_clock::time_point t2;
+
+	duration<double> t_arquivos;
+	duration<double> t_processamento;
+	duration<double> t_intercessao;
 
 	unordered_map<string, vector<int>> itens;
 	unordered_map<string, vector<int>> classes;
@@ -29,38 +40,38 @@ int main() {
 
 	int op = -1;
 
-	float t_arquivos;
-	float t_processamento;
-	float t_intercessao;
+
 
 	Kernel k;
 
 	while (op != 0) {
 		system("clear");
 		op = menu();
-		// op = 1;
 		cout << endl;
 
 		switch (op) {
 		case 1:
-			start = clock();
+			t1 = steady_clock::now();
 			control(&itens, &classes, "D");
 			control(&tarefaT, &tarefaT_processamento, "T");
-			t_arquivos = (float)(clock() - start) / CLOCKS_PER_SEC;
+			t2 = steady_clock::now();
+			t_arquivos = duration_cast<duration<double>>(t2 - t1);
 
-			start = clock();
+			t1 = steady_clock::now();
 			k.setItens(&itens);
 			k.setClasses(&classes);
 			k.itensInComum(&tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
-			t_processamento = (float)(clock() - start) / CLOCKS_PER_SEC;
+			t2 = steady_clock::now();
+			t_processamento = duration_cast<duration<double>>(t2 - t1);
 
-			start = clock();
+			t1 = steady_clock::now();
 			k.fazIntersecoes(&tarefaT_combinacoes);
-			t_intercessao = (float)(clock() - start) / CLOCKS_PER_SEC;
+			t2 = steady_clock::now();
+			t_intercessao = duration_cast<duration<double>>(t2 - t1);
 
-			printf("\nTempo leitura de arquivos: %0.6f\n", t_arquivos);
-			printf("Tempo de processamento: %0.6f\n", t_processamento);
-			printf("Tempo de intercessoes: %0.6f\n", t_intercessao);
+			cout << "\nTempo leitura de arquivos: " << t_arquivos.count() << endl;
+			cout << "Tempo de processamento: " << t_processamento.count() << endl;
+			cout << "Tempo de intercessoes: " << t_intercessao.count() << endl;
 
 			return EXIT_SUCCESS;
 		case 0:

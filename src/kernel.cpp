@@ -153,10 +153,10 @@ void Kernel::checkCache(string chave, vector<string> dados,
 }
 
 /**
- * @brief caso a chave pesquisa em checkCache nao existir, esta funcao eh chamada
- * eh executada a verificacao das combinacoes geradas
+ * @brief caso a chave pesquisada em checkCache nao existir, esta funcao eh chamada
+ * sendo executada a verificacao das combinacoes geradas
  * caso uma conbinacao tenha um tamanho maior do que 1, primeiro deve ser feita
- * a intercessa de todos os vetores da combinacao em questao para depois verificar com a classe
+ * a intercessao de todos os vetores da combinacao em questao para depois verificar com a classe
  *
  * caso o tamanho seja apenas 1, o check da classe eh chamado
  *
