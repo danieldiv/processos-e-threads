@@ -3,11 +3,13 @@
 
 #include <map>
 #include <set>
-#include <string>
+#include <vector>
 #include <utility>
 
+#include "./template/util.hpp"
+
 /**
- * @brief descricao do map pacotes
+ * @brief descricao do map package
  *
  * pair <string, int> -> string = coluna, int = linha
  * set <pair> -> ordena pelo pair, no caso por coluna
@@ -16,13 +18,20 @@
  */
 
 class Packages {
-protected:
-	std::map < int, std::set < std::pair < std::string, int>>> package;
+private:
+	Util<string> util;
 public:
-	void insertDado(int _N, std::string chave, int linha);
-	void updateDado(int _N, std::string chave, int linha);
+	map < int, set < pair < string, int>>> package;
+	void quebrarEmPacotes(unordered_map < int, vector<string>> combinacoes);
 
-	std::map < int, std::set < std::pair < std::string, int>>> getPackage();
+	void insertDado(int _N, string chave, int linha);
+	void updateDado(int _N, string chave, int linha);
+	void printPackage();
+
+
+	// void fazIntersecoes2();
+
+	// void atribuiPackage(map < int, set < pair < string, int>>> *newPackage);
 };
 
 #endif

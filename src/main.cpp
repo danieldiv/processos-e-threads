@@ -20,10 +20,36 @@ void imprimirMap(T *itens) {
 }
 
 int menu();
+void escalonador(politicas politica);
 
 int main() {
-	// clock_t start, end;
+	int op = -1;
 
+	while (op != 0) {
+		system("clear");
+		op = menu();
+		cout << endl;
+
+		switch (op) {
+		case 1:
+			escalonador(fifo);
+			break;
+		case 2:
+			escalonador(lowest_job_first);
+			break;
+		case 0:
+			cout << "O programa sera finalizado!" << endl;
+			return EXIT_SUCCESS;
+		default:
+			cout << (RED "Opcao invalida!" RESET) << endl;
+		}
+		system("read -p \"\nPressione enter para continuar...\" continue");
+	}
+
+	return EXIT_SUCCESS;
+}
+
+void escalonador(politicas politica) {
 	steady_clock::time_point t1;
 	steady_clock::time_point t2;
 
@@ -36,64 +62,44 @@ int main() {
 
 	unordered_map<int, vector<string>> tarefaT;
 	unordered_map<int, vector<string>> tarefaT_processamento;
-	unordered_map<int, vector<string>> tarefaT_combinacoes;
-
-	int op = -1;
-
-
 
 	Kernel k;
 
-	while (op != 0) {
-		system("clear");
-		op = menu();
-		cout << endl;
+	t1 = steady_clock::now();
+	control(&itens, &classes, "D");
+	control(&tarefaT, &tarefaT_processamento, "T");
+	t2 = steady_clock::now();
+	t_arquivos = duration_cast< duration<double> >(t2 - t1);
 
-		switch (op) {
-		case 1:
-			t1 = steady_clock::now();
-			control(&itens, &classes, "D");
-			control(&tarefaT, &tarefaT_processamento, "T");
-			t2 = steady_clock::now();
-			t_arquivos = duration_cast<duration<double>>(t2 - t1);
+	t1 = steady_clock::now();
+	k.setItens(&itens);
+	k.setClasses(&classes);
+	k.itensInComum(politica, &tarefaT, &tarefaT_processamento/*, &tarefaT_combinacoes*/);
+	t2 = steady_clock::now();
+	t_processamento = duration_cast< duration<double> >(t2 - t1);
 
-			t1 = steady_clock::now();
-			k.setItens(&itens);
-			k.setClasses(&classes);
-			k.itensInComum(&tarefaT, &tarefaT_processamento, &tarefaT_combinacoes);
-			t2 = steady_clock::now();
-			t_processamento = duration_cast<duration<double>>(t2 - t1);
+	t1 = steady_clock::now();
+	// k.fazIntersecoes();
+	t2 = steady_clock::now();
+	t_intercessao = duration_cast< duration<double> >(t2 - t1);
 
-			t1 = steady_clock::now();
-			k.fazIntersecoes(&tarefaT_combinacoes);
-			t2 = steady_clock::now();
-			t_intercessao = duration_cast<duration<double>>(t2 - t1);
-
-			cout << "\nTempo leitura de arquivos: " << t_arquivos.count() << endl;
-			cout << "Tempo de processamento: " << t_processamento.count() << endl;
-			cout << "Tempo de intercessoes: " << t_intercessao.count() << endl;
-
-			return EXIT_SUCCESS;
-		case 0:
-			cout << "O programa sera finalizado!" << endl;
-			return EXIT_SUCCESS;
-		default:
-			cout << (RED "Opcao invalida!" RESET) << endl;
-		}
-		system("read -p \"\nPressione enter para continuar...\" continue");
-	}
-	return EXIT_SUCCESS;
+	cout << "\nTempo leitura de arquivos: " << t_arquivos.count() << endl;
+	cout << "Tempo de processamento: " << t_processamento.count() << endl;
+	cout << "Tempo de intercessoes: " << t_intercessao.count() << endl;
 }
 
 int menu() {
-	cout << "=================" << endl;
-	cout << "   MENU OPCOES" << endl;
-	cout << "=================" << endl << endl;
+	cout << "================" << endl;
+	cout << "   POLITICAS" << endl;
+	cout << "================" << endl << endl;
 
-	cout << "1 - Processar" << endl;
+	cout << "1 - Fifo" << endl;
+	cout << "2 - Menor job primeiro" << endl;
+	// cout << "1 - Maior job primeiro" << endl;
+	// cout << "1 - Prioridade job primeiro" << endl;
 	cout << "0 - Sair" << endl;
 
-	cout << "\nEscolha uma opcao: ";
+	cout << "\nEscolha uma politica: ";
 
 	int op;
 	cin >> op;

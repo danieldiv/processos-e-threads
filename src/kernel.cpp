@@ -6,13 +6,9 @@ Kernel::Kernel() {
 }
 Kernel::~Kernel() {}
 
-void Kernel::setItens(unordered_map < string, vector<int>> *itens) {
-	this->itens = itens;
-}
-
-void Kernel::setClasses(unordered_map < string, vector<int>> *classes) {
-	this->classes = classes;
-}
+// void Kernel::setPackages(map < int, set < pair < string, int>>> package) { this->pkg = package; }
+void Kernel::setItens(unordered_map < string, vector<int>> *itens) { this->itens = itens; }
+void Kernel::setClasses(unordered_map < string, vector<int>> *classes) { this->classes = classes; }
 
 /**
  * @brief faz o processamento de cada linha do arquivo T e seleciona os itens em comum com o mapeamento do arquivo D
@@ -25,9 +21,9 @@ void Kernel::setClasses(unordered_map < string, vector<int>> *classes) {
  * chamado no main
  */
 void Kernel::itensInComum(
+	politicas politica,
 	unordered_map < int, vector<string>> *tarefaT,
-	unordered_map < int, vector<string>> *tarefaT_processamento,
-	unordered_map < int, vector<string>> *tarefaT_combinacoes) {
+	unordered_map < int, vector<string>> *tarefaT_processamento) {
 
 	unordered_map < int, vector<string>>::iterator itr;
 	unordered_map < int, vector<string>>::iterator foundLinha;
@@ -43,7 +39,13 @@ void Kernel::itensInComum(
 	}
 
 	for (itr = tarefaT_processamento->begin();itr != tarefaT_processamento->end();++itr)
-		fazCombinacoes(itr->first, itr->second, tarefaT_combinacoes);
+		fazCombinacoes(itr->first, itr->second);
+
+	if (politica == lowest_job_first) {
+		this->quebrarEmPacotes(tarefaT_combinacoes);
+		this->fazIntersecoes2();
+		// this->printPackage();
+	}
 }
 
 /**
@@ -55,8 +57,7 @@ void Kernel::itensInComum(
  *
  * utilizada pelo metodo itenInComum
  */
-void Kernel::fazCombinacoes(int key, vector<string> colunas,
-	unordered_map < int, vector<string>> *tarefaT_combinacoes) {
+void Kernel::fazCombinacoes(int key, vector<string> colunas) {
 
 	int perm[N] = { 0 };
 
@@ -70,10 +71,7 @@ void Kernel::fazCombinacoes(int key, vector<string> colunas,
 	for (auto item : colunas)
 		this->combination.combinate(vetor, perm, 0, colunas.size(), cont++, key);
 	this->combination.atribuiCombinations(&res);
-	tarefaT_combinacoes->insert({ key, res });
-
-	// this->combination.getPackage();
-
+	tarefaT_combinacoes.insert({ key, res });
 }
 
 /**
@@ -88,7 +86,7 @@ void Kernel::fazCombinacoes(int key, vector<string> colunas,
  *
  * chamado no main
  */
-void Kernel::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combinacoes) {
+void Kernel::fazIntersecoes() {
 
 	unordered_map < int, unordered_map<string, int>> classes_aux;
 	unordered_map < int, unordered_map<string, int>>::iterator foundClasses_aux;
@@ -103,12 +101,11 @@ void Kernel::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combin
 	for (itr_classes = classes->begin(); itr_classes != classes->end(); ++itr_classes)
 		value_class_aux.insert({ itr_classes->first, 0 });
 
-	for (itr_combinacoes = tarefaT_combinacoes->begin(); itr_combinacoes != tarefaT_combinacoes->end(); ++itr_combinacoes) {
+	for (itr_combinacoes = tarefaT_combinacoes.begin(); itr_combinacoes != tarefaT_combinacoes.end(); ++itr_combinacoes) {
 		classes_aux.insert({ itr_combinacoes->first, value_class_aux });
 		foundClasses_aux = classes_aux.find(itr_combinacoes->first);
 
 		for (auto item : itr_combinacoes->second) {
-
 			checkCache(item, &foundClasses_aux->second);
 		}
 		printResult(classes_aux);
@@ -116,6 +113,20 @@ void Kernel::fazIntersecoes(unordered_map < int, vector<string>> *tarefaT_combin
 	}
 	cout << endl << "Combinacoes encontrada na cache " << this->cont_cache_found << endl;
 	cout << "Computacoes realizadas " << this->cont_cache_not_found << endl;
+}
+
+void Kernel::fazIntersecoes2() {
+	map < int, set < pair < string, int>>>::iterator it_pkg;
+
+	for (it_pkg = package.begin(); it_pkg != package.end(); ++it_pkg) {
+		cout << "[ " << it_pkg->first << " ]" << endl;
+
+		for (auto value : it_pkg->second) {
+			cout << value.first << " " << value.second << endl;
+		}
+		cout << endl;
+	}
+	cout << endl;
 }
 
 /**
@@ -229,7 +240,7 @@ void Kernel::checkClasse(string chave, vector<int> vecA, unordered_map<string, i
 	vector<int> res;
 	string classe;
 
-	for (itr = classes->begin();itr != classes->end();++itr) {
+	for (itr = classes->begin(); itr != classes->end();++itr) {
 		this->intersection.intersecaoVetores(vecA, itr->second, &res);
 		itr_aux = classes_aux->find(itr->first);
 

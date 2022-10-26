@@ -28,13 +28,13 @@ void Combination::combinate(vector<string> vetor,
 		if (!temp.empty()) {
 			temp.erase(temp.end() - 1);
 
-			this->it_pkg = this->package.find(k);
+			// this->it_pkg = this->package.find(k);
 
-			if (this->it_pkg != this->package.end()) {
-				this->updateDado(k, temp, linha);
-			} else {
-				this->insertDado(k, temp, linha);
-			}
+			// if (this->it_pkg != this->package.end()) {
+			// 	this->updateDado(k, temp, linha);
+			// } else {
+			// 	this->insertDado(k, temp, linha);
+			// }
 
 			combinations.push_back(temp);
 		}
@@ -59,46 +59,4 @@ void Combination::printCombinations() {
 	for (auto item : combinations)
 		cout << "[" << item << "] ";
 	cout << endl;
-}
-
-void Packages::insertDado(int _N, std::string chave, int linha) {
-	pair<string, int> dado;
-	set<pair<string, int>> valores;
-
-	dado = make_pair(chave, linha);
-	valores.insert(dado);
-
-	this->package.insert({ _N, valores });
-}
-
-void Packages::updateDado(int _N, std::string chave, int linha) {
-	map < int, set < pair < string, int>>>::iterator it_pkg;
-
-	pair<string, int> dado;
-
-	dado = make_pair(chave, linha);
-
-	it_pkg = this->package.find(_N);
-	it_pkg->second.insert(dado);
-}
-
-std::map < int, std::set < std::pair < std::string, int>>> Packages::getPackage() {
-	map < int, std::set < std::pair < std::string, int>>> m;
-
-	map < int, set < pair < string, int>>>::iterator it_pkg;
-
-	for (it_pkg = this->package.begin();
-		it_pkg != this->package.end();
-		++it_pkg) {
-
-		cout << it_pkg->first << endl;
-
-		for (auto value : it_pkg->second) {
-			cout << value.first << " " << value.second << endl;
-		}
-		cout << endl;
-	}
-	cout << endl;
-
-	return m;
 }
