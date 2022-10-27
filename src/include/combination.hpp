@@ -3,8 +3,8 @@
 
 #include <unordered_map>
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -16,8 +16,7 @@ public:
 	Combination();
 	~Combination();
 
-	// void combinate(vector<string> vetor, int perm[], int index, int n, int k);
-	void combinate(vector<string> vetor, int perm[], int index, int n, int k);
+	void combinate(vector<string> vetor, int perm[], int index, int n, int k, int linha);
 	void printCombinations();
 	void atribuiCombinations(vector<string> *combinations);
 };

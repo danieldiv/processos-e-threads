@@ -4,11 +4,16 @@
 #include <unordered_map>
 #include <iostream>
 #include <sstream>
-#include <string>
 #include <vector>
-// #include <vector>
 
 #define N 5
+
+enum politicas {
+	fifo,
+	lowest_job_first,
+	biggest_job_first,
+	priority
+};
 
 #define RED 	"\x1b[31m"
 #define GREEN	"\x1b[32m"
@@ -125,6 +130,7 @@ void Util<T>::tokenizar(string text, int linha,
 
 template<typename T>
 void Util<T>::tokenizar(string text, vector<string> *tokens) {
+	tokens->clear();
 	char del = '-';
 
 	stringstream sstream(text);
