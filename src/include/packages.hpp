@@ -21,17 +21,12 @@ class Packages {
 private:
 	Util<string> util;
 public:
-	map < int, set < pair < string, int>>> package;
+	map < int, set < pair < string, int>>> packages;
 	void quebrarEmPacotes(unordered_map < int, vector<string>> combinacoes);
 
 	void insertDado(int _N, string chave, int linha);
 	void updateDado(int _N, string chave, int linha);
 	void printPackage();
-
-
-	// void fazIntersecoes2();
-
-	// void atribuiPackage(map < int, set < pair < string, int>>> *newPackage);
 };
 
 #endif

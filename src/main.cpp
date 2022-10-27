@@ -74,18 +74,11 @@ void escalonador(politicas politica) {
 	t1 = steady_clock::now();
 	k.setItens(&itens);
 	k.setClasses(&classes);
-	k.itensInComum(politica, &tarefaT, &tarefaT_processamento/*, &tarefaT_combinacoes*/);
+	k.itensInComum(politica, &tarefaT, &tarefaT_processamento);
 	t2 = steady_clock::now();
 	t_processamento = duration_cast< duration<double> >(t2 - t1);
 
-	t1 = steady_clock::now();
-	// k.fazIntersecoes();
-	t2 = steady_clock::now();
-	t_intercessao = duration_cast< duration<double> >(t2 - t1);
-
-	cout << "\nTempo leitura de arquivos: " << t_arquivos.count() << endl;
-	cout << "Tempo de processamento: " << t_processamento.count() << endl;
-	cout << "Tempo de intercessoes: " << t_intercessao.count() << endl;
+	cout << "\nTempo de processamento: " << t_processamento.count() << endl;
 }
 
 int menu() {

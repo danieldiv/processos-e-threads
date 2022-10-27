@@ -2,13 +2,24 @@
 
 Kernel::Kernel() {
 	this->cont_cache_found = 0;
-	this->cont_cache_not_found = 0;
 }
 Kernel::~Kernel() {}
 
 // void Kernel::setPackages(map < int, set < pair < string, int>>> package) { this->pkg = package; }
 void Kernel::setItens(unordered_map < string, vector<int>> *itens) { this->itens = itens; }
-void Kernel::setClasses(unordered_map < string, vector<int>> *classes) { this->classes = classes; }
+
+void Kernel::setClasses(unordered_map < string, vector<int>> *classes) {
+	this->classes = classes;
+	this->setClassModel();
+}
+
+// cria um map das classes com valor igual a 0
+void Kernel::setClassModel() {
+	this->class_model.clear();
+	for (itr_classes = classes->begin(); itr_classes != classes->end(); ++itr_classes) {
+		this->class_model.insert({ itr_classes->first, 0 });
+	}
+}
 
 /**
  * @brief faz o processamento de cada linha do arquivo T e seleciona os itens em comum com o mapeamento do arquivo D
@@ -41,10 +52,11 @@ void Kernel::itensInComum(
 	for (itr = tarefaT_processamento->begin();itr != tarefaT_processamento->end();++itr)
 		fazCombinacoes(itr->first, itr->second);
 
-	if (politica == lowest_job_first) {
+	if (politica == fifo) {
+		this->fazIntersecoes();
+	} else if (politica == lowest_job_first) {
 		this->quebrarEmPacotes(tarefaT_combinacoes);
 		this->fazIntersecoes2();
-		// this->printPackage();
 	}
 }
 
@@ -82,27 +94,17 @@ void Kernel::fazCombinacoes(int key, vector<string> colunas) {
  * ate N, para cada intercessao eh impresso o resultado a qual classe pertence a
  * tarefa T
  *
- * @param tarefaT_combinacoes
- *
- * chamado no main
+ * chamado no main quando a politica fifo for escolhida
  */
 void Kernel::fazIntersecoes() {
-
 	unordered_map < int, unordered_map<string, int>> classes_aux;
 	unordered_map < int, unordered_map<string, int>>::iterator foundClasses_aux;
 
 	unordered_map < int, vector<int>>::iterator found_cache;
 	unordered_map < int, vector<string>>::iterator itr_combinacoes;
 
-	unordered_map < string, int> value_class_aux;
-	unordered_map < string, vector<int>>::iterator itr_classes;
-
-	// cria um map das classes com valor igual a 0
-	for (itr_classes = classes->begin(); itr_classes != classes->end(); ++itr_classes)
-		value_class_aux.insert({ itr_classes->first, 0 });
-
 	for (itr_combinacoes = tarefaT_combinacoes.begin(); itr_combinacoes != tarefaT_combinacoes.end(); ++itr_combinacoes) {
-		classes_aux.insert({ itr_combinacoes->first, value_class_aux });
+		classes_aux.insert({ itr_combinacoes->first, this->class_model });
 		foundClasses_aux = classes_aux.find(itr_combinacoes->first);
 
 		for (auto item : itr_combinacoes->second) {
@@ -111,22 +113,29 @@ void Kernel::fazIntersecoes() {
 		printResult(classes_aux);
 		classes_aux.clear();
 	}
-	cout << endl << "Combinacoes encontrada na cache " << this->cont_cache_found << endl;
-	cout << "Computacoes realizadas " << this->cont_cache_not_found << endl;
+	printAnalize();
 }
 
+/**
+ * @brief eh chamado quando a politica lowest_job_first for escolhida no main
+ *
+ * nesta funcao o map dos resultados inicialmente estao todos separados, logo
+ * nao eh possivel imprimir a possivel classe da tarefa T em cada for pois
+ * eh necessario percorrer todos os pacotes
+ */
 void Kernel::fazIntersecoes2() {
+	this->cache.clear();
+
 	map < int, set < pair < string, int>>>::iterator it_pkg;
+	unordered_map < int, unordered_map<string, int>> classes_res;
 
-	for (it_pkg = package.begin(); it_pkg != package.end(); ++it_pkg) {
-		cout << "[ " << it_pkg->first << " ]" << endl;
-
+	for (it_pkg = packages.begin(); it_pkg != packages.end(); ++it_pkg) {
 		for (auto value : it_pkg->second) {
-			cout << value.first << " " << value.second << endl;
+			checkCache2(value.first, value.second, &classes_res);
 		}
-		cout << endl;
 	}
-	cout << endl;
+	printResult(classes_res);
+	printAnalize();
 }
 
 /**
@@ -141,25 +150,93 @@ void Kernel::fazIntersecoes2() {
 void Kernel::checkCache(string chave,
 	unordered_map<string, int> *classes_aux) {
 
-	unordered_map < string, unordered_map<string, int>>::iterator itr_cache;
 	unordered_map < string, int>::iterator itr_aux;
 	unordered_map < string, int>::iterator itr;
 
-	itr_cache = cache.find(chave);
+	this->itr_cache = cache.find(chave);
 
 	if (itr_cache != cache.end()) {
-		for (itr = itr_cache->second.begin();itr != itr_cache->second.end();++itr) {
+		for (itr = itr_cache->second.class_model.begin();itr != itr_cache->second.class_model.end();++itr) {
 			itr_aux = classes_aux->find(itr->first);
 
 			if (itr_aux != classes_aux->end()) {
 				itr_aux->second = itr_aux->second + itr->second;
-				this->cont_cache_found++;
 			}
 		}
+		this->cont_cache_found++;
 	} else {
-		this->cont_cache_not_found++;
+		Cache cache_aux;
+		cache_aux.class_model.clear();
+		cache_aux.class_model = this->class_model;
+
+		this->cache.insert({ chave, cache_aux });
 		checkDados(chave, classes_aux);
 	}
+}
+
+/**
+ * @brief pesquisa uma chave primeiro na cache antes de realizar as operacoes de intercessoes
+ *
+ * @param chave chave que sera pesquisa, que sao as combinacoes do arquivo T
+ *
+ * utilizada pela funcao fazIntercessoes2
+ */
+void Kernel::checkCache2(string chave, int linha,
+	unordered_map < int, unordered_map<string, int>> *classes_res) {
+
+	unordered_map < int, unordered_map<string, int>>::iterator found_classes_res;
+	unordered_map < string, int>::iterator itr;
+	unordered_map < string, int>::iterator itr_aux;
+
+	this->itr_cache = this->cache.find(chave);
+
+	if (itr_cache != this->cache.end()) {
+		found_classes_res = classes_res->find(linha);
+		this->cont_cache_found++;
+
+		if (found_classes_res == classes_res->end()) {
+			classes_res->insert({ linha, this->class_model });
+			found_classes_res = classes_res->find(linha);
+		}
+
+		for (itr = itr_cache->second.class_model.begin(); itr != itr_cache->second.class_model.end(); ++itr) {
+			itr_aux = found_classes_res->second.find(itr->first);
+
+			if (itr_aux != found_classes_res->second.end())
+				itr_aux->second = itr_aux->second + itr->second;
+		}
+	} else {
+		checkDados2(chave, linha, classes_res);
+	}
+}
+
+/**
+ * @brief o mesmo que o checkDados
+ *
+ * @param chave chave que sera pesquisa, que sao as combinacoes do arquivo T
+ * @param linha numero da linha do processo
+ * @param classes_res mapa para armazenar o resultado das intercessoes
+ *
+ * utilizada pela funcao checkCache2
+ */
+void Kernel::checkDados2(string chave, int linha,
+	unordered_map < int, unordered_map<string, int>> *classes_res) {
+
+	unordered_map < int, unordered_map<string, int>>::iterator found_classes_res;
+	Cache cache_aux;
+
+	cache_aux.class_model.clear();
+	cache_aux.class_model = this->class_model;
+
+	this->cache.insert({ chave, cache_aux });
+
+	found_classes_res = classes_res->find(linha);
+
+	if (found_classes_res == classes_res->end()) {
+		classes_res->insert({ linha, this->class_model });
+		found_classes_res = classes_res->find(linha);
+	}
+	checkDados(chave, &found_classes_res->second);
 }
 
 /**
@@ -235,10 +312,12 @@ void Kernel::checkClasse(string chave, vector<int> vecA, unordered_map<string, i
 
 	unordered_map < string, vector<int>>::iterator itr;
 	unordered_map<string, int>::iterator itr_aux;
-	unordered_map<string, int> cache_aux;
 
 	vector<int> res;
 	string classe;
+
+	Cache cache_aux;
+	cache_aux.setZero(false);
 
 	for (itr = classes->begin(); itr != classes->end();++itr) {
 		this->intersection.intersecaoVetores(vecA, itr->second, &res);
@@ -246,10 +325,16 @@ void Kernel::checkClasse(string chave, vector<int> vecA, unordered_map<string, i
 
 		if (itr_aux != classes_aux->end()) {
 			itr_aux->second = itr_aux->second + res.size();
-			cache_aux.insert({ itr->first, res.size() });
+			cache_aux.class_model.insert({ itr->first, res.size() });
 		}
 	}
-	this->cache.insert({ chave, cache_aux });
+	this->itr_cache = this->cache.find(chave);
+
+	if (itr_cache != this->cache.end()) {
+		itr_cache->second = cache_aux;
+	} else {
+		this->cache.insert({ chave, cache_aux });
+	}
 }
 
 /**
@@ -281,9 +366,28 @@ void Kernel::printResult(unordered_map < int, unordered_map<string, int>> classe
 				maior = itr_aux_values->second;
 
 			}
-			// cout << itr_aux_values->second << " ";
-			// cout << itr_aux_values->first << endl;
 		}
 		cout << "----> " << ((maior > 0) ? classe : "NULL") << endl;
 	}
+}
+
+/**
+ * @brief imprime as analizes de chamadas realizadas ou nao na chache
+ *
+ * chamado pelo metodo fazIntercessao e fazIntercessao2
+ */
+void Kernel::printAnalize() {
+	int quant = 0;
+
+	for (this->itr_cache = this->cache.begin(); itr_cache != this->cache.end(); ++itr_cache)
+		if (!itr_cache->second.getZero()) quant++;
+
+	cout << endl << "Cache com valor {0}: " << this->cache.size() - quant << endl;
+	cout << "Cache com valor != {0}: " << quant << endl;
+	cout << "Computacoes realizadas: " << this->cache.size() << endl;
+	cout << "Combinacoes encontrada na cache: " << this->cont_cache_found << endl;
+	cout << endl << "Total de iteracoes: "
+		<< this->cache.size() << " + "
+		<< this->cont_cache_found << " = "
+		<< this->cont_cache_found + this->cache.size() << endl;
 }

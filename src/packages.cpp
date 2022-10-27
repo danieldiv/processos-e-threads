@@ -12,9 +12,9 @@ void Packages::quebrarEmPacotes(unordered_map < int, vector<string>> combinacoes
 			util.tokenizar(combinacao, &vec);
 
 			tam = vec.size();
-			it_pkg = package.find(tam);
+			it_pkg = packages.find(tam);
 
-			if (it_pkg != package.end())
+			if (it_pkg != packages.end())
 				updateDado(tam, combinacao, itr->first);
 			else
 				insertDado(tam, combinacao, itr->first);
@@ -36,7 +36,7 @@ void Packages::insertDado(int _N, string chave, int linha) {
 	dado = make_pair(chave, linha);
 	valores.insert(dado);
 
-	this->package.insert({ _N, valores });
+	this->packages.insert({ _N, valores });
 }
 
 void Packages::updateDado(int _N, string chave, int linha) {
@@ -46,14 +46,14 @@ void Packages::updateDado(int _N, string chave, int linha) {
 
 	dado = make_pair(chave, linha);
 
-	it_pkg = this->package.find(_N);
+	it_pkg = this->packages.find(_N);
 	it_pkg->second.insert(dado);
 }
 
 void Packages::printPackage() {
 	map < int, set < pair < string, int>>>::iterator it_pkg;
 
-	for (it_pkg = this->package.begin(); it_pkg != this->package.end(); ++it_pkg) {
+	for (it_pkg = this->packages.begin(); it_pkg != this->packages.end(); ++it_pkg) {
 		cout << "[ " << it_pkg->first << " ]" << endl;
 
 		for (auto value : it_pkg->second) {

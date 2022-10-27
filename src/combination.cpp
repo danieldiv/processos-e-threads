@@ -27,15 +27,6 @@ void Combination::combinate(vector<string> vetor,
 
 		if (!temp.empty()) {
 			temp.erase(temp.end() - 1);
-
-			// this->it_pkg = this->package.find(k);
-
-			// if (this->it_pkg != this->package.end()) {
-			// 	this->updateDado(k, temp, linha);
-			// } else {
-			// 	this->insertDado(k, temp, linha);
-			// }
-
 			combinations.push_back(temp);
 		}
 
