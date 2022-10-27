@@ -5,6 +5,7 @@
 #include "./intersetion.hpp"
 #include "./packages.hpp"
 #include "./cache.hpp"
+#include "./model.hpp"
 
 #include <algorithm>
 
@@ -14,16 +15,12 @@ private:
 	int cont_cache_not_found;
 
 	unordered_map < string, int> class_model;
-	unordered_map < string, vector<int>> *itens;
-	unordered_map < string, vector<int>> *classes;
-	// unordered_map < string, unordered_map<string, int>> cache;
 	unordered_map < string, Cache> cache;
-
-	unordered_map < int, vector<string>> tarefaT_combinacoes;
 
 	unordered_map < string, Cache>::iterator itr_cache;
 	unordered_map < string, vector<int>>::iterator itr_classes;
 
+	Dados dados;
 	Combination combination;
 	Intersection intersection;
 public:
@@ -32,15 +29,10 @@ public:
 	Kernel();
 	~Kernel();
 
-	void setItens(unordered_map < string, vector<int>> *itens);
-	void setClasses(unordered_map < string, vector<int>> *classes);
+	void setDados(Dados dados);
 	void setClassModel();
 
-	void itensInComum(
-		politicas politica,
-		unordered_map < int, vector<string>> *tarefaT,
-		unordered_map < int, vector<string>> *tarefaT_processamento);
-
+	void itensInComum(politicas politica);
 	void fazCombinacoes(int key, vector<string> colunas);
 	void printResult(unordered_map < int, unordered_map<string, int>> classes_aux);
 	void printAnalize();

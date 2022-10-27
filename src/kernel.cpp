@@ -1,22 +1,20 @@
 #include "./include/kernel.hpp"
 
-Kernel::Kernel() {
-	this->cont_cache_found = 0;
-}
+Dados::Dados() {}
+Dados::~Dados() {}
+
+Kernel::Kernel() { this->cont_cache_found = 0; }
 Kernel::~Kernel() {}
 
-// void Kernel::setPackages(map < int, set < pair < string, int>>> package) { this->pkg = package; }
-void Kernel::setItens(unordered_map < string, vector<int>> *itens) { this->itens = itens; }
-
-void Kernel::setClasses(unordered_map < string, vector<int>> *classes) {
-	this->classes = classes;
+void Kernel::setDados(Dados dados) {
+	this->dados = dados;
 	this->setClassModel();
 }
 
 // cria um map das classes com valor igual a 0
 void Kernel::setClassModel() {
 	this->class_model.clear();
-	for (itr_classes = classes->begin(); itr_classes != classes->end(); ++itr_classes) {
+	for (itr_classes = this->dados.classes.begin(); itr_classes != this->dados.classes.end(); ++itr_classes) {
 		this->class_model.insert({ itr_classes->first, 0 });
 	}
 }
@@ -31,31 +29,27 @@ void Kernel::setClassModel() {
  *
  * chamado no main
  */
-void Kernel::itensInComum(
-	politicas politica,
-	unordered_map < int, vector<string>> *tarefaT,
-	unordered_map < int, vector<string>> *tarefaT_processamento) {
-
+void Kernel::itensInComum(politicas politica) {
 	unordered_map < int, vector<string>>::iterator itr;
 	unordered_map < int, vector<string>>::iterator foundLinha;
 	unordered_map < string, vector<int>>::iterator foundItem;
 
-	for (itr = tarefaT->begin();itr != tarefaT->end();++itr) {
-		foundLinha = tarefaT_processamento->find(itr->first);
+	for (itr = this->dados.tarefaT.begin();itr != this->dados.tarefaT.end();++itr) {
+		foundLinha = this->dados.tarefaT_processamento.find(itr->first);
 
 		for (auto item : itr->second) {
-			foundItem = itens->find(item);
-			if (foundItem != itens->end()) foundLinha->second.push_back(item);
+			foundItem = this->dados.itens.find(item);
+			if (foundItem != this->dados.itens.end()) foundLinha->second.push_back(item);
 		}
 	}
 
-	for (itr = tarefaT_processamento->begin();itr != tarefaT_processamento->end();++itr)
+	for (itr = this->dados.tarefaT_processamento.begin();itr != this->dados.tarefaT_processamento.end();++itr)
 		fazCombinacoes(itr->first, itr->second);
 
 	if (politica == fifo) {
 		this->fazIntersecoes();
 	} else if (politica == lowest_job_first) {
-		this->quebrarEmPacotes(tarefaT_combinacoes);
+		this->quebrarEmPacotes(this->dados.tarefaT_combinacoes);
 		this->fazIntersecoes2();
 	}
 }
@@ -83,7 +77,7 @@ void Kernel::fazCombinacoes(int key, vector<string> colunas) {
 	for (auto item : colunas)
 		this->combination.combinate(vetor, perm, 0, colunas.size(), cont++, key);
 	this->combination.atribuiCombinations(&res);
-	tarefaT_combinacoes.insert({ key, res });
+	this->dados.tarefaT_combinacoes.insert({ key, res });
 }
 
 /**
@@ -103,7 +97,7 @@ void Kernel::fazIntersecoes() {
 	unordered_map < int, vector<int>>::iterator found_cache;
 	unordered_map < int, vector<string>>::iterator itr_combinacoes;
 
-	for (itr_combinacoes = tarefaT_combinacoes.begin(); itr_combinacoes != tarefaT_combinacoes.end(); ++itr_combinacoes) {
+	for (itr_combinacoes = this->dados.tarefaT_combinacoes.begin(); itr_combinacoes != this->dados.tarefaT_combinacoes.end(); ++itr_combinacoes) {
 		classes_aux.insert({ itr_combinacoes->first, this->class_model });
 		foundClasses_aux = classes_aux.find(itr_combinacoes->first);
 
@@ -147,8 +141,7 @@ void Kernel::fazIntersecoes2() {
  *
  * utilizada pela funcao fazIntercessoes
  */
-void Kernel::checkCache(string chave,
-	unordered_map<string, int> *classes_aux) {
+void Kernel::checkCache(string chave, unordered_map<string, int> *classes_aux) {
 
 	unordered_map < string, int>::iterator itr_aux;
 	unordered_map < string, int>::iterator itr;
@@ -271,14 +264,14 @@ void Kernel::checkDados(string chave, unordered_map<string, int> *classes_aux) {
 	if (dados.size() > 1) {
 		it_vec = dados.begin();
 		v1.clear();
-		v1 = itens->find(*it_vec)->second;
+		v1 = this->dados.itens.find(*it_vec)->second;
 
 		++it_vec;
 		res.clear();
 		res.push_back(0); // apenas para inicializar
 
 		for (; it_vec != dados.end() && res.size() > 0; ++it_vec) {
-			v2 = itens->find(*it_vec)->second;
+			v2 = this->dados.itens.find(*it_vec)->second;
 			this->intersection.intersecaoVetores(v1, v2, &res);
 
 			v1.clear();
@@ -294,7 +287,7 @@ void Kernel::checkDados(string chave, unordered_map<string, int> *classes_aux) {
 			checkClasse(chave, aux, classes_aux);
 		}
 	} else {
-		v1 = itens->find(chave)->second;
+		v1 = this->dados.itens.find(chave)->second;
 		checkClasse(chave, v1, classes_aux);
 	}
 }
@@ -319,7 +312,7 @@ void Kernel::checkClasse(string chave, vector<int> vecA, unordered_map<string, i
 	Cache cache_aux;
 	cache_aux.setZero(false);
 
-	for (itr = classes->begin(); itr != classes->end();++itr) {
+	for (itr = this->dados.classes.begin(); itr != this->dados.classes.end();++itr) {
 		this->intersection.intersecaoVetores(vecA, itr->second, &res);
 		itr_aux = classes_aux->find(itr->first);
 

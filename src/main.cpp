@@ -1,12 +1,6 @@
 #include "./include/template/file.hpp"
 #include "./include/kernel.hpp"
 
-#include <ctime>
-#include <ratio>
-#include <chrono>
-
-using namespace std::chrono;
-
 template <typename T>
 void control(T *itens, T *classes, string file) {
 	File<T> arq;
@@ -20,10 +14,21 @@ void imprimirMap(T *itens) {
 }
 
 int menu();
-void escalonador(politicas politica);
+void escalonador(Dados dados, politicas politica);
 
 int main() {
 	int op = -1;
+
+	steady_clock::time_point t1;
+	steady_clock::time_point t2;
+
+	Dados dados;
+
+	t1 = steady_clock::now();
+	control(&dados.itens, &dados.classes, "D");
+	control(&dados.tarefaT, &dados.tarefaT_processamento, "T");
+	t2 = steady_clock::now();
+	dados.t_arquivos = duration_cast< duration<double> >(t2 - t1);
 
 	while (op != 0) {
 		system("clear");
@@ -32,10 +37,10 @@ int main() {
 
 		switch (op) {
 		case 1:
-			escalonador(fifo);
+			escalonador(dados, fifo);
 			break;
 		case 2:
-			escalonador(lowest_job_first);
+			escalonador(dados, lowest_job_first);
 			break;
 		case 0:
 			cout << "O programa sera finalizado!" << endl;
@@ -49,36 +54,21 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-void escalonador(politicas politica) {
+void escalonador(Dados dados, politicas politica) {
 	steady_clock::time_point t1;
 	steady_clock::time_point t2;
-
-	duration<double> t_arquivos;
-	duration<double> t_processamento;
-	duration<double> t_intercessao;
-
-	unordered_map<string, vector<int>> itens;
-	unordered_map<string, vector<int>> classes;
-
-	unordered_map<int, vector<string>> tarefaT;
-	unordered_map<int, vector<string>> tarefaT_processamento;
 
 	Kernel k;
 
 	t1 = steady_clock::now();
-	control(&itens, &classes, "D");
-	control(&tarefaT, &tarefaT_processamento, "T");
+	k.setDados(dados);
+	k.itensInComum(politica);
 	t2 = steady_clock::now();
-	t_arquivos = duration_cast< duration<double> >(t2 - t1);
 
-	t1 = steady_clock::now();
-	k.setItens(&itens);
-	k.setClasses(&classes);
-	k.itensInComum(politica, &tarefaT, &tarefaT_processamento);
-	t2 = steady_clock::now();
-	t_processamento = duration_cast< duration<double> >(t2 - t1);
+	dados.t_processamento = duration_cast< duration<double> >(t2 - t1);
 
-	cout << "\nTempo de processamento: " << t_processamento.count() << endl;
+	cout << "\nTempo leitura: " << dados.t_arquivos.count() << endl;
+	cout << "Tempo de processamento: " << dados.t_processamento.count() << endl;
 }
 
 int menu() {
