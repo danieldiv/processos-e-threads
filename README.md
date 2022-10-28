@@ -10,17 +10,17 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 
 ![Scrennshot](src/resource/imgs/menuPrincipal.png)
 
-- 1. Faz o escalonamento dos processos utilizando a politica FIFO
+- 1. Faz o escalonamento dos processos utilizando a politica Fifo
 - 2. Faz o escalonamento dos processos utilizando a politica Menor job primeiro
 - 3. Faz o escalonamento dos processos utilizando a politica Maior job primeiro
 
 ## Sistema multitarefa: Etapa I
 
-- Na etapa I é realizada a leitura e tokenização do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/util/tokenizar.hpp#L56) em 5 colunas que representam as chaves e as linhas representam os valores. As 4 primeiras colunas serão utilizadas como chaves dos itens e a ultima coluna sera utilizada como chave da classe.
+- Na etapa I é realizada a leitura e tokenização do arquivo `D`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/util/tokenizar.hpp#L60) em 5 colunas que representam as chaves e as linhas representam os valores. As 4 primeiras colunas serão utilizadas como chaves dos itens e a ultima coluna sera utilizada como chave da classe.
 
 ## Sistema multitarefa: Etapa II
 
-- Na etapa II é realizada a leitura, tokenização, `processamento` e `combinação` do arquivo `T`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/util/tokenizar.hpp#L107) linha a linha utilizando as colunas como valores e linha como chave.
+- Na etapa II é realizada a leitura, tokenização, `processamento` e `combinação` do arquivo `T`. O arquivo sera [tokenizado](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/util/tokenizar.hpp#L108) linha a linha utilizando as colunas como valores e linha como chave.
 
 ## Sistema multitarefa: Etapa III
 
@@ -28,11 +28,11 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 
 ## Sistema multitarefa: Etapa IV
 
-- Na etapa IV é feito uma modificação no código para que seja possivel utilizar `cache`, ou seja, antes de realizar todas as operacoes de interceções é feito primeiro a busca na cache, que caso ainda não exista, é feita as intercessoes normalmente
+- Na etapa IV é feito uma modificação no código para que seja possivel utilizar `cache`, ou seja, antes de realizar todas as operacoes de interceções é feito primeiro a busca na cache, que caso não exista, é feita as intercessoes normalmente
 
 ## Sistema multitarefa: Etapa V
 
-- A etapa 5 consiste em modificar a politica de escalonamento, neste projeto foi adotado 3 politicas, sendo: `FIFO`, `Menor job primeiro` e `Maior job primeiro`. Como algumas das chamadas dos metodos são bastantes semelhantes, a execução do [Kernel](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/kernel.hpp) foi modificada para trabalhar no modelo de template.
+- A etapa 5 consiste em modificar a politica de escalonamento, neste projeto foi adotado 3 politicas, sendo: `Fifo`, `Menor job primeiro` e `Maior job primeiro`. Como algumas das chamadas dos metodos são bastantes semelhantes, a execução do [Kernel](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/kernel.hpp) foi modificada para trabalhar no modelo de template.
 
 # Compilação e Execução
 
