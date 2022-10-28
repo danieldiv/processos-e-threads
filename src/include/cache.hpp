@@ -12,11 +12,11 @@ private:
 public:
 	unordered_map<string, int> class_model;
 
-	Cache();
-	~Cache();
+	Cache() { setZero(true); };
+	~Cache() {};
 
-	void setZero(bool valor);
-	bool getZero();
+	void setZero(bool valor) { this->vazio = valor; };
+	bool getZero() { return this->vazio; };
 };
 
 #endif

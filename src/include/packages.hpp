@@ -7,15 +7,7 @@
 
 #include "./template/util.hpp"
 
-/**
- * @brief descricao do map package
- *
- * pair <string, int> -> string = coluna, int = linha
- * set <pair> -> ordena pelo pair, no caso por coluna
- * map <int, set> -> int = quantidade de combinacao
- *
- */
-
+// transforma as combinacoes realizadas pelo kernel em pacotes
 class Packages {
 private:
 	Util<string> util;
