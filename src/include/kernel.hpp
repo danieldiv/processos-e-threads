@@ -20,7 +20,7 @@ private:
 	map < int, set < pair < string, int>>>::iterator it_pkg;
 	unordered_map < string, vector<int>>::iterator itr_classes;
 
-	Dados dados;
+	Dados *dados;
 	Combination combination;
 	Intersection intersection;
 public:
@@ -29,7 +29,7 @@ public:
 	Kernel() { this->cont_cache_found = 0; }
 	~Kernel() {}
 
-	void setDados(Dados dados);
+	void setDados(Dados *dados);
 	void setClassModel();
 
 	void itensInComum();
@@ -55,7 +55,7 @@ public:
 };
 
 template<Politicas p>
-void Kernel<p>::setDados(Dados dados) {
+void Kernel<p>::setDados(Dados *dados) {
 	this->dados = dados;
 	this->setClassModel();
 }
@@ -64,7 +64,7 @@ void Kernel<p>::setDados(Dados dados) {
 template<Politicas p>
 void Kernel<p>::setClassModel() {
 	this->class_model.clear();
-	for (itr_classes = this->dados.classes.begin(); itr_classes != this->dados.classes.end(); ++itr_classes) {
+	for (itr_classes = this->dados->classes.begin(); itr_classes != this->dados->classes.end(); ++itr_classes) {
 		this->class_model.insert({ itr_classes->first, 0 });
 	}
 }
@@ -81,18 +81,22 @@ void Kernel<p>::itensInComum() {
 	unordered_map < int, vector<string>>::iterator foundLinha;
 	unordered_map < string, vector<int>>::iterator foundItem;
 
-	for (itr = this->dados.tarefaT.begin();itr != this->dados.tarefaT.end();++itr) {
-		foundLinha = this->dados.tarefaT_processamento.find(itr->first);
+	for (itr = this->dados->tarefaT.begin();itr != this->dados->tarefaT.end();++itr) {
+		foundLinha = this->dados->tarefaT_processamento.find(itr->first);
 
 		for (auto item : itr->second) {
-			foundItem = this->dados.itens.find(item);
-			if (foundItem != this->dados.itens.end()) foundLinha->second.push_back(item);
+			foundItem = this->dados->itens.find(item);
+			if (foundItem != this->dados->itens.end()) foundLinha->second.push_back(item);
 		}
 	}
 
-	for (itr = this->dados.tarefaT_processamento.begin();itr != this->dados.tarefaT_processamento.end();++itr)
+	for (itr = this->dados->tarefaT_processamento.begin();itr != this->dados->tarefaT_processamento.end();++itr) {
 		fazCombinacoes(itr->first, itr->second);
+	}
+	steady_clock::time_point init = steady_clock::now();
 	fazIntersecoes();
+	this->dados->t_intercessao = duration_cast< duration<double> >(steady_clock::now() - init);
+	// cout << this->dados->t_intercessao.count() << endl;
 }
 
 /**
@@ -119,7 +123,7 @@ void Kernel<p>::fazCombinacoes(int key, vector<string> colunas) {
 	for (auto item : colunas)
 		this->combination.combinate(vetor, perm, 0, colunas.size(), cont++, key);
 	this->combination.atribuiCombinations(&res);
-	this->dados.tarefaT_combinacoes.insert({ key, res });
+	this->dados->tarefaT_combinacoes.insert({ key, res });
 }
 
 // chamado pelo metodo itensInComum
@@ -130,7 +134,7 @@ void Kernel<Politicas::FIFO>::fazIntersecoes() {
 
 	unordered_map < int, vector<string>>::iterator itr_combinacoes;
 
-	for (itr_combinacoes = this->dados.tarefaT_combinacoes.begin(); itr_combinacoes != this->dados.tarefaT_combinacoes.end(); ++itr_combinacoes) {
+	for (itr_combinacoes = this->dados->tarefaT_combinacoes.begin(); itr_combinacoes != this->dados->tarefaT_combinacoes.end(); ++itr_combinacoes) {
 		result.insert({ itr_combinacoes->first, this->class_model });
 		foundResult = result.find(itr_combinacoes->first);
 
@@ -146,7 +150,7 @@ void Kernel<Politicas::FIFO>::fazIntersecoes() {
 // chamado pelo metodo itensInComum
 template<Politicas p>
 void Kernel<p>::fazIntersecoes() {
-	this->quebrarEmPacotes(this->dados.tarefaT_combinacoes);
+	this->quebrarEmPacotes(this->dados->tarefaT_combinacoes);
 	this->cache.clear();
 
 	map < int, set < pair < string, int>>>::iterator it_pkg;
@@ -306,14 +310,14 @@ void Kernel<p>::checkDados(string chave, unordered_map<string, int> *classes_aux
 	if (dados.size() > 1) {
 		it_vec = dados.begin();
 		v1.clear();
-		v1 = this->dados.itens.find(*it_vec)->second;
+		v1 = this->dados->itens.find(*it_vec)->second;
 
 		++it_vec;
 		res.clear();
 		res.push_back(0); // apenas para inicializar
 
 		for (; it_vec != dados.end() && res.size() > 0; ++it_vec) {
-			v2 = this->dados.itens.find(*it_vec)->second;
+			v2 = this->dados->itens.find(*it_vec)->second;
 			this->intersection.intersecaoVetores(v1, v2, &res);
 
 			v1.clear();
@@ -329,7 +333,7 @@ void Kernel<p>::checkDados(string chave, unordered_map<string, int> *classes_aux
 			checkClasse(chave, aux, classes_aux);
 		}
 	} else {
-		v1 = this->dados.itens.find(chave)->second;
+		v1 = this->dados->itens.find(chave)->second;
 		checkClasse(chave, v1, classes_aux);
 	}
 }
@@ -357,7 +361,7 @@ void Kernel<p>::checkClasse(string chave, vector<int> vecA, unordered_map<string
 	Cache cache_aux;
 	cache_aux.setZero(false);
 
-	for (itr = this->dados.classes.begin(); itr != this->dados.classes.end();++itr) {
+	for (itr = this->dados->classes.begin(); itr != this->dados->classes.end();++itr) {
 		this->intersection.intersecaoVetores(vecA, itr->second, &res);
 		itr_aux = classes_aux->find(itr->first);
 

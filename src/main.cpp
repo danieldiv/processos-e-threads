@@ -71,14 +71,15 @@ void escalonador(Dados dados) {
 	Kernel<p> k;
 
 	t1 = steady_clock::now();
-	k.setDados(dados);
+	k.setDados(&dados);
 	k.itensInComum();
 	t2 = steady_clock::now();
 
-	dados.t_processamento = duration_cast< duration<double> >(t2 - t1);
+	dados.t_escalonamento = duration_cast< duration<double> >(t2 - t1);
 
 	cout << "\nTempo leitura: " << dados.t_arquivos.count() << endl;
-	cout << "Tempo de processamento: " << dados.t_processamento.count() << endl;
+	cout << "Tempo de intercessoes: " << dados.t_intercessao.count() << endl;
+	cout << "Tempo de escalonamento: " << dados.t_escalonamento.count() << endl;
 }
 
 int menu() {
