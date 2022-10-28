@@ -51,6 +51,9 @@ void Kernel::itensInComum(politicas politica) {
 	} else if (politica == lowest_job_first) {
 		this->quebrarEmPacotes(this->dados.tarefaT_combinacoes);
 		this->fazIntersecoes2();
+	} else if (politica == biggest_job_first) {
+		this->quebrarEmPacotes(this->dados.tarefaT_combinacoes);
+		this->fazIntersecoes3();
 	}
 }
 
@@ -127,6 +130,28 @@ void Kernel::fazIntersecoes2() {
 		for (auto value : it_pkg->second) {
 			checkCache2(value.first, value.second, &classes_res);
 		}
+	}
+	printResult(classes_res);
+	printAnalize();
+}
+
+void Kernel::fazIntersecoes3() {
+	this->cache.clear();
+
+	map < int, set < pair < string, int>>> pkg_aux;
+
+	map < int, set < pair < string, int>>>::iterator it_pkg;
+	unordered_map < int, unordered_map<string, int>> classes_res;
+
+	it_pkg = packages.end();
+	it_pkg--;
+
+	for (; it_pkg != --packages.begin();--it_pkg) {
+		for (auto value : it_pkg->second) {
+			// cout << value.first << endl;
+			checkCache2(value.first, value.second, &classes_res);
+		}
+
 	}
 	printResult(classes_res);
 	printAnalize();

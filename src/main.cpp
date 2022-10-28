@@ -42,6 +42,9 @@ int main() {
 		case 2:
 			escalonador(dados, lowest_job_first);
 			break;
+		case 3:
+			escalonador(dados, biggest_job_first);
+			break;
 		case 0:
 			cout << "O programa sera finalizado!" << endl;
 			return EXIT_SUCCESS;
@@ -78,7 +81,7 @@ int menu() {
 
 	cout << "1 - Fifo" << endl;
 	cout << "2 - Menor job primeiro" << endl;
-	// cout << "1 - Maior job primeiro" << endl;
+	cout << "3 - Maior job primeiro" << endl;
 	// cout << "1 - Prioridade job primeiro" << endl;
 	cout << "0 - Sair" << endl;
 
