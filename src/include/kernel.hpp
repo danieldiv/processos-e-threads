@@ -52,6 +52,11 @@ public:
 	void checkCache2(string chave, int linha, unordered_map < int, unordered_map<string, int>> *classes_res);
 	void checkDados2(string chave, int linha, unordered_map < int, unordered_map<string, int>> *classes_res);
 
+	/* Funcoes utilizadas com a politica do tipo maior Job first, onde as combinacoes realizadas
+	sao reorganizadas em um map para serem processadas primeiro as combinacoes maiores, o que é possivel
+	utilizar as funcoes do menor Job first, pois basta ler ao contrario */
+
+	void fazIntersecoes3();
 };
 
 #endif
