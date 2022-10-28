@@ -13,8 +13,8 @@ using namespace std::chrono;
 
 class Dados {
 public:
-	Dados();
-	~Dados();
+	Dados() {};
+	~Dados() {};
 
 	// mapas
 

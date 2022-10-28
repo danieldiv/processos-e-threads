@@ -3,7 +3,6 @@
 
 #include <map>
 #include <set>
-#include <vector>
 #include <utility>
 
 #include "./template/util.hpp"

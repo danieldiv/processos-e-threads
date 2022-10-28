@@ -8,11 +8,12 @@
 
 #define N 5
 
-enum politicas {
-	fifo,
-	lowest_job_first,
-	biggest_job_first,
-	priority
+enum class Politicas {
+	FIFO, // fila
+	LJF, // menor job primeiro
+	BJF, // maior job primeiro
+	PRIORITY, // prioridade
+	NONE // nenhum
 };
 
 #define RED 	"\x1b[31m"

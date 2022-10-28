@@ -14,7 +14,10 @@ void imprimirMap(T *itens) {
 }
 
 int menu();
-void escalonador(Dados dados, politicas politica);
+Politicas getPolitica(int op);
+
+template<Politicas p>
+void escalonador(Dados dados);
 
 int main() {
 	int op = -1;
@@ -23,6 +26,7 @@ int main() {
 	steady_clock::time_point t2;
 
 	Dados dados;
+	Politicas politica;
 
 	t1 = steady_clock::now();
 	control(&dados.itens, &dados.classes, "D");
@@ -35,21 +39,23 @@ int main() {
 		op = menu();
 		cout << endl;
 
-		switch (op) {
-		case 1:
-			escalonador(dados, fifo);
-			break;
-		case 2:
-			escalonador(dados, lowest_job_first);
-			break;
-		case 3:
-			escalonador(dados, biggest_job_first);
-			break;
-		case 0:
+		if (op == 0) {
 			cout << "O programa sera finalizado!" << endl;
 			return EXIT_SUCCESS;
-		default:
-			cout << (RED "Opcao invalida!" RESET) << endl;
+		} else {
+			switch (op) {
+			case 1:
+				escalonador<Politicas::FIFO>(dados);
+				break;
+			case 2:
+				escalonador<Politicas::LJF>(dados);
+				break;
+			case 3:
+				escalonador<Politicas::BJF>(dados);
+				break;
+			default:
+				cout << (RED "Opcao invalida!" RESET) << endl;
+			}
 		}
 		system("read -p \"\nPressione enter para continuar...\" continue");
 	}
@@ -57,15 +63,16 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-void escalonador(Dados dados, politicas politica) {
+template<Politicas p>
+void escalonador(Dados dados) {
 	steady_clock::time_point t1;
 	steady_clock::time_point t2;
 
-	Kernel k;
+	Kernel<p> k;
 
 	t1 = steady_clock::now();
 	k.setDados(dados);
-	k.itensInComum(politica);
+	k.itensInComum();
 	t2 = steady_clock::now();
 
 	dados.t_processamento = duration_cast< duration<double> >(t2 - t1);
@@ -82,7 +89,7 @@ int menu() {
 	cout << "1 - Fifo" << endl;
 	cout << "2 - Menor job primeiro" << endl;
 	cout << "3 - Maior job primeiro" << endl;
-	// cout << "1 - Prioridade job primeiro" << endl;
+	// cout << "4 - Prioridade" << endl;
 	cout << "0 - Sair" << endl;
 
 	cout << "\nEscolha uma politica: ";
@@ -92,3 +99,12 @@ int menu() {
 
 	return op;
 }
+
+// Politicas getPolitica(int op) {
+// 	switch (op) {
+// 	case 1: return Politicas::FIFO;
+// 	case 2: return Politicas::LOWEST_JOB_FIRST;
+// 	case 3: return Politicas::BIGGEST_JOB_FIRST;
+// 	default: return Politicas::NONE;
+// 	}
+// }
