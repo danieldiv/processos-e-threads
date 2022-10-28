@@ -9,7 +9,7 @@
 #define N 5
 
 enum class Politicas {
-	FIFO, // fila
+	FIFO, // round robin, fila
 	LJF, // menor job primeiro
 	BJF, // maior job primeiro
 	PRIORITY, // prioridade

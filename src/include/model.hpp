@@ -28,7 +28,7 @@ public:
 	// tempos
 
 	duration<double> t_arquivos;
-	duration<double> t_processamento;
+	duration<double> t_escalonamento;
 	duration<double> t_intercessao;
 };
 
