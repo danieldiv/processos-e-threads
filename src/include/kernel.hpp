@@ -1,5 +1,5 @@
-#ifndef OPERACAO_HPP
-#define OPERACAO_HPP
+#ifndef KERNEL_HPP
+#define KERNEL_HPP
 
 #include "./combination.hpp"
 #include "./intersetion.hpp"

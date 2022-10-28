@@ -101,12 +101,3 @@ int menu() {
 
 	return op;
 }
-
-// Politicas getPolitica(int op) {
-// 	switch (op) {
-// 	case 1: return Politicas::FIFO;
-// 	case 2: return Politicas::LOWEST_JOB_FIRST;
-// 	case 3: return Politicas::BIGGEST_JOB_FIRST;
-// 	default: return Politicas::NONE;
-// 	}
-// }
