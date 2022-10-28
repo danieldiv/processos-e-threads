@@ -7,6 +7,14 @@
 #include "./cache.hpp"
 #include "./model.hpp"
 
+enum class Politicas {
+	FIFO, // round robin, fila
+	LJF, // menor job primeiro
+	BJF, // maior job primeiro
+	PRIORITY, // prioridade
+	NONE // nenhum
+};
+
 template<Politicas p>
 class Kernel: Packages {
 private:
