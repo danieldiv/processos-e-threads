@@ -76,10 +76,11 @@ void escalonador(Dados dados) {
 	t2 = steady_clock::now();
 
 	dados.t_escalonamento = duration_cast< duration<double> >(t2 - t1);
+	dados.t_processamento = dados.t_escalonamento - dados.t_intercessao;
 
-	cout << "\nTempo leitura: " << dados.t_arquivos.count() << endl;
+	cout << "\nTempo de leitura: " << dados.t_arquivos.count() << endl;
 	cout << "Tempo de intercessoes: " << dados.t_intercessao.count() << endl;
-	cout << "Tempo de escalonamento: " << dados.t_escalonamento.count() << endl;
+	cout << "Tempo de processamento: " << dados.t_processamento.count() << endl;
 }
 
 int menu() {

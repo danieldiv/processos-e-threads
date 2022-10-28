@@ -8,14 +8,6 @@
 
 #define N 5
 
-enum class Politicas {
-	FIFO, // round robin, fila
-	LJF, // menor job primeiro
-	BJF, // maior job primeiro
-	PRIORITY, // prioridade
-	NONE // nenhum
-};
-
 #define RED 	"\x1b[31m"
 #define GREEN	"\x1b[32m"
 #define BLUE	"\x1b[34m"
