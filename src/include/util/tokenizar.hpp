@@ -24,10 +24,10 @@ enum class Politicas {
 using namespace std;
 
 template<typename T>
-class Util {
+class Tokenizar {
 public:
-	Util();
-	~Util();
+	Tokenizar();
+	~Tokenizar();
 
 	void tokenizar(string text, int linha,
 		unordered_map < string, vector<int>> *itens,
@@ -43,10 +43,10 @@ public:
 };
 
 template<typename T>
-Util<T>::Util() {}
+Tokenizar<T>::Tokenizar() {}
 
 template<typename T>
-Util<T>::~Util() {}
+Tokenizar<T>::~Tokenizar() {}
 
 /**
  * @brief realiza a tokenizacao do texto passado e armazena nos mapas itens e classes
@@ -58,7 +58,7 @@ Util<T>::~Util() {}
  * @param classes mapa para armazenar a coluna da classe do arquivo D
  */
 template<typename T>
-void Util<T>::tokenizar(string text, int linha,
+void Tokenizar<T>::tokenizar(string text, int linha,
 	unordered_map < string, vector<int>> *itens,
 	unordered_map < string, vector<int>> *classes) {
 
@@ -105,7 +105,7 @@ void Util<T>::tokenizar(string text, int linha,
  * @param classes mapa para inicializar o processamento
  */
 template<typename T>
-void Util<T>::tokenizar(string text, int linha,
+void Tokenizar<T>::tokenizar(string text, int linha,
 	unordered_map < int, vector<string>> *itens,
 	unordered_map < int, vector<string>> *classes) {
 
@@ -130,7 +130,7 @@ void Util<T>::tokenizar(string text, int linha,
 }
 
 template<typename T>
-void Util<T>::tokenizar(string text, vector<string> *tokens) {
+void Tokenizar<T>::tokenizar(string text, vector<string> *tokens) {
 	tokens->clear();
 	char del = '-';
 
@@ -141,7 +141,7 @@ void Util<T>::tokenizar(string text, vector<string> *tokens) {
 }
 
 template<typename T>
-void Util<T>::printMap(T *itens) {
+void Tokenizar<T>::printMap(T *itens) {
 	typename T::iterator itr;
 
 	for (itr = itens->begin();itr != itens->end();itr++) {

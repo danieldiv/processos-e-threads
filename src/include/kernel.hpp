@@ -295,7 +295,7 @@ void Kernel<p>::checkDados(string chave, unordered_map<string, int> *classes_aux
 
 	vector<string>::iterator it_vec;
 
-	Util<string> u;
+	Tokenizar<string> u;
 	vector<string> dados;
 
 	vector<int> v1, v2, aux, res;

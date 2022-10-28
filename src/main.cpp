@@ -1,4 +1,4 @@
-#include "./include/template/file.hpp"
+#include "./include/util/file.hpp"
 #include "./include/kernel.hpp"
 
 template <typename T>
@@ -9,7 +9,7 @@ void control(T *itens, T *classes, string file) {
 
 template <typename T>
 void imprimirMap(T *itens) {
-	Util<T> u;
+	Tokenizar<T> u;
 	u.printMap(itens);
 }
 

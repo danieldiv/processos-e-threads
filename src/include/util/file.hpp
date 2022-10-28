@@ -1,13 +1,13 @@
 #ifndef FILE_HPP
 #define FILE_HPP
 
-#include "util.hpp"
+#include "tokenizar.hpp"
 #include <fstream>
 
 template <typename T>
 class File {
 private:
-	Util<T> util;
+	Tokenizar<T> util;
 public:
 	File();
 	~File();
