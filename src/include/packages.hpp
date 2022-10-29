@@ -3,6 +3,7 @@
 
 #include <map>
 #include <set>
+#include <stack>
 #include <utility>
 
 #include "./util/tokenizar.hpp"
@@ -12,7 +13,7 @@ class Packages {
 private:
 	Tokenizar<string> util;
 public:
-	map < int, set < pair < string, int>>> packages;
+	set < pair < string, int>> packages;
 	void quebrarEmPacotes(unordered_map < int, vector<string>> combinacoes);
 
 	void insertDado(int _N, string chave, int linha);

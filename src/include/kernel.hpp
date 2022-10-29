@@ -25,7 +25,7 @@ private:
 	unordered_map < string, Cache> cache;
 
 	unordered_map < string, Cache>::iterator itr_cache;
-	map < int, set < pair < string, int>>>::iterator it_pkg;
+	set < pair < string, int>>::iterator it_pkg;
 	unordered_map < string, vector<int>>::iterator itr_classes;
 
 	Dados *dados;
@@ -103,8 +103,7 @@ void Kernel<p>::itensInComum() {
 	}
 	steady_clock::time_point init = steady_clock::now();
 	fazIntersecoes();
-	this->dados->t_intercessao = duration_cast< duration<double> >(steady_clock::now() - init);
-	// cout << this->dados->t_intercessao.count() << endl;
+	this->dados->t_intercessao = duration_cast<duration<double>>(steady_clock::now() - init);
 }
 
 /**
@@ -172,16 +171,21 @@ void Kernel<p>::fazIntersecoes() {
 // chamado pelo metodo generico fazIntersecoes
 template<>
 void Kernel<Politicas::LJF>::walkInPackage(unordered_map < int, unordered_map<string, int>> *result) {
-	for (it_pkg = packages.begin(); it_pkg != packages.end(); ++it_pkg) {
-		for (auto value : it_pkg->second) checkCache(value.first, value.second, result);
-	}
+	for (auto value : packages) checkCache(value.first, value.second, result);
 }
 
 // chamado pelo metodo generico fazIntersecoes
 template<>
 void Kernel<Politicas::BJF>::walkInPackage(unordered_map < int, unordered_map<string, int>> *result) {
-	for (it_pkg = --packages.end(); it_pkg != --packages.begin();--it_pkg) {
-		for (auto value : it_pkg->second) checkCache(value.first, value.second, result);
+	stack< pair < string, int>> packages_inverso;
+
+	for (auto value : packages) packages_inverso.push(value);
+
+	while (packages_inverso.size() > 0) {
+		checkCache(
+			packages_inverso.top().first,
+			packages_inverso.top().second, result);
+		packages_inverso.pop();
 	}
 }
 
