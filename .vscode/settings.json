@@ -51,6 +51,11 @@
     "array": "cpp",
     "string_view": "cpp",
     "chrono": "cpp",
-    "ratio": "cpp"
+    "ratio": "cpp",
+    "queue": "cpp",
+    "stack": "cpp",
+    "*.rh": "cpp",
+    "deque": "cpp",
+    "unordered_set": "cpp"
   }
 }

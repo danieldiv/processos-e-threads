@@ -7,6 +7,8 @@
 #include "./cache.hpp"
 #include "./model.hpp"
 
+#include <queue>
+
 enum class Politicas {
 	FIFO, // round robin, fila
 	LJF, // menor job primeiro
@@ -19,19 +21,18 @@ template<Politicas p>
 class Kernel: Packages {
 private:
 	int cont_cache_found;
-	int cont_cache_not_found;
 
 	unordered_map < string, int> class_model;
-	unordered_map < string, Cache> cache;
 
 	unordered_map < string, Cache>::iterator itr_cache;
-	set < pair < string, int>>::iterator it_pkg;
 	unordered_map < string, vector<int>>::iterator itr_classes;
 
-	Dados *dados;
 	Combination combination;
 	Intersection intersection;
 public:
+	Dados *dados;
+	unordered_map < string, Cache> cache;
+
 	/* Funcoes genericas */
 
 	Kernel() { this->cont_cache_found = 0; }
@@ -57,9 +58,13 @@ public:
 	onde as combinacoes realizadas sao reorganizadas em um map para serem processadas
 	primeiro as combinacoes menores ou ao contrario*/
 
-	void walkInPackage(unordered_map < int, unordered_map<string, int>> *result);
-	void checkCache(string chave, int linha, unordered_map < int, unordered_map<string, int>> *classes_res);
-	void pre_checkDados(string chave, int linha, unordered_map < int, unordered_map<string, int>> *classes_res);
+	void walkInPackage(queue<pair < string, int>> *new_packages);
+
+	void checkCache(string chave, int linha,
+		unordered_map < int, unordered_map<string, int>> *classes_res);
+
+	void pre_checkDados(string chave, int linha,
+		unordered_map < int, unordered_map<string, int>> *classes_res);
 };
 
 template<Politicas p>
@@ -101,9 +106,6 @@ void Kernel<p>::itensInComum() {
 	for (itr = this->dados->tarefaT_processamento.begin();itr != this->dados->tarefaT_processamento.end();++itr) {
 		fazCombinacoes(itr->first, itr->second);
 	}
-	steady_clock::time_point init = steady_clock::now();
-	fazIntersecoes();
-	this->dados->t_intercessao = duration_cast<duration<double>>(steady_clock::now() - init);
 }
 
 /**
@@ -140,6 +142,7 @@ void Kernel<Politicas::FIFO>::fazIntersecoes() {
 	unordered_map < int, unordered_map<string, int>>::iterator foundResult;
 
 	unordered_map < int, vector<string>>::iterator itr_combinacoes;
+	printf("init: %ld\n", this->cache.size());
 
 	for (itr_combinacoes = this->dados->tarefaT_combinacoes.begin(); itr_combinacoes != this->dados->tarefaT_combinacoes.end(); ++itr_combinacoes) {
 		result.insert({ itr_combinacoes->first, this->class_model });
@@ -159,33 +162,27 @@ template<Politicas p>
 void Kernel<p>::fazIntersecoes() {
 	this->quebrarEmPacotes(this->dados->tarefaT_combinacoes);
 	this->cache.clear();
+}
+
+// chamado pelo metodo generico fazIntersecoes
+template<>
+void Kernel<Politicas::LJF>::walkInPackage(queue<pair < string, int>> *new_packages) {
 
 	map < int, set < pair < string, int>>>::iterator it_pkg;
-	unordered_map < int, unordered_map<string, int>> result;
 
-	walkInPackage(&result);
-	printResult(result);
-	printAnalize();
+	for (it_pkg = packages.begin(); it_pkg != packages.end(); ++it_pkg) {
+		for (auto value : it_pkg->second)  new_packages->push(value);
+	}
 }
 
 // chamado pelo metodo generico fazIntersecoes
 template<>
-void Kernel<Politicas::LJF>::walkInPackage(unordered_map < int, unordered_map<string, int>> *result) {
-	for (auto value : packages) checkCache(value.first, value.second, result);
-}
+void Kernel<Politicas::BJF>::walkInPackage(queue<pair < string, int>> *new_packages) {
 
-// chamado pelo metodo generico fazIntersecoes
-template<>
-void Kernel<Politicas::BJF>::walkInPackage(unordered_map < int, unordered_map<string, int>> *result) {
-	stack< pair < string, int>> packages_inverso;
+	map < int, set < pair < string, int>>>::iterator it_pkg;
 
-	for (auto value : packages) packages_inverso.push(value);
-
-	while (packages_inverso.size() > 0) {
-		checkCache(
-			packages_inverso.top().first,
-			packages_inverso.top().second, result);
-		packages_inverso.pop();
+	for (it_pkg = --packages.end(); it_pkg != --packages.begin();--it_pkg) {
+		for (auto value : it_pkg->second)  new_packages->push(value);
 	}
 }
 
@@ -423,7 +420,8 @@ void Kernel<p>::printResult(unordered_map < int, unordered_map<string, int>> cla
 
 			}
 		}
-		cout << "----> " << ((maior > 0) ? classe : "NULL") << endl;
+		printf("----> ");
+		printf("%s\n", classe.c_str());
 	}
 }
 
@@ -434,14 +432,11 @@ void Kernel<p>::printAnalize() {
 	for (this->itr_cache = this->cache.begin(); itr_cache != this->cache.end(); ++itr_cache)
 		if (!itr_cache->second.getZero()) quant++;
 
-	cout << endl << "Cache com valor {0}: " << this->cache.size() - quant << endl;
-	cout << "Cache com valor != {0}: " << quant << endl;
-	cout << "Computacoes realizadas: " << this->cache.size() << endl;
-	cout << "Combinacoes encontrada na cache: " << this->cont_cache_found << endl;
-	cout << endl << "Total de iteracoes: "
-		<< this->cache.size() << " + "
-		<< this->cont_cache_found << " = "
-		<< this->cont_cache_found + this->cache.size() << endl;
+	printf("\nCache com valor {0}: %ld\n", this->cache.size() - quant);
+	printf("Cache com valor != {0}: %d\n", quant);
+	printf("Computacoes realizadas: %ld\n", this->cache.size());
+	printf("Combinacoes encontrada na cache: %d\n", this->cont_cache_found);
+	printf("Total de iteracoes: %ld :: %d :: %ld\n", this->cache.size(), this->cont_cache_found, this->cont_cache_found + this->cache.size());
 }
 
 #endif

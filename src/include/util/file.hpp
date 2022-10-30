@@ -32,7 +32,7 @@ void File<T>::readFile(string file, T *itens, T *classes) {
 	if (myfile.is_open() && myfile.good()) {
 		while (getline(myfile, line))
 			this->util.tokenizar(line, ++contLinha, itens, classes);
-	} else cout << "Nao foi possivel abrir o arquivo" << endl;
+	} else printf("Nao foi possivel abrir o arquivo\n");
 }
 
 #endif
