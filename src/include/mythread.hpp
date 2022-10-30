@@ -8,8 +8,8 @@
 
 #include "./kernel.hpp"
 
-#define NUMPROD 5
-#define NUMCONS 5
+#define NUMPROD 3
+#define NUMCONS 3
 
 template<Politicas p>
 struct estrutura_global {
@@ -22,6 +22,10 @@ struct estrutura_global {
 	unordered_map < int, unordered_map<string, int>> result;
 
 	Kernel<p> *k;
+
+	steady_clock::time_point init;
+	steady_clock::time_point end;
+	double t_impressao;
 };
 
 template<Politicas p>
@@ -52,32 +56,36 @@ template<>
 void MyThread<Politicas::FIFO>::init() {
 	this->kernel.itensInComum();
 	this->vglobal.k = &this->kernel;
-
-	steady_clock::time_point init = steady_clock::now();
-
 	this->kernel.fazIntersecoes();
-
-	this->vglobal.k->dados->t_intercessao =
-		duration_cast<duration<double>>(steady_clock::now() - init);
+	this->kernel.dados->t_chaveamento = 0;
 }
 
 template<Politicas p>
 void MyThread<p>::init() {
+	steady_clock::time_point init;
+	steady_clock::time_point end;
+
 	this->kernel.itensInComum();
-
-	steady_clock::time_point init = steady_clock::now();
-
 	this->kernel.fazIntersecoes();
 	this->vglobal.k = &this->kernel;
+	this->vglobal.t_impressao = 0;
 	this->pkgs = &this->vglobal.pacotes;
 	this->kernel.walkInPackage(this->pkgs);
-	this->initThread();
 
-	this->vglobal.k->dados->t_intercessao =
-		duration_cast<duration<double>>(steady_clock::now() - init);
+
+	init = steady_clock::now();
+	this->initThread();
+	end = steady_clock::now();
+
+	this->vglobal.k->dados->t_chaveamento = duration_cast<duration<double>>(end - init).count();
+	this->vglobal.k->dados->t_chaveamento -= this->vglobal.k->dados->t_intercessao;
+	this->vglobal.k->dados->t_chaveamento -= this->vglobal.t_impressao;
+	this->vglobal.k->dados->t_impressao = this->vglobal.t_impressao;
 
 	this->vglobal.k->printResult(this->vglobal.result);
 	this->vglobal.k->printAnalize();
+
+	printf("\nanalize: %lf\n", this->vglobal.t_impressao);
 }
 
 template<Politicas p>
@@ -86,11 +94,42 @@ void MyThread<p>::initThread() {
 	sem_init(&this->vglobal.buffer_full, 0, this->pkgs->size());
 	sem_init(&this->vglobal.buffer_empty, 0, 0);
 
-	for (int i = 0; i < NUMPROD; i++) pthread_create(&(this->prod[i]), NULL, addValue<p>, &this->vglobal);
-	for (int i = 0; i < NUMCONS; i++) pthread_create(&(this->cons[i]), NULL, processaValue<p>, &this->vglobal);
+	int rstatus_prod;
+	int	rstatus_cons;
 
-	for (int i = 0; i < NUMPROD; i++) pthread_join(this->prod[i], NULL);
-	for (int i = 0; i < NUMCONS; i++) pthread_join(this->cons[i], NULL);
+	for (int i = 0; i < NUMPROD; i++) {
+		rstatus_prod = pthread_create(&(this->prod[i]), NULL, addValue<p>, &this->vglobal);
+
+		if (rstatus_prod != 0) {
+			perror("Erro ao criar thread do produtor\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	for (int i = 0; i < NUMCONS; i++) {
+		rstatus_cons = pthread_create(&(this->cons[i]), NULL, processaValue<p>, &this->vglobal);
+
+		if (rstatus_cons != 0) {
+			perror("Erro ao criar thread do cosumidor\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	for (int i = 0; i < NUMPROD; i++) {
+		rstatus_prod = pthread_join(this->prod[i], NULL);
+
+		if (rstatus_prod != 0) {
+			perror("Erro ao aguardar finalizacao da thread do produtor.\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	for (int i = 0; i < NUMCONS; i++) {
+		rstatus_cons = pthread_join(this->cons[i], NULL);
+
+		if (rstatus_cons != 0) {
+			perror("Erro ao aguardar finalizacao da thread do cosumidor.\n");
+			exit(EXIT_FAILURE);
+		}
+	}
 }
 
 template<Politicas p>
@@ -109,8 +148,7 @@ void *addValue(void *arg) {
 		pthread_mutex_unlock(&vglobal->buffer_mutex);
 		sem_post(&vglobal->buffer_empty);
 
-		printf("[PROD] pacotes [%3ld] :: fila [%3ld] :: Lendo: # %s\n",
-			vglobal->pacotes.size(), vglobal->buffer.size(), dado.first.c_str());
+		printf("[PROD] pacotes [%3ld] :: fila [%3ld] :: Lendo: # %s\n", vglobal->pacotes.size(), vglobal->buffer.size(), dado.first.c_str());
 	}
 	pthread_exit(arg);
 }
@@ -131,8 +169,14 @@ void *processaValue(void *arg) {
 		sem_post(&vglobal->buffer_full);
 
 		vglobal->k->checkCache(dado.first, dado.second, &vglobal->result);
-		printf("[CONS] pacotes [%3ld] :: fila [%3ld] :: Consumindo: # %s\n",
-			vglobal->pacotes.size(), vglobal->buffer.size(), dado.first.c_str());
+
+		vglobal->init = steady_clock::now();
+
+		printf("[CONS] pacotes [%3ld] :: fila [%3ld] :: Consumindo: # %s\n", vglobal->pacotes.size(), vglobal->buffer.size(), dado.first.c_str());
+
+		vglobal->end = steady_clock::now();
+		vglobal->t_impressao += duration_cast<duration<double>>(vglobal->end - vglobal->init).count();
+
 	}
 	pthread_exit(arg);
 }

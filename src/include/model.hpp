@@ -26,11 +26,12 @@ public:
 	std::unordered_map < int, std::vector<std::string>> tarefaT_combinacoes;
 
 	// tempos
-
-	duration<double> t_arquivos;
-	duration<double> t_processamento;
-	duration<double> t_intercessao;
-	duration<double> t_escalonamento;
+	double t_leitura;
+	double t_processamento;
+	double t_chaveamento;
+	double t_intercessao;
+	double t_escalonamento;
+	double t_impressao;
 };
 
 #endif

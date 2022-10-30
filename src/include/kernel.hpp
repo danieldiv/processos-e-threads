@@ -106,6 +106,7 @@ void Kernel<p>::itensInComum() {
 	for (itr = this->dados->tarefaT_processamento.begin();itr != this->dados->tarefaT_processamento.end();++itr) {
 		fazCombinacoes(itr->first, itr->second);
 	}
+	this->dados->t_intercessao = 0;
 }
 
 /**
@@ -305,6 +306,7 @@ void Kernel<p>::pre_checkDados(string chave, int linha,
  */
 template<Politicas p>
 void Kernel<p>::checkDados(string chave, unordered_map<string, int> *classes_aux) {
+	steady_clock::time_point init = steady_clock::now();
 
 	vector<string>::iterator it_vec;
 
@@ -345,6 +347,9 @@ void Kernel<p>::checkDados(string chave, unordered_map<string, int> *classes_aux
 		v1 = this->dados->itens.find(chave)->second;
 		checkClasse(chave, v1, classes_aux);
 	}
+	steady_clock::time_point end = steady_clock::now();
+	this->dados->t_intercessao +=
+		duration_cast<duration<double>>(end - init).count();
 }
 
 /**
@@ -436,7 +441,7 @@ void Kernel<p>::printAnalize() {
 	printf("Cache com valor != {0}: %d\n", quant);
 	printf("Computacoes realizadas: %ld\n", this->cache.size());
 	printf("Combinacoes encontrada na cache: %d\n", this->cont_cache_found);
-	printf("Total de iteracoes: %ld :: %d :: %ld\n", this->cache.size(), this->cont_cache_found, this->cont_cache_found + this->cache.size());
+	printf("\nTotal de iteracoes: %ld + %d :: %ld\n", this->cache.size(), this->cont_cache_found, this->cont_cache_found + this->cache.size());
 }
 
 #endif
