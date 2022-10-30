@@ -32,7 +32,7 @@ int main() {
 	control(&dados.itens, &dados.classes, "D");
 	control(&dados.tarefaT, &dados.tarefaT_processamento, "T");
 	t2 = steady_clock::now();
-	dados.t_arquivos = duration_cast<duration<double>>(t2 - t1);
+	dados.t_leitura = duration_cast<duration<double>>(t2 - t1).count();
 
 	while (op != 0) {
 		system("clear");
@@ -74,12 +74,21 @@ void escalonador(Dados dados) {
 	myThread.init();
 	t2 = steady_clock::now();
 
-	dados.t_escalonamento = duration_cast<duration<double>>(t2 - t1);
-	dados.t_processamento = dados.t_escalonamento - dados.t_intercessao;
+	dados.t_escalonamento = duration_cast<duration<double>>(t2 - t1).count();
+	dados.t_escalonamento -= dados.t_impressao;
 
-	printf("\nTempo de leitura: %lf\n", dados.t_arquivos.count());
-	printf("Tempo de intercessoes: %lf\n", dados.t_intercessao.count());
-	printf("Tempo de processamento: %lf\n", dados.t_processamento.count());
+	if (dados.t_chaveamento < 0) dados.t_chaveamento = -dados.t_chaveamento;
+
+	dados.t_processamento = dados.t_escalonamento - dados.t_chaveamento - dados.t_intercessao;
+
+	if (dados.t_processamento < 0) dados.t_processamento = -dados.t_processamento;
+
+	printf("\n");
+	printf("Tempo de leitura       : %lf\n", dados.t_leitura);
+	printf("Tempo de escalonamento : %lf\n", dados.t_escalonamento);
+	printf("Tempo de processamento : %lf\n", dados.t_processamento);
+	// printf("Tempo de chaveamento   : %lf\n", dados.t_chaveamento);
+	printf("Tempo de intercessoes  : %lf\n", dados.t_intercessao);
 }
 
 int menu() {

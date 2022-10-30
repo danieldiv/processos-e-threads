@@ -34,6 +34,10 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 
 - A etapa 5 consiste em modificar a politica de escalonamento, neste projeto foi adotado 3 politicas, sendo: `Fifo`, `Menor job primeiro` e `Maior job primeiro`. Como algumas das chamadas dos metodos são bastantes semelhantes, a execução do [Kernel](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/kernel.hpp) foi modificada para trabalhar no modelo de template.
 
+## Sistema multitarefa: Etapa VI
+
+- Nesta etapa será utilizado os pacotes criados na `etapa V`, com a diferença de que agora eles serão processados em threads. A execução das threads almenta a complexidade, logo o tempo de execução também sofreu impacotos.
+
 # Compilação e Execução
 
 | Comando    | Função                                                                                  |
