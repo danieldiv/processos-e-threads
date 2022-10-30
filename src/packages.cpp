@@ -53,13 +53,30 @@ void Packages::updateDado(int _N, string chave, int linha) {
 void Packages::printPackage() {
 	map < int, set < pair < string, int>>>::iterator it_pkg;
 
-	for (it_pkg = this->packages.begin(); it_pkg != this->packages.end(); ++it_pkg) {
-		cout << "[ " << it_pkg->first << " ]" << endl;
+	// for (it_pkg = this->packages.begin(); it_pkg != this->packages.end(); ++it_pkg) {
+	// 	cout << "[ " << it_pkg->first << " ]" << endl;
 
-		for (auto value : it_pkg->second) {
-			cout << value.first << " " << value.second << endl;
-		}
-		cout << endl;
-	}
-	cout << endl;
+	// 	for (auto value : it_pkg->second) {
+	// 		cout << value.first << " " << value.second << endl;
+	// 	}
+	// 	cout << endl;
+	// }
+	// cout << endl;
 }
+
+// #include "./include/packages.hpp"
+
+// void Packages::quebrarEmPacotes(unordered_map < int, vector<string>> combinacoes) {
+// 	unordered_map < int, vector<string>>::iterator itr;
+
+// 	for (itr = combinacoes.begin(); itr != combinacoes.end();++itr) {
+// 		for (auto combinacao : itr->second)
+// 			this->packages.insert(make_pair(combinacao, itr->first));
+// 	}
+// }
+
+// void Packages::printPackage() {
+// 	for (auto value : this->packages) {
+// 		cout << value.first << " " << value.second << endl;
+// 	}
+// }

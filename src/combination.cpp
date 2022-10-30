@@ -47,7 +47,7 @@ void Combination::atribuiCombinations(vector<string> *combinations) {
 }
 
 void Combination::printCombinations() {
-	for (auto item : combinations)
-		cout << "[" << item << "] ";
-	cout << endl;
+	// for (auto item : combinations)
+	// 	cout << "[" << item << "] ";
+	// cout << endl;
 }

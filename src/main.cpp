@@ -1,5 +1,5 @@
 #include "./include/util/file.hpp"
-#include "./include/kernel.hpp"
+#include "./include/mythread.hpp"
 
 template <typename T>
 void control(T *itens, T *classes, string file) {
@@ -32,15 +32,15 @@ int main() {
 	control(&dados.itens, &dados.classes, "D");
 	control(&dados.tarefaT, &dados.tarefaT_processamento, "T");
 	t2 = steady_clock::now();
-	dados.t_arquivos = duration_cast< duration<double> >(t2 - t1);
+	dados.t_arquivos = duration_cast<duration<double>>(t2 - t1);
 
 	while (op != 0) {
 		system("clear");
 		op = menu();
-		cout << endl;
+		// cout << endl;
 
 		if (op == 0) {
-			cout << "O programa sera finalizado!" << endl;
+			// cout << "O programa sera finalizado!" << endl;
 			return EXIT_SUCCESS;
 		} else {
 			switch (op) {
@@ -54,7 +54,7 @@ int main() {
 				escalonador<Politicas::BJF>(dados);
 				break;
 			default:
-				cout << (RED "Opcao invalida!" RESET) << endl;
+				printf((RED "Opcao invalida!\n" RESET));
 			}
 		}
 		system("read -p \"\nPressione enter para continuar...\" continue");
@@ -68,33 +68,32 @@ void escalonador(Dados dados) {
 	steady_clock::time_point t1;
 	steady_clock::time_point t2;
 
-	Kernel<p> k;
+	MyThread<p> myThread(&dados);
 
 	t1 = steady_clock::now();
-	k.setDados(&dados);
-	k.itensInComum();
+	myThread.init();
 	t2 = steady_clock::now();
 
-	dados.t_escalonamento = duration_cast< duration<double> >(t2 - t1);
+	dados.t_escalonamento = duration_cast<duration<double>>(t2 - t1);
 	dados.t_processamento = dados.t_escalonamento - dados.t_intercessao;
 
-	cout << "\nTempo de leitura: " << dados.t_arquivos.count() << endl;
-	cout << "Tempo de intercessoes: " << dados.t_intercessao.count() << endl;
-	cout << "Tempo de processamento: " << dados.t_processamento.count() << endl;
+	printf("\nTempo de leitura: %lf\n", dados.t_arquivos.count());
+	printf("Tempo de intercessoes: %lf\n", dados.t_intercessao.count());
+	printf("Tempo de processamento: %lf\n", dados.t_processamento.count());
 }
 
 int menu() {
-	cout << "================" << endl;
-	cout << "   POLITICAS" << endl;
-	cout << "================" << endl << endl;
+	printf("================\n");
+	printf("   POLITICAS\n");
+	printf("================\n\n");
 
-	cout << "1 - Fifo" << endl;
-	cout << "2 - Menor job primeiro" << endl;
-	cout << "3 - Maior job primeiro" << endl;
-	// cout << "4 - Prioridade" << endl;
-	cout << "0 - Sair" << endl;
+	printf("1 - Fifo\n");
+	printf("2 - Menor job primeiro\n");
+	printf("3 - Maior job primeiro\n");
+	// printf("4 - Prioridade\n");
+	printf("0 - Sair\n");
 
-	cout << "\nEscolha uma politica: ";
+	printf("\nEscolha uma politica: \n");
 
 	int op;
 	cin >> op;
