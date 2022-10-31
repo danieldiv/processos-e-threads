@@ -36,7 +36,7 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 
 ## Sistema multitarefa: Etapa VI
 
-- Nesta etapa será utilizado os pacotes criados na `etapa V`, com a diferença de que agora eles serão processados em threads. A execução das threads almenta a complexidade, logo o tempo de execução também sofreu impacotos.
+- Nesta etapa será utilizado os pacotes criados na `etapa V`, com a diferença de que agora eles serão processados em threads. A execução das threads aumenta a complexidade, logo o tempo de execução também sofreu impacotos.
 
 # Compilação e Execução
 
