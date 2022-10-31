@@ -17,11 +17,11 @@ struct estrutura_global {
 	sem_t buffer_full;
 	sem_t buffer_empty;
 
-	queue<pair < string, int>> buffer;
-	queue<pair < string, int>> pacotes;
+	queue<pair < string, int>> buffer; // fila para pegar os valores retirados dos pacotes e serem consumidas
+	queue<pair < string, int>> pacotes; // combinacoes dos processos em ordem crescente ou descrescente
 	unordered_map < int, unordered_map<string, int>> result;
 
-	Kernel<p> *k;
+	Kernel<p> *k; // ponteiro para o kernel
 
 	steady_clock::time_point init;
 	steady_clock::time_point end;
@@ -71,7 +71,6 @@ void MyThread<p>::init() {
 	this->vglobal.t_impressao = 0;
 	this->pkgs = &this->vglobal.pacotes;
 	this->kernel.walkInPackage(this->pkgs);
-
 
 	init = steady_clock::now();
 	this->initThread();
