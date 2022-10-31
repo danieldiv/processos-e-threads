@@ -165,7 +165,7 @@ void Kernel<p>::fazIntersecoes() {
 	this->cache.clear();
 }
 
-// chamado pelo metodo generico fazIntersecoes
+// chamado pelo metodo init da classe Thread
 template<>
 void Kernel<Politicas::LJF>::walkInPackage(queue<pair < string, int>> *new_packages) {
 
@@ -176,7 +176,7 @@ void Kernel<Politicas::LJF>::walkInPackage(queue<pair < string, int>> *new_packa
 	}
 }
 
-// chamado pelo metodo generico fazIntersecoes
+// chamado pelo metodo init da classe Thread
 template<>
 void Kernel<Politicas::BJF>::walkInPackage(queue<pair < string, int>> *new_packages) {
 
@@ -231,7 +231,7 @@ void Kernel<p>::checkCache(string chave, unordered_map<string, int> *classes_aux
  * @param linha linha do arquivo T
  * @param classes_res
  *
- * utilizada pela funcao walkInPackage
+ * utilizada pela funcao processaValue da classe Thread
  */
 template<Politicas p>
 void Kernel<p>::checkCache(string chave, int linha,
@@ -267,7 +267,7 @@ void Kernel<p>::checkCache(string chave, int linha,
  * @brief inicializa o valor da classe res para verificar os dados com a classe principal
  *
  * @tparam p
- * @param chave chave que sera pesquisa, que sao as combinacoes do arquivo T
+ * @param chave chave que sera pesquisada, que sao as combinacoes do arquivo T
  * @param linha numero da linha do processo
  * @param classes_res mapa para armazenar o resultado das intercessoes de cada linha(processo)
  *
