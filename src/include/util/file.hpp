@@ -23,7 +23,7 @@ File<T>::~File() {}
 
 template <typename T>
 void File<T>::readFile(string file, T *itens, T *classes) {
-	file.insert(0, "src/resource/").append(".csv");
+	file.insert(0, "resource/").append(".csv");
 
 	ifstream myfile(file);
 	string line;

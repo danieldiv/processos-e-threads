@@ -1,4 +1,4 @@
-#include "./include/packages.hpp"
+#include "./kernel/packages.hpp"
 
 void Packages::quebrarEmPacotes(unordered_map < int, vector<string>> combinacoes) {
 	unordered_map < int, vector<string>>::iterator itr;
