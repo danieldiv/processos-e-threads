@@ -30,8 +30,6 @@ public:
 		unordered_map < int, vector<string>> *classes);
 
 	void tokenizar(string text, vector<string> *tokens);
-
-	void printMap(T *itens);
 };
 
 template<typename T>
@@ -130,18 +128,6 @@ void Tokenizar<T>::tokenizar(string text, vector<string> *tokens) {
 	string token;
 
 	while (getline(sstream, token, del)) tokens->push_back(token);
-}
-
-template<typename T>
-void Tokenizar<T>::printMap(T *itens) {
-	typename T::iterator itr;
-
-	// for (itr = itens->begin();itr != itens->end();itr++) {
-	// 	cout << "[" << itr->first << "] -> ";
-
-	// 	for (auto v : itr->second) cout << "(" << v << ") ";
-	// 	cout << endl << endl;
-	// }
 }
 
 #endif

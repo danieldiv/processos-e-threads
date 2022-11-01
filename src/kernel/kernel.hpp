@@ -1,18 +1,18 @@
 #ifndef KERNEL_HPP
 #define KERNEL_HPP
 
-#include "./combination.hpp"
-#include "./intersetion.hpp"
+#include "../include/combination.hpp"
+#include "../include/intersetion.hpp"
+#include "../include/model.hpp"
 #include "./packages.hpp"
 #include "./cache.hpp"
-#include "./model.hpp"
 
 #include <queue>
 
 enum class Politicas {
-	FIFO, // round robin, fila
-	LJF, // menor job primeiro
-	BJF, // maior job primeiro
+	ROUND_ROBIN, // round robin, fila
+	LOWER_JOB_FIRST, // menor job primeiro
+	BIGGER_JOB_FIRST, // maior job primeiro
 	PRIORITY, // prioridade
 	NONE // nenhum
 };
@@ -47,7 +47,7 @@ public:
 	void printAnalize();
 	void fazIntersecoes();
 
-	/* Funcoes utilizadas com a politica do tipo FIFO,
+	/* Funcoes utilizadas com a politica do tipo Roudin Robin,
 	funcionando como um processamento em lote */
 
 	void checkCache(string chave, unordered_map<string, int> *classes_aux);
@@ -138,7 +138,7 @@ void Kernel<p>::fazCombinacoes(int key, vector<string> colunas) {
 
 // chamado pelo metodo itensInComum
 template<>
-void Kernel<Politicas::FIFO>::fazIntersecoes() {
+void Kernel<Politicas::ROUND_ROBIN>::fazIntersecoes() {
 	unordered_map < int, unordered_map<string, int>> result;
 	unordered_map < int, unordered_map<string, int>>::iterator foundResult;
 
@@ -167,7 +167,7 @@ void Kernel<p>::fazIntersecoes() {
 
 // chamado pelo metodo init da classe Thread
 template<>
-void Kernel<Politicas::LJF>::walkInPackage(queue<pair < string, int>> *new_packages) {
+void Kernel<Politicas::LOWER_JOB_FIRST>::walkInPackage(queue<pair < string, int>> *new_packages) {
 
 	map < int, set < pair < string, int>>>::iterator it_pkg;
 
@@ -178,7 +178,7 @@ void Kernel<Politicas::LJF>::walkInPackage(queue<pair < string, int>> *new_packa
 
 // chamado pelo metodo init da classe Thread
 template<>
-void Kernel<Politicas::BJF>::walkInPackage(queue<pair < string, int>> *new_packages) {
+void Kernel<Politicas::BIGGER_JOB_FIRST>::walkInPackage(queue<pair < string, int>> *new_packages) {
 
 	map < int, set < pair < string, int>>>::iterator it_pkg;
 
@@ -194,7 +194,7 @@ void Kernel<Politicas::BJF>::walkInPackage(queue<pair < string, int>> *new_packa
  * @param chave chave que sera pesquisa, que sao as combinacoes do arquivo T
  * @param classes_aux mapa para armazenar o resultado das intercessoes
  *
- * utilizada pela funcao fazIntercessoes na politica FIFO
+ * utilizada pela funcao fazIntercessoes na politica Roudin Robin
  */
 template<Politicas p>
 void Kernel<p>::checkCache(string chave, unordered_map<string, int> *classes_aux) {

@@ -6,13 +6,17 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 	O trabalho constitui de um sistema de classificação cujas características serão utilizadas para observar conceitos importantes como: escalonamento e gestão de memória primária. No sistema será utilizado dois arquivos, D e T. A base D será utilizada para simular a inicialização, fornecendo assim o conceito de bootstrapping, tal como no sistema operacional. A base T irá representar os processos a serem executados.
 </p>
 
-## Menu
+<!-- ## Menu
 
 ![Scrennshot](src/resource/imgs/menuPrincipal.png)
 
-- 1. Faz o escalonamento dos processos utilizando a politica Fifo
+- 1. Faz o escalonamento dos processos utilizando a politica Roudin Robin
 - 2. Faz o escalonamento dos processos utilizando a politica Menor job primeiro
-- 3. Faz o escalonamento dos processos utilizando a politica Maior job primeiro
+- 3. Faz o escalonamento dos processos utilizando a politica Maior job primeiro -->
+
+## Politica utilizada
+
+- LOWER_JOB_FIRST (Menor job primeiro)
 
 ## Sistema multitarefa: Etapa I
 
@@ -32,7 +36,7 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 
 ## Sistema multitarefa: Etapa V
 
-- A etapa 5 consiste em modificar a politica de escalonamento, neste projeto foi adotado 3 politicas, sendo: `Fifo`, `Menor job primeiro` e `Maior job primeiro`. Como algumas das chamadas dos metodos são bastantes semelhantes, a execução do [Kernel](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/kernel.hpp) foi modificada para trabalhar no modelo de template.
+- A etapa 5 consiste em modificar a politica de escalonamento, neste projeto foi adotado 3 politicas, sendo: `Roudin Robin`, `Menor job primeiro` e `Maior job primeiro`. Como algumas das chamadas dos metodos são bastantes semelhantes, a execução do [Kernel](https://github.com/danieldiv/processos-e-threads/blob/main/src/include/kernel.hpp) foi modificada para trabalhar no modelo de template.
 
 ## Sistema multitarefa: Etapa VI
 

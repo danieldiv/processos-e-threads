@@ -8,6 +8,7 @@
 #include <ctime>
 #include <ratio>
 #include <chrono>
+#include <thread>
 
 using namespace std::chrono;
 

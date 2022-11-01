@@ -5,7 +5,7 @@
 #include <set>
 #include <utility>
 
-#include "./util/tokenizar.hpp"
+#include "../include/util/tokenizar.hpp"
 
 // transforma as combinacoes realizadas pelo kernel em pacotes
 class Packages {
