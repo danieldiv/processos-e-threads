@@ -45,7 +45,7 @@ public:
 	void fazCombinacoes(int key, vector<string> colunas);
 	void printResult(unordered_map < int, unordered_map<string, int>> classes_aux);
 	void printAnalize();
-	void fazIntersecoes();
+	void findClasses();
 
 	/* Funcoes utilizadas com a politica do tipo Roudin Robin,
 	funcionando como um processamento em lote */
@@ -107,6 +107,7 @@ void Kernel<p>::itensInComum() {
 		fazCombinacoes(itr->first, itr->second);
 	}
 	this->dados->t_intercessao = 0;
+	this->cache.clear();
 }
 
 /**
@@ -136,9 +137,9 @@ void Kernel<p>::fazCombinacoes(int key, vector<string> colunas) {
 	this->dados->tarefaT_combinacoes.insert({ key, res });
 }
 
-// chamado pelo metodo itensInComum
+// chamado pelo metodo init na classe mythread
 template<>
-void Kernel<Politicas::ROUND_ROBIN>::fazIntersecoes() {
+void Kernel<Politicas::ROUND_ROBIN>::findClasses() {
 	unordered_map < int, unordered_map<string, int>> result;
 	unordered_map < int, unordered_map<string, int>>::iterator foundResult;
 
@@ -160,7 +161,7 @@ void Kernel<Politicas::ROUND_ROBIN>::fazIntersecoes() {
 
 // chamado pelo metodo itensInComum
 template<Politicas p>
-void Kernel<p>::fazIntersecoes() {
+void Kernel<p>::findClasses() {
 	this->quebrarEmPacotes(this->dados->tarefaT_combinacoes);
 	this->cache.clear();
 }

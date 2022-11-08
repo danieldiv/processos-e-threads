@@ -45,9 +45,3 @@ void Combination::atribuiCombinations(vector<string> *combinations) {
 	combinations->assign(this->combinations.begin(), this->combinations.end());
 	this->combinations.clear();
 }
-
-void Combination::printCombinations() {
-	// for (auto item : combinations)
-	// 	cout << "[" << item << "] ";
-	// cout << endl;
-}

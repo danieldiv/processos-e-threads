@@ -17,7 +17,6 @@ public:
 	~Combination();
 
 	void combinate(vector<string> vetor, int perm[], int index, int n, int k, int linha);
-	void printCombinations();
 	void atribuiCombinations(vector<string> *combinations);
 };
 
