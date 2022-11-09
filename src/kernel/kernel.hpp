@@ -233,14 +233,6 @@ void Kernel<p>::checkCache(string chave, unordered_map<string, int> *classes_aux
 	}
 }
 
-// auxiliar da posicao atual do iterator de content_processo
-enum class Posicao {
-	FIND,
-	CHECK,
-	SUM,
-	NONE
-};
-
 /**
  * @brief pesquisa uma chave primeiro na cache antes de realizar as operacoes de intercessoes
  *
