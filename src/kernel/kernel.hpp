@@ -17,6 +17,14 @@ enum class Politicas {
 	NONE // nenhum
 };
 
+// item.first = chave -> contem a chave que sera pesquisada, que sao as combinacoes do arquivo T
+// item.second = linha -> representa a linha do arquivo T
+struct content_processo {
+	pair < string, int> item;
+	unordered_map < int, unordered_map<string, int>>::iterator it_res;
+	bool finalizado;
+};
+
 template<Politicas p>
 class Kernel: Packages {
 private:
@@ -60,8 +68,9 @@ public:
 
 	void walkInPackage(queue<pair < string, int>> *new_packages);
 
-	void checkCache(string chave, int linha,
-		unordered_map < int, unordered_map<string, int>> *classes_res);
+	void checkCache(
+		unordered_map < int, unordered_map<string, int>> *result,
+		content_processo *c_processo);
 
 	void pre_checkDados(string chave, int linha,
 		unordered_map < int, unordered_map<string, int>> *classes_res);
@@ -224,43 +233,48 @@ void Kernel<p>::checkCache(string chave, unordered_map<string, int> *classes_aux
 	}
 }
 
+// auxiliar da posicao atual do iterator de content_processo
+enum class Posicao {
+	FIND,
+	CHECK,
+	SUM,
+	NONE
+};
+
 /**
  * @brief pesquisa uma chave primeiro na cache antes de realizar as operacoes de intercessoes
  *
  * @tparam p
- * @param chave chave que sera pesquisa, que sao as combinacoes do arquivo T
- * @param linha linha do arquivo T
- * @param classes_res
- *
- * utilizada pela funcao processaValue da classe Thread
+ * @param result resultado final de todos os processos
+ * @param c_processo
  */
 template<Politicas p>
-void Kernel<p>::checkCache(string chave, int linha,
-	unordered_map < int, unordered_map<string, int>> *classes_res) {
+void Kernel<p>::checkCache(
+	unordered_map < int, unordered_map<string, int>> *result,
+	content_processo *c_processo) {
 
-	unordered_map < int, unordered_map<string, int>>::iterator found_classes_res;
 	unordered_map < string, int>::iterator itr;
 	unordered_map < string, int>::iterator itr_aux;
 
-	this->itr_cache = this->cache.find(chave);
+	this->itr_cache = this->cache.find(c_processo->item.first);
 
 	if (itr_cache != this->cache.end()) {
-		found_classes_res = classes_res->find(linha);
+		c_processo->it_res = result->find(c_processo->item.second);
 		this->cont_cache_found++;
 
-		if (found_classes_res == classes_res->end()) {
-			classes_res->insert({ linha, this->class_model });
-			found_classes_res = classes_res->find(linha);
+		if (c_processo->it_res == result->end()) {
+			result->insert({ c_processo->item.second, this->class_model });
+			c_processo->it_res = result->find(c_processo->item.second);
 		}
 
 		for (itr = itr_cache->second.class_model.begin(); itr != itr_cache->second.class_model.end(); ++itr) {
-			itr_aux = found_classes_res->second.find(itr->first);
+			itr_aux = c_processo->it_res->second.find(itr->first);
 
-			if (itr_aux != found_classes_res->second.end())
+			if (itr_aux != c_processo->it_res->second.end())
 				itr_aux->second = itr_aux->second + itr->second;
 		}
 	} else {
-		pre_checkDados(chave, linha, classes_res);
+		pre_checkDados(c_processo->item.first, c_processo->item.second, result);
 	}
 }
 

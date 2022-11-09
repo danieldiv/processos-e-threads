@@ -10,17 +10,12 @@
 #define NUMPROD 5
 #define NUMCONS 5
 
-struct content_mmu {
-	pair < string, int> item;
-};
-
 template<Politicas p>
 struct memorial_virtual {
 	pthread_mutex_t buffer_mutex;
 	pthread_mutex_t pacotes_mutex;
 
-	queue<content_mmu> buffer;
-	// queue<pair < string, int>> buffer;
+	queue<content_processo> buffer;
 	queue<pair < string, int>> *pacotes;
 
 	unordered_map < int, unordered_map<string, int>> *result;
@@ -122,7 +117,7 @@ template<Politicas p>
 void *addValue(void *arg) {
 	memorial_virtual<p> *vglobal = (memorial_virtual<p> *)arg;
 	pair < string, int> dado;
-	content_mmu c_mmu;
+	content_processo c_mmu;
 	bool aux = false;
 
 	while (vglobal->pacotes->size() > 0) {
@@ -149,17 +144,15 @@ void *addValue(void *arg) {
 
 template<Politicas p>
 void *processaValue(void *arg) {
-	// pair < string, int> dado;
 	memorial_virtual<p> *vglobal = (memorial_virtual<p> *)arg;
-	content_mmu c_mmu;
+	content_processo c_processo;
 
 	while (!(vglobal->pacotes->size() == 0 && vglobal->buffer.size() == 0)) {
 		pthread_mutex_lock(&vglobal->buffer_mutex);
 		if (vglobal->buffer.size() > 0) {
-			c_mmu = vglobal->buffer.front();
-			// dado = vglobal->buffer.front();
+			c_processo = vglobal->buffer.front();
 			vglobal->buffer.pop();
-			vglobal->k->checkCache(c_mmu.item.first, c_mmu.item.second, vglobal->result);
+			vglobal->k->checkCache(vglobal->result, &c_processo);
 		}
 		pthread_mutex_unlock(&vglobal->buffer_mutex);
 	}
