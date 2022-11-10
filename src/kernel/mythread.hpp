@@ -157,7 +157,7 @@ void *processaValue(void *arg) {
 
 			if (c_processo.exec != Execucao::FINALIZADO) {
 				vglobal->buffer.push(c_processo);
-				cout << "retirou" << endl;
+				// cout << "retirou" << endl;
 			}
 		}
 		pthread_mutex_unlock(&vglobal->buffer_mutex);
