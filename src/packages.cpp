@@ -26,7 +26,7 @@ void Packages::quebrarEmPacotes(unordered_map < int, vector<string>> combinacoes
  * @brief insere combinacoes no package de acordo com o tamanho de combinacoes
  *
  * @param _N tamanho das combinacoes que sera utilizada para a chave do map
- * @param chave chave do pair que sera inserida em um set para adicionar no map de acordo com o tamanho _N
+ * @param chave chave do pair que sera inserida em um unordered_set para adicionar no map de acordo com o tamanho _N
  * @param linha valor do pair
  */
 void Packages::insertDado(int _N, string chave, int linha) {

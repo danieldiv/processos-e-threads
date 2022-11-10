@@ -147,14 +147,21 @@ void *processaValue(void *arg) {
 	memorial_virtual<p> *vglobal = (memorial_virtual<p> *)arg;
 	content_processo c_processo;
 
+	bool c = true;
 	while (!(vglobal->pacotes->size() == 0 && vglobal->buffer.size() == 0)) {
 		pthread_mutex_lock(&vglobal->buffer_mutex);
 		if (vglobal->buffer.size() > 0) {
 			c_processo = vglobal->buffer.front();
 			vglobal->buffer.pop();
-			vglobal->k->checkCache(vglobal->result, &c_processo);
+			vglobal->k->executeProcess(vglobal->result, &c_processo);
+
+			if (c_processo.exec != Execucao::FINALIZADO) {
+				vglobal->buffer.push(c_processo);
+				// cout << "retirou" << endl;
+			}
 		}
 		pthread_mutex_unlock(&vglobal->buffer_mutex);
+		c = !c;
 	}
 	pthread_exit(arg);
 }
