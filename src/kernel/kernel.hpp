@@ -9,7 +9,7 @@
 
 #include <queue>
 
-#define QUANTUM 20
+#define QUANTUM 30
 
 enum class Politicas {
 	ROUND_ROBIN,
@@ -280,8 +280,6 @@ void Kernel<p>::executeProcess(
 		checkClasse(c_processo->item.first, c_processo->vecA, c_processo->classe_aux);
 
 	c_processo->exec = Execucao::FINALIZADO;
-
-	// cout << "end:" << endl;
 }
 
 /**

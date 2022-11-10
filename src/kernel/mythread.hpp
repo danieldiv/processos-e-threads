@@ -8,7 +8,7 @@
 #include "./kernel.hpp"
 
 #define NUMPROD 5
-#define NUMCONS 1
+#define NUMCONS 5
 
 template<Politicas p>
 struct memorial_virtual {
@@ -155,8 +155,10 @@ void *processaValue(void *arg) {
 			vglobal->buffer.pop();
 			vglobal->k->executeProcess(vglobal->result, &c_processo);
 
-			if (c_processo.exec != Execucao::FINALIZADO)
+			if (c_processo.exec != Execucao::FINALIZADO) {
 				vglobal->buffer.push(c_processo);
+				cout << "retirou" << endl;
+			}
 		}
 		pthread_mutex_unlock(&vglobal->buffer_mutex);
 		c = !c;
