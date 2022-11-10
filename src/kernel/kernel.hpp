@@ -9,24 +9,35 @@
 
 #include <queue>
 
+#define QUANTUM 20
+
 enum class Politicas {
-	ROUND_ROBIN, // round robin, fila
-	LOWER_JOB_FIRST, // menor job primeiro
-	BIGGER_JOB_FIRST, // maior job primeiro
-	PRIORITY, // prioridade
-	NONE // nenhum
+	ROUND_ROBIN,
+	LOWER_JOB_FIRST,
+	BIGGER_JOB_FIRST,
+	PRIORITY,
+	NONE
 };
 
-// item.first = chave -> contem a chave que sera pesquisada, que sao as combinacoes do arquivo T
-// item.second = linha -> representa a linha do arquivo T
+enum class Execucao {
+	CHECK_CACHE,
+	CHECK_DADOS,
+	CHECK_CLASSE,
+	FINALIZADO
+};
+
 struct content_processo {
+	vector<int> vecA;
 	pair < string, int> item;
-	unordered_map < int, unordered_map<string, int>>::iterator it_res;
-	bool finalizado;
+	unordered_map<string, int> *classe_aux;
+
+	bool timer = false;
+
+	Execucao exec = Execucao::CHECK_CACHE;
 };
 
 template<Politicas p>
-class Kernel: Packages {
+class Kernel : Packages {
 private:
 	int cont_cache_found;
 
@@ -59,7 +70,8 @@ public:
 	funcionando como um processamento em lote */
 
 	void checkCache(string chave, unordered_map<string, int> *classes_aux);
-	void checkDados(string item, unordered_map<string, int> *classes_aux);
+	void checkDados(string chave, unordered_map<string, int> *result,
+		content_processo *c_processo);
 	void checkClasse(string chave, vector<int> vecA, unordered_map<string, int> *classes_aux);
 
 	/* Funcoes utilizadas com a politica do tipo menor Job first ou maior job primeiro,
@@ -68,12 +80,17 @@ public:
 
 	void walkInPackage(queue<pair < string, int>> *new_packages);
 
+	void executeProcess(
+		unordered_map < int, unordered_map<string, int>> *result,
+		content_processo *c_processo);
+
 	void checkCache(
 		unordered_map < int, unordered_map<string, int>> *result,
 		content_processo *c_processo);
 
-	void pre_checkDados(string chave, int linha,
-		unordered_map < int, unordered_map<string, int>> *classes_res);
+	void pre_checkDados(
+		unordered_map < int, unordered_map<string, int>> *result,
+		content_processo *c_processo);
 };
 
 template<Politicas p>
@@ -205,6 +222,10 @@ void Kernel<Politicas::BIGGER_JOB_FIRST>::walkInPackage(queue<pair < string, int
  * @param classes_aux mapa para armazenar o resultado das intercessoes
  *
  * utilizada pela funcao fazIntercessoes na politica Roudin Robin
+ *
+ * a politica Roudin Robin nao esta mais funcional devido a modificacoes
+ * realizadas para que a utilizacao de threads com remocao do processo por
+ * tempo fosse possivel
  */
 template<Politicas p>
 void Kernel<p>::checkCache(string chave, unordered_map<string, int> *classes_aux) {
@@ -225,12 +246,42 @@ void Kernel<p>::checkCache(string chave, unordered_map<string, int> *classes_aux
 		this->cont_cache_found++;
 	} else {
 		Cache cache_aux;
+		content_processo c_processo;
+
 		cache_aux.class_model.clear();
 		cache_aux.class_model = this->class_model;
 
 		this->cache.insert({ chave, cache_aux });
-		checkDados(chave, classes_aux);
+		checkDados(chave, classes_aux, &c_processo);
 	}
+}
+
+template<Politicas p>
+void Kernel<p>::executeProcess(
+	unordered_map < int, unordered_map<string, int>> *result,
+	content_processo *c_processo) {
+
+	steady_clock::time_point init = steady_clock::now();
+	double tempo;
+
+	if (c_processo->exec == Execucao::CHECK_CACHE)
+		this->checkCache(result, c_processo);
+
+	tempo = duration_cast<chrono::microseconds>(steady_clock::now() - init).count();
+
+	if (tempo >= QUANTUM) return;
+	else if (c_processo->exec == Execucao::CHECK_DADOS)
+		this->pre_checkDados(result, c_processo);
+
+	tempo = duration_cast<chrono::microseconds>(steady_clock::now() - init).count();
+
+	if (tempo >= QUANTUM) return;
+	else if (c_processo->exec == Execucao::CHECK_CLASSE)
+		checkClasse(c_processo->item.first, c_processo->vecA, c_processo->classe_aux);
+
+	c_processo->exec = Execucao::FINALIZADO;
+
+	// cout << "end:" << endl;
 }
 
 /**
@@ -247,26 +298,28 @@ void Kernel<p>::checkCache(
 
 	unordered_map < string, int>::iterator itr;
 	unordered_map < string, int>::iterator itr_aux;
+	unordered_map < int, unordered_map<string, int>>::iterator it_res;
 
 	this->itr_cache = this->cache.find(c_processo->item.first);
 
 	if (itr_cache != this->cache.end()) {
-		c_processo->it_res = result->find(c_processo->item.second);
+		it_res = result->find(c_processo->item.second);
 		this->cont_cache_found++;
 
-		if (c_processo->it_res == result->end()) {
+		if (it_res == result->end()) {
 			result->insert({ c_processo->item.second, this->class_model });
-			c_processo->it_res = result->find(c_processo->item.second);
+			it_res = result->find(c_processo->item.second);
 		}
 
 		for (itr = itr_cache->second.class_model.begin(); itr != itr_cache->second.class_model.end(); ++itr) {
-			itr_aux = c_processo->it_res->second.find(itr->first);
+			itr_aux = it_res->second.find(itr->first);
 
-			if (itr_aux != c_processo->it_res->second.end())
+			if (itr_aux != it_res->second.end())
 				itr_aux->second = itr_aux->second + itr->second;
 		}
+		c_processo->exec = Execucao::FINALIZADO;
 	} else {
-		pre_checkDados(c_processo->item.first, c_processo->item.second, result);
+		c_processo->exec = Execucao::CHECK_DADOS;
 	}
 }
 
@@ -281,24 +334,30 @@ void Kernel<p>::checkCache(
  * utilizada pela funcao checkCache na politica LJF e BJF
  */
 template<Politicas p>
-void Kernel<p>::pre_checkDados(string chave, int linha,
-	unordered_map < int, unordered_map<string, int>> *classes_res) {
+void Kernel<p>::pre_checkDados(
+	unordered_map < int, unordered_map<string, int>> *result,
+	content_processo *c_processo) {
 
 	unordered_map < int, unordered_map<string, int>>::iterator found_classes_res;
 	Cache cache_aux;
+
+	string chave;
+	chave.assign(c_processo->item.first);
+
+	int linha = c_processo->item.second;
 
 	cache_aux.class_model.clear();
 	cache_aux.class_model = this->class_model;
 
 	this->cache.insert({ chave, cache_aux });
 
-	found_classes_res = classes_res->find(linha);
+	found_classes_res = result->find(linha);
 
-	if (found_classes_res == classes_res->end()) {
-		classes_res->insert({ linha, this->class_model });
-		found_classes_res = classes_res->find(linha);
+	if (found_classes_res == result->end()) {
+		result->insert({ linha, this->class_model });
+		found_classes_res = result->find(linha);
 	}
-	checkDados(chave, &found_classes_res->second);
+	checkDados(chave, &found_classes_res->second, c_processo);
 }
 
 /**
@@ -312,7 +371,9 @@ void Kernel<p>::pre_checkDados(string chave, int linha,
  * utilizada pelas funcoes checkCache e pre_checkDados
  */
 template<Politicas p>
-void Kernel<p>::checkDados(string chave, unordered_map<string, int> *classes_aux) {
+void Kernel<p>::checkDados(string chave, unordered_map<string, int> *classe_aux,
+	content_processo *c_processo) {
+
 	steady_clock::time_point init = steady_clock::now();
 
 	vector<string>::iterator it_vec;
@@ -348,11 +409,14 @@ void Kernel<p>::checkDados(string chave, unordered_map<string, int> *classes_aux
 		aux.assign(res.begin(), res.end());
 
 		if (aux.size() > 0) {
-			checkClasse(chave, aux, classes_aux);
+			c_processo->exec = Execucao::CHECK_CLASSE;
+			c_processo->vecA.assign(aux.begin(), aux.end());
+			c_processo->classe_aux = classe_aux;
 		}
 	} else {
-		v1 = this->dados->itens.find(chave)->second;
-		checkClasse(chave, v1, classes_aux);
+		c_processo->exec = Execucao::CHECK_CLASSE;
+		c_processo->vecA = this->dados->itens.find(chave)->second;
+		c_processo->classe_aux = classe_aux;
 	}
 	steady_clock::time_point end = steady_clock::now();
 	this->dados->t_intercessao +=

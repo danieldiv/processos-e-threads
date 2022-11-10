@@ -153,7 +153,10 @@ void *processaValue(void *arg) {
 		if (vglobal->buffer.size() > 0) {
 			c_processo = vglobal->buffer.front();
 			vglobal->buffer.pop();
-			vglobal->k->checkCache(vglobal->result, &c_processo);
+			vglobal->k->executeProcess(vglobal->result, &c_processo);
+
+			if (c_processo.exec != Execucao::FINALIZADO)
+				vglobal->buffer.push(c_processo);
 		}
 		pthread_mutex_unlock(&vglobal->buffer_mutex);
 		c = !c;
