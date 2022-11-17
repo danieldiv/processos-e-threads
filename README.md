@@ -6,6 +6,10 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 	O trabalho constitui de um sistema de classificação cujas características serão utilizadas para observar conceitos importantes como: escalonamento e gestão de memória primária. No sistema será utilizado dois arquivos, D e T. A base D será utilizada para simular a inicialização, fornecendo assim o conceito de bootstrapping, tal como no sistema operacional. A base T irá representar os processos a serem executados.
 </p>
 
+## Observações
+
+- Caso tenha interesse, em `Code > Codespaces > Create codespace on main` é possivel executar a aplição através do navegador.
+
 ## Politica utilizada
 
 - LOWER_JOB_FIRST (Menor job primeiro)
