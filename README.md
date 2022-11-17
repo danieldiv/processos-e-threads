@@ -8,7 +8,13 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 
 ## Observações
 
-- Caso tenha interesse, em `Code > Codespaces > Create codespace on main` é possivel executar a aplição através do navegador.
+- Caso tenha interesse, em `Code > Codespaces > Teste de excecucao` é possivel executar a aplicação através do navegador. É necessário estar logado no **GitHub**.
+
+- Os testes foram realizados nos navegadores abaixo:
+  - Brave
+  - Edge
+  - Chrome
+  - Firefox
 
 ## Politica utilizada
 
