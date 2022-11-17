@@ -6,7 +6,7 @@ void control(T *itens, T *classes, string file) {
 	File<T> arq;
 	arq.readFile(file, itens, classes);
 }
-
+//Teste
 template <typename T>
 void imprimirMap(T *itens) {
 	Tokenizar<T> u;
