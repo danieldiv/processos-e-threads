@@ -6,14 +6,6 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 	O trabalho constitui de um sistema de classificação cujas características serão utilizadas para observar conceitos importantes como: escalonamento e gestão de memória primária. No sistema será utilizado dois arquivos, D e T. A base D será utilizada para simular a inicialização, fornecendo assim o conceito de bootstrapping, tal como no sistema operacional. A base T irá representar os processos a serem executados.
 </p>
 
-<!-- ## Menu
-
-![Scrennshot](src/resource/imgs/menuPrincipal.png)
-
-- 1. Faz o escalonamento dos processos utilizando a politica Roudin Robin
-- 2. Faz o escalonamento dos processos utilizando a politica Menor job primeiro
-- 3. Faz o escalonamento dos processos utilizando a politica Maior job primeiro -->
-
 ## Politica utilizada
 
 - LOWER_JOB_FIRST (Menor job primeiro)
@@ -41,6 +33,8 @@ Documentacao pode ser encontrada em [Wiki](https://github.com/danieldiv/processo
 ## Sistema multitarefa: Etapa VI
 
 - Nesta etapa será utilizado os pacotes criados na `etapa V`, com a diferença de que agora eles serão processados em threads. A execução das threads aumenta a complexidade, logo o tempo de execução também sofreu impacotos.
+
+- Para simular uma memoria virtual é necessario modificar o `kernel` para que os cheks de **cache, dados e classe** sejam feitos de forma independentes, ou seja, após a finalização de cada check é verificado se o tempo de `QUANTUN` foi estrapolado, caso seja verdadeiro é retornado para a `mytread` e é recolocado na fila novamente para terminar o seu processo depois.
 
 # Compilação e Execução
 
