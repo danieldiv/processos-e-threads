@@ -7,8 +7,8 @@
 
 #include "./kernel.hpp"
 
-#define NUMPROD 5
-#define NUMCONS 5
+#define NUMPROD 9
+#define NUMCONS 9
 
 template<Politicas p>
 struct memorial_virtual {
